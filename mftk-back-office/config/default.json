@@ -1,0 +1,20 @@
+{
+  "host": "localhost",
+  "port": 1337,
+  "sqlite": "../data/mftkBackOffice.sqlite",
+  "public": "../public/",
+  "auth": {
+    "idField": "id",
+    "token": {
+      "secret": "evGqNH6bgb1mZ25TX3CyfVMmcitBpaq9SOrk6/9j69MwI4wKffPTny58NvJOvjv2zSjV4RvvgfE+yA8b0jxpxQ=="
+    },
+    "local": false,
+    "github": {
+      "clientID": "your github client id",
+      "clientSecret": "your github client secret",
+      "permissions": {
+        "scope": []
+      }
+    }
+  }
+}

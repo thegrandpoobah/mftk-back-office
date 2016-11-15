@@ -1,0 +1,31 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Classes
+    <a class="btn btn-default aviator" href="/admin/classes/{{id}}/new/" role="button">Create</a>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Class Name</th>
+        <th>Day of the Week</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody class="table-hover">
+      {{#data}}
+        <tr>
+          <td>{{name}}</td>
+          <td>{{dayOfTheWeek}}</td>
+          <td>{{startTime}}</td>
+          <td>{{endTime}}</td>
+          <td>
+            <a class="btn btn-default aviator" href="/admin/classes/{{id}}/edit/" role="button">Edit</a>
+            <a class="btn btn-danger aviator" href="/admin/classes/{{id}}/delete/" role="button">Delete</a>
+          </td>
+        </tr>
+      {{/data}}
+    </tbody>
+  </table>
+</div>
