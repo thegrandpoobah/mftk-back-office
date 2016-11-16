@@ -16,7 +16,7 @@ module.exports = function(sequelize) {
     dayOfTheWeek: {
       type: Sequelize.ENUM('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
       allowNull: false
-    }
+    },
     startTime: {
       type: Sequelize.DATE,
       allowNull: false

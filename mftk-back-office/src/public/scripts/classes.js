@@ -3,7 +3,7 @@ var qwest = require('qwest')
 var $ = require('jquery')
 require('handlebars/runtime')
 require('eonasdan-bootstrap-datetimepicker')
-// require('moment')
+var moment = require('moment')
 require('alpaca')
 
 var templates = {
@@ -30,7 +30,8 @@ module.exports = {
           "dayOfTheWeek": {
             "type": "string",
             "title": "Day of the Week",
-            "enum": ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            "enum": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+            "default": "Monday",
             "required": true
           },
           "startTime": {
@@ -55,9 +56,16 @@ module.exports = {
             "submit": {
               "title": "Create",
               "click": function() {
-                console.log('Submitting Form', this.getValue())
+                var v = this.getValue()
 
-                Aviator.navigate("/admin/classes/")
+                v.startTime = moment(v.startTime, "h:mm:ss a").format() 
+                v.endTime = moment(v.endTime, "h:mm:ss a").format()
+
+                qwest
+                  .post("/divisions", v)
+                  .then(function(xhr, response) {
+                    Aviator.navigate("/admin/classes/")
+                  })
               }
             },
             "back": {
@@ -73,7 +81,8 @@ module.exports = {
             "placeholder": "Enter a name for the class"
           },
           "dayOfTheWeek": {
-            "type": "select"
+            "type": "select",
+            "sort": false
           },
           "startTime": {
             "type": "time"
@@ -102,8 +111,9 @@ module.exports = {
             "dayOfTheWeek": {
               "type": "string",
               "title": "Day of the Week",
-              "enum": ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-              "required": true
+              "enum": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+              "required": true,
+              "default": "Monday"
             },
             "startTime": {
               "type": "string",
@@ -127,9 +137,16 @@ module.exports = {
               "submit": {
                 "title": "Update",
                 "click": function() {
-                  console.log('Submitting Form', this.getValue())
+                  var v = this.getValue()
 
-                  Aviator.navigate("/admin/classes/")
+                  v.startTime = moment(v.startTime, "h:mm:ss a").format() 
+                  v.endTime = moment(v.endTime, "h:mm:ss a").format()
+
+                  qwest
+                    .put("/divisions/" + request.namedParams.id, v)
+                    .then(function(xhr, response) {
+                      Aviator.navigate("/admin/classes/")
+                    })
                 }
               },
               "back": {
@@ -145,7 +162,8 @@ module.exports = {
               "placeholder": "Enter a name for the class"
             },
             "dayOfTheWeek": {
-              "type": "select"
+              "type": "select",
+              "sort": false
             },
             "startTime": {
               "type": "time"
@@ -160,6 +178,10 @@ module.exports = {
     })
   },
   delete: function(request) {
-    console.log('delete divisions', request.namedParams)
+    qwest
+      .delete("/divisions/" + request.namedParams.id)
+      .then(function(xhr, response) {
+        Aviator.navigate("/admin/classes/")
+      })
   }
 }
