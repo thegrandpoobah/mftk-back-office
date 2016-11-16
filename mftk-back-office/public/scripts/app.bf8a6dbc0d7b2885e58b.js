@@ -4,39 +4,35 @@ webpackJsonp([0],{
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1)
-	__webpack_require__(2)
-	__webpack_require__(5)
-	__webpack_require__(25)
-	__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"bootstrap-datetimepicker\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))
 
-	var Aviator = __webpack_require__(28)
+	var Aviator = __webpack_require__(2)
 
-	__webpack_require__(39)
+	__webpack_require__(13)
 
 	Aviator.linkSelector = 'a.aviator'
 	Aviator.setRoutes({
 	  '/admin': {
 	    '/students': {
-	      target: __webpack_require__(43),
+	      target: __webpack_require__(17),
 	      '/': 'index',
 	      ':id': 'edit'
 	    },
 	    '/classes': {
-	      target: __webpack_require__(44),
+	      target: __webpack_require__(18),
 	      '/': 'index',
+	      '/new': 'create',
 	      '/:id': {
-	        '/new': 'new',
 	        '/edit': 'edit',
 	        '/delete': 'delete' 
 	      }
 	    }
 	  },
 	  '/instructor-sign-in': {
-	    target: __webpack_require__(51),
+	    target: __webpack_require__(54),
 	    '/': 'index'
 	  },
 	  '/student-sign-in': {
-	    target: __webpack_require__(52),
+	    target: __webpack_require__(55),
 	    '/': 'index'
 	  }
 	})
@@ -45,14 +41,10 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 39:
-/***/ function(module, exports) {
+/***/ 13:
+57,
 
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-
-/***/ 43:
+/***/ 17:
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -64,26 +56,31 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 44:
+/***/ 18:
 /***/ function(module, exports, __webpack_require__) {
 
-	var qwest = __webpack_require__(45)
+	var Aviator = __webpack_require__(2)
+	var qwest = __webpack_require__(19)
+	var $ = __webpack_require__(24)
+	__webpack_require__(27)
+	__webpack_require__(47)
+	// require('moment')
+	__webpack_require__(50)
 
 	var templates = {
-	  'classes-index-template': __webpack_require__(50)
+	  'classes-index': __webpack_require__(53)
 	}
 
 	module.exports = {
 	  index: function() {
 	    qwest.get('/divisions').then(function(xhr, response) {
-	      $('#spa-target').empty().html(templates['classes-index-template'](response))
+	      $('#spa-target').empty().html(templates['classes-index'](response))
 	    })
 	  },
-	  edit: function(request) {
+	  create: function() {
 	    $("#spa-target").empty().alpaca({
 	      "schema": {
-	        "title": "Edit Class",
-	        "description": "What do you think about Alpaca?",
+	        "title": "Create Class",
 	        "type": "object",
 	        "properties": {
 	          "name": {
@@ -112,28 +109,32 @@ webpackJsonp([0],{
 	      "options": {
 	        "form": {
 	          "attributes": {
-	            "action": "/divisions/" + request.namedParams.id,
-	            "method": "put"
+	            "action": "/divisions",
+	            "method": "post"
 	          },
 	          "buttons": {
 	            "submit": {
-	              "title": "Update",
+	              "title": "Create",
 	              "click": function() {
-	                console.log('Submitting Form')
+	                console.log('Submitting Form', this.getValue())
+
+	                Aviator.navigate("/admin/classes/")
+	              }
+	            },
+	            "back": {
+	              "title": "Back",
+	              "click": function() {
+	                Aviator.navigate("/admin/classes/")
 	              }
 	            }
 	          }
 	        },
-	        // "helper": "Tell us what you think about Alpaca!",
 	        "fields": {
 	          "name": {
-	            // "helper": "Please enter your name.",
 	            "placeholder": "Enter a name for the class"
 	          },
 	          "dayOfTheWeek": {
 	            "type": "select"
-	            // "helper": "Select your ranking.",
-	            // "optionLabels": ["Awesome!", "It's Ok", "Hmm..."]
 	          },
 	          "startTime": {
 	            "type": "time"
@@ -142,10 +143,82 @@ webpackJsonp([0],{
 	            "type": "time"
 	          }
 	        }
-	      }
+	      },
+	      "view": "bootstrap-create"
 	    })
+	  },
+	  edit: function(request) {
+	    qwest.get('/divisions/' + request.namedParams.id).then(function(xhr, response) {
+	      $("#spa-target").empty().alpaca({
+	        "data": response,
+	        "schema": {
+	          "title": "Edit Class",
+	          "type": "object",
+	          "properties": {
+	            "name": {
+	              "type": "string",
+	              "title": "Name",
+	              "required": true
+	            },
+	            "dayOfTheWeek": {
+	              "type": "string",
+	              "title": "Day of the Week",
+	              "enum": ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+	              "required": true
+	            },
+	            "startTime": {
+	              "type": "string",
+	              "title": "Starting Time",
+	              "required": true
+	            },
+	            "endTime": {
+	              "type": "string",
+	              "title": "Ending Time",
+	              "required": true
+	            }
+	          }
+	        },
+	        "options": {
+	          "form": {
+	            "attributes": {
+	              "action": "/divisions/" + request.namedParams.id,
+	              "method": "put"
+	            },
+	            "buttons": {
+	              "submit": {
+	                "title": "Update",
+	                "click": function() {
+	                  console.log('Submitting Form', this.getValue())
 
-	    // console.log('edit divisions', request.namedParams)
+	                  Aviator.navigate("/admin/classes/")
+	                }
+	              },
+	              "back": {
+	                "title": "Back",
+	                "click": function() {
+	                  Aviator.navigate("/admin/classes/")
+	                }
+	              }
+	            }
+	          },
+	          "fields": {
+	            "name": {
+	              "placeholder": "Enter a name for the class"
+	            },
+	            "dayOfTheWeek": {
+	              "type": "select"
+	            },
+	            "startTime": {
+	              "type": "time"
+	            },
+	            "endTime": {
+	              "type": "time"
+	            }
+	          }
+	        },
+	        "view": "bootstrap-edit"
+	      })
+	    })
 	  },
 	  delete: function(request) {
 	    console.log('delete divisions', request.namedParams)
@@ -155,7 +228,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 45:
+/***/ 19:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*! qwest 4.4.5 (https://github.com/pyrsmk/qwest) */
@@ -163,8 +236,8 @@ webpackJsonp([0],{
 	module.exports = function() {
 
 		var global = typeof window != 'undefined' ? window : self,
-			pinkyswear = __webpack_require__(46),
-			jparam = __webpack_require__(49),
+			pinkyswear = __webpack_require__(20),
+			jparam = __webpack_require__(23),
 			defaultOptions = {},
 			// Default response type for XDR in auto mode
 			defaultXdrResponseType = 'json',
@@ -663,7 +736,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 46:
+/***/ 20:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module, setImmediate, process) {/*
@@ -784,14 +857,14 @@ webpackJsonp([0],{
 	})( false ? [window, 'pinkySwear'] : [module, 'exports']);
 
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(47)(module), __webpack_require__(48).setImmediate, __webpack_require__(32)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)(module), __webpack_require__(22).setImmediate, __webpack_require__(6)))
 
 /***/ },
 
-/***/ 48:
+/***/ 22:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(setImmediate, clearImmediate) {var nextTick = __webpack_require__(32).nextTick;
+	/* WEBPACK VAR INJECTION */(function(setImmediate, clearImmediate) {var nextTick = __webpack_require__(6).nextTick;
 	var apply = Function.prototype.apply;
 	var slice = Array.prototype.slice;
 	var immediateIds = {};
@@ -867,11 +940,11 @@ webpackJsonp([0],{
 	exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
 	  delete immediateIds[id];
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(48).setImmediate, __webpack_require__(48).clearImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22).setImmediate, __webpack_require__(22).clearImmediate))
 
 /***/ },
 
-/***/ 49:
+/***/ 23:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -929,10 +1002,10 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 50:
+/***/ 53:
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(5);
+	var Handlebars = __webpack_require__(27);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
 	    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
@@ -945,17 +1018,15 @@ webpackJsonp([0],{
 	    + alias4(((helper = (helper = helpers.startTime || (depth0 != null ? depth0.startTime : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"startTime","hash":{},"data":data}) : helper)))
 	    + "</td>\n          <td>"
 	    + alias4(((helper = (helper = helpers.endTime || (depth0 != null ? depth0.endTime : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"endTime","hash":{},"data":data}) : helper)))
-	    + "</td>\n          <td>\n            <a class=\"btn btn-default aviator\" href=\"/admin/classes/"
+	    + "</td>\n          <td>\n            <a class=\"btn btn-default btn-xs aviator\" href=\"/admin/classes/"
 	    + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
-	    + "/edit/\" role=\"button\">Edit</a>\n            <a class=\"btn btn-danger aviator\" href=\"/admin/classes/"
+	    + "/edit/\" role=\"button\">Edit</a>\n            <a class=\"btn btn-danger btn-xs aviator\" href=\"/admin/classes/"
 	    + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
 	    + "/delete/\" role=\"button\">Delete</a>\n          </td>\n        </tr>\n";
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-	    var stack1, helper, options, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", buffer = 
-	  "<div class=\"panel panel-default\">\n  <div class=\"panel-heading\">\n    Classes\n    <a class=\"btn btn-default aviator\" href=\"/admin/classes/"
-	    + container.escapeExpression(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
-	    + "/new/\" role=\"button\">Create</a>\n  </div>\n  <table class=\"table\">\n    <thead>\n      <tr>\n        <th>Class Name</th>\n        <th>Day of the Week</th>\n        <th>Start Time</th>\n        <th>End Time</th>\n        <th></th>\n      </tr>\n    </thead>\n    <tbody class=\"table-hover\">\n";
-	  stack1 = ((helper = (helper = helpers.data || (depth0 != null ? depth0.data : depth0)) != null ? helper : alias2),(options={"name":"data","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data}),(typeof helper === alias3 ? helper.call(alias1,options) : helper));
+	    var stack1, helper, options, buffer = 
+	  "<div class=\"panel panel-default\">\n  <div class=\"panel-heading clearfix\">\n    <div class=\"pull-right\">\n      <a class=\"btn btn-default btn-sm aviator\" href=\"/admin/classes/new/\" role=\"button\">Create</a>\n    </div>\n    Classes\n  </div>\n  <table class=\"table\">\n    <thead>\n      <tr>\n        <th>Class Name</th>\n        <th>Day of the Week</th>\n        <th>Start Time</th>\n        <th>End Time</th>\n        <th></th>\n      </tr>\n    </thead>\n    <tbody class=\"table-hover\">\n";
+	  stack1 = ((helper = (helper = helpers.data || (depth0 != null ? depth0.data : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"data","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},options) : helper));
 	  if (!helpers.data) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
 	  if (stack1 != null) { buffer += stack1; }
 	  return buffer + "    </tbody>\n  </table>\n</div>\n";
@@ -963,7 +1034,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 51:
+/***/ 54:
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -975,7 +1046,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 52:
+/***/ 55:
 /***/ function(module, exports) {
 
 	module.exports = {

@@ -1,7 +1,4 @@
 require('modernizr')
-require('jquery')
-require('handlebars/runtime')
-require('alpaca')
 
 var Aviator = require('aviator')
 
@@ -18,8 +15,8 @@ Aviator.setRoutes({
     '/classes': {
       target: require('./classes'),
       '/': 'index',
+      '/new': 'create',
       '/:id': {
-        '/new': 'new',
         '/edit': 'edit',
         '/delete': 'delete' 
       }
