@@ -1,5 +1,6 @@
 include_recipe 'nodejs::nodejs_from_package'
-include_recipe 'mongodb3::default'
+include_recipe 'postgresql::client'
+include_recipe 'postgresql::server'
 
 package 'build-essential'
 package 'git'
