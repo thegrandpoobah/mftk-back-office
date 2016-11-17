@@ -105,6 +105,10 @@ module.exports = {
                 "items": {
                   "type": "object",
                   "properties": {
+                    "sameAsStudent": {
+                      "type": "boolean",
+                      "default": true
+                    },
                     "firstName": {
                       "type": "string",
                       "title": "First Name",
@@ -165,6 +169,10 @@ module.exports = {
                         }
                       }
                     }
+                  },
+                  "dependencies": {
+                    "firstName": ["sameAsStudent"],
+                    "lastName": ["sameAsStudent"]
                   }
                 }
               }
@@ -243,6 +251,19 @@ module.exports = {
                 "toolbarSticky": true,
                 "items": {
                   "fields": {
+                    "sameAsStudent": {
+                      "rightLabel": "Contact name is same as Student Name"
+                    },
+                    "firstName": {
+                      "dependencies": {
+                        "sameAsStudent": false
+                      }
+                    },
+                    "lastName": {
+                      "dependencies": {
+                        "sameAsStudent": false
+                      }
+                    },
                     "emails": {
                       "actionbar": {
                         "showLabels": true,
@@ -362,7 +383,42 @@ module.exports = {
             "submit": {
               "title": "Create",
               "click": function() {
-                console.log("clicked create", this.getValue())
+                var student = this.getValue()
+
+                if (student.accountType === 'New Account') {
+                  delete student.accountType
+                  
+                  qwest
+                    .post("/accounts", {"active": student.accountObject.active}, {dataType: 'json', responseType: 'json'})
+                    .then(function(xhr, response) {
+                      student.accountId = response.id
+
+                      student.accountObject.contacts.forEach(function(contact) {
+                        contact.accountId = student.accountId
+
+                        if (contact.sameAsStudent) {
+                          contact.firstName = student.firstName
+                          contact.lastName = student.lastName 
+                        }
+
+                        delete contact.sameAsStudent
+
+                        qwest
+                          .post("/contacts", contact, {dataType: 'json', responseType: 'json'})
+                          .then(function(xhr, response) {
+                            contact.id = response.id
+                          })
+                      })
+
+                      delete student.accountObject
+                    }).then(function(xhr, response) {
+                      qwest
+                        .post("/students", student, {dataType: 'json', responseType: 'json'})
+                        .then(function(xhr, response) {
+                          Aviator.navigate("/admin/students/")
+                        })
+                    })
+                }
               }
             },
             "back": {

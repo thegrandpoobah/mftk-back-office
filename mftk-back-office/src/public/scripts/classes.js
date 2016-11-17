@@ -58,7 +58,7 @@ module.exports = {
                 v.endTime = moment(v.endTime, "h:mm:ss a").format()
 
                 qwest
-                  .post("/divisions", v)
+                  .post("/divisions", v, {dataType: 'json', responseType: 'json'})
                   .then(function(xhr, response) {
                     Aviator.navigate("/admin/classes/")
                   })
@@ -135,7 +135,7 @@ module.exports = {
                   v.endTime = moment(v.endTime, "h:mm:ss a").format()
 
                   qwest
-                    .put("/divisions/" + request.namedParams.id, v)
+                    .put("/divisions/" + request.namedParams.id, v, {dataType: 'json', responseType: 'json'})
                     .then(function(xhr, response) {
                       Aviator.navigate("/admin/classes/")
                     })
