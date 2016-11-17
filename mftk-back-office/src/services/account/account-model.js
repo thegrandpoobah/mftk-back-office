@@ -6,8 +6,6 @@
 // for more of what you can do here.
 
 const Sequelize = require('sequelize');
-const contact = require('../contact/contact-model.js');
-const student = require('../student/student-model.js');
 
 module.exports = function(sequelize) {
   const account = sequelize.define('account', {
@@ -21,6 +19,7 @@ module.exports = function(sequelize) {
       associate(models) {
         account.hasMany(models.contact, { as: 'contacts' });
         account.hasMany(models.student, { as: 'students' });
+        account.hasMany(models.note, { as: 'notes' });
       }
     }
   });

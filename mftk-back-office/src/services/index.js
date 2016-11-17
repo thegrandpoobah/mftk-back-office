@@ -1,5 +1,7 @@
 'use strict';
 
+const note = require('./note');
+
 const attendance = require('./attendance');
 
 const division = require('./division');
@@ -32,7 +34,7 @@ module.exports = function() {
   app.configure(contact);
   app.configure(division);
   app.configure(attendance);
-  
+
   // Setup relationships
   const models = sequelize.models;
   Object.keys(models)
@@ -42,4 +44,5 @@ module.exports = function() {
 
   sequelize.sync();
 
+  app.configure(note);
 };

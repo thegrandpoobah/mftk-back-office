@@ -10,7 +10,11 @@ Aviator.setRoutes({
     '/students': {
       target: require('./students'),
       '/': 'index',
-      ':id': 'edit'
+      '/new': 'create',
+      '/:id': {
+        '/edit': 'edit',
+        '/delete': 'delete' 
+      }
     },
     '/classes': {
       target: require('./classes'),

@@ -17,6 +17,10 @@ module.exports = function(sequelize) {
       type: Sequelize.STRING,
       allowNull: false
     },
+    active: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false
+    },
     dateOfBirth: {
       type: Sequelize.DATEONLY,
       allowNull: false,
@@ -56,6 +60,7 @@ module.exports = function(sequelize) {
       associate(models) {
         student.belongsTo(models.account);
         student.hasMany(models.attendance, { as: 'attendance' });
+        student.hasMany(models.note, { as: 'notes' });
       }
     }
   });

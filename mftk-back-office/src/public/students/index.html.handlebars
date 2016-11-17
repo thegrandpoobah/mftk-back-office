@@ -1,0 +1,36 @@
+<div class="panel panel-default">
+  <div class="panel-heading clearfix">
+    <div class="pull-right">
+      <a class="btn btn-default btn-sm aviator" href="/admin/students/new/" role="button">Create</a>
+    </div>
+    Students
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date of Birth</th>
+        <th>Rank</th>
+        <th>Roles</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody class="table-hover">
+      {{#data}}
+        <tr>
+          <td>{{firstName}} {{lastName}}</td>
+          <td>{{dateOfBirth}}</td>
+          <td>{{rank}}</td>
+          <td>{{roles}}</td>
+          <td>
+            <a class="btn btn-default btn-xs aviator" href="/admin/students/{{id}}/edit/" role="button">Edit</a>
+            <a class="btn btn-danger btn-xs aviator" href="/admin/students/{{id}}/delete/" role="button">Delete</a>
+          </td>
+        </tr>
+      {{/data}}
+      {{^data}}
+        <td colspan="5">No students found</td>
+      {{/data}}
+    </tbody>
+  </table>
+</div>

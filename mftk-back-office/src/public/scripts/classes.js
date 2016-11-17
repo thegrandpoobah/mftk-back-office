@@ -7,13 +7,13 @@ var moment = require('moment')
 require('alpaca')
 
 var templates = {
-  'classes-index': require('../classes/index.html.handlebars')
+  'index': require('../classes/index.html.handlebars')
 }
 
 module.exports = {
   index: function() {
     qwest.get('/divisions').then(function(xhr, response) {
-      $('#spa-target').empty().html(templates['classes-index'](response))
+      $('#spa-target').empty().html(templates['index'](response))
     })
   },
   create: function() {
@@ -48,10 +48,6 @@ module.exports = {
       },
       "options": {
         "form": {
-          "attributes": {
-            "action": "/divisions",
-            "method": "post"
-          },
           "buttons": {
             "submit": {
               "title": "Create",
@@ -129,10 +125,6 @@ module.exports = {
         },
         "options": {
           "form": {
-            "attributes": {
-              "action": "/divisions/" + request.namedParams.id,
-              "method": "put"
-            },
             "buttons": {
               "submit": {
                 "title": "Update",
