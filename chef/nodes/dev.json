@@ -9,6 +9,11 @@
       "default_monitrc_configs": [
 
       ]
+    },
+    "postgresql": {
+      "password": {
+        "postgres": "iloverandompasswordsbutthiswilldo"
+      }
     }
   },
   "normal": {
@@ -30,6 +35,17 @@
           }
         }
       }
+    },
+    "postgresql": {
+      "config": {
+        "data_directory": "/var/lib/postgresql/9.3/main",
+        "hba_file": "/etc/postgresql/9.3/main/pg_hba.conf",
+        "ident_file": "/etc/postgresql/9.3/main/pg_ident.conf",
+        "external_pid_file": "/var/run/postgresql/9.3-main.pid",
+        "unix_socket_directories": "/var/run/postgresql",
+        "ssl_cert_file": "/etc/ssl/certs/ssl-cert-snakeoil.pem",
+        "ssl_key_file": "/etc/ssl/private/ssl-cert-snakeoil.key"
+      }
     }
   },
   "default": {
@@ -38,6 +54,96 @@
       "databag_name": null,
       "databag_entry": null,
       "mfa_code": null
+    },
+    "chef_handler": {
+      "handler_path": "/var/chef/handlers"
+    },
+    "windows": {
+      "allow_pending_reboots": true,
+      "allow_reboot_on_failure": false,
+      "rubyzipversion": null,
+      "reboot_timeout": 60
+    },
+    "seven_zip": {
+      "url": "http://www.7-zip.org/a/7z1514-x64.msi",
+      "checksum": "cefe1a9092d8a6be68468c33910d6206b40e934fb63cab686c5cccf369fbf712",
+      "package_name": "7-Zip 15.14 (x64 edition)",
+      "default_extract_timeout": 600
+    },
+    "build-essential": {
+      "compile_time": false,
+      "msys2": {
+        "path": "\\msys2"
+      }
+    },
+    "monit": {
+      "start_delay": 0,
+      "polling_frequency": 20,
+      "pidfile": "/var/run/monit.pid",
+      "use_syslog": true,
+      "logfile": "/var/log/monit.log",
+      "idfile": "/var/.monit.id",
+      "statefile": "/var/lib/monit/state",
+      "mail_alerts": true,
+      "alert_onlyif_events": [
+
+      ],
+      "alert_ignore_events": [
+
+      ],
+      "alert_email": "root@localhost",
+      "web_interface": {
+        "enable": true,
+        "port": 2812,
+        "address": "localhost",
+        "allow": [
+          "localhost",
+          "admin:b1gbr0th3r"
+        ]
+      },
+      "mail": {
+        "hostname": "localhost",
+        "port": 25,
+        "username": null,
+        "password": null,
+        "encrypted_credentials": null,
+        "encrypted_credentials_data_bag": "credentials",
+        "from": "monit@$HOST",
+        "subject": "$SERVICE $EVENT at $DATE",
+        "message": "Monit $ACTION $SERVICE at $DATE on $HOST,\n\n$DESCRIPTION\n\nDutifully,\nMonit",
+        "security": null,
+        "timeout": 30,
+        "using_hostname": null
+      },
+      "main_config_path": "/etc/monit/monitrc",
+      "includes_dir": "/etc/monit/conf.d",
+      "default_monitrc_configs": [
+        "load",
+        "ssh"
+      ],
+      "reload_on_change": true,
+      "init_opts": "",
+      "version": null,
+      "source_install": false,
+      "source_uninstall": false,
+      "source": {
+        "version": "5.12.2",
+        "prefix": "/usr/local",
+        "url": "https://mmonit.com/monit/dist/monit-5.12.2.tar.gz",
+        "checksum": "8ab0296d1aa2351b1573481592d7b5e06de1edd49dff1b5552839605a450914c",
+        "pam_support": true,
+        "ssl_support": true,
+        "large_file_support": true,
+        "compiler_optimized": true
+      },
+      "binary_install": false,
+      "binary_uninstall": false,
+      "binary": {
+        "version": "5.12.2",
+        "prefix": "/usr",
+        "url": "http://mmonit.com/monit/dist/binary/5.12.2/monit-5.12.2-linux-x64.tar.gz",
+        "checksum": "4908143752d0ee5081a50389a9206b7c905f9f8922a062a208fecf6e729a3c77"
+      }
     },
     "apt": {
       "cacher-client": {
@@ -84,39 +190,41 @@
         "install_suggests": false
       }
     },
-    "packagecloud": {
-      "base_repo_path": "/install/repositories/",
-      "gpg_key_path": "/gpgkey",
-      "hostname_override": null,
-      "proxy_host": null,
-      "proxy_port": null,
-      "default_type": "deb"
+    "ark": {
+      "apache_mirror": "http://apache.mirrors.tds.net",
+      "prefix_root": "/usr/local",
+      "prefix_bin": "/usr/local/bin",
+      "prefix_home": "/usr/local",
+      "tar": "/bin/tar",
+      "package_dependencies": [
+        "libtool",
+        "autoconf",
+        "make",
+        "unzip",
+        "rsync",
+        "gcc",
+        "autogen",
+        "shtool",
+        "pkg-config"
+      ]
     },
-    "runit": {
-      "sv_bin": "/usr/bin/sv",
-      "chpst_bin": "/usr/bin/chpst",
-      "service_dir": "/etc/service",
-      "sv_dir": "/etc/sv",
-      "lsb_init_dir": "/etc/init.d",
-      "executable": "/sbin/runit",
-      "start": "start runsvdir",
-      "stop": "stop runsvdir",
-      "reload": "reload runsvdir"
-    },
-    "user": {
-      "home_root": "/home",
-      "default_shell": "/bin/bash",
-      "home_dir_mode": "2755",
-      "manage_home": "true",
-      "create_user_group": "true",
-      "ssh_keygen": "true",
-      "non_unique": "false",
-      "data_bag_name": "users",
-      "user_array_node_attr": "users"
-    },
-    "users": [
+    "homebrew": {
+      "owner": null,
+      "auto-update": true,
+      "casks": [
 
-    ],
+      ],
+      "formulas": [
+
+      ],
+      "taps": [
+
+      ],
+      "installer": {
+        "url": "https://raw.githubusercontent.com/Homebrew/install/master/install",
+        "checksum": null
+      }
+    },
     "yum": {
       "main": {
         "cachedir": "/var/cache/yum/$basearch/$releasever",
@@ -267,359 +375,6 @@
         "make_cache": true
       }
     },
-    "mongodb3": {
-      "version": "3.2.8",
-      "package": {
-        "version": null,
-        "repo": {
-          "url": null,
-          "apt": {
-            "name": null,
-            "keyserver": null,
-            "key": null,
-            "components": null
-          }
-        }
-      },
-      "user": "mongodb",
-      "group": "mongodb",
-      "mongod": {
-        "config_file": "/etc/mongod.conf",
-        "disable-transparent-hugepages": false
-      },
-      "mongos": {
-        "config_file": "/etc/mongos.conf",
-        "runit_template_cookbook": "mongodb3"
-      },
-      "config": {
-        "key_file_content": null,
-        "mongod": {
-          "systemLog": {
-            "verbosity": null,
-            "quiet": null,
-            "traceAllException": null,
-            "syslogFacility": null,
-            "path": "/var/log/mongodb/mongod.log",
-            "logAppend": true,
-            "logRotate": null,
-            "destination": "file",
-            "timeStampFormat": null,
-            "component": {
-              "accessControl": {
-                "verbosity": null
-              },
-              "command": {
-                "verbosity": null
-              },
-              "control": {
-                "verbosity": null
-              },
-              "geo": {
-                "verbosity": null
-              },
-              "index": {
-                "verbosity": null
-              },
-              "network": {
-                "verbosity": null
-              },
-              "query": {
-                "verbosity": null
-              },
-              "replication": {
-                "verbosity": null
-              },
-              "sharding": {
-                "verbosity": null
-              },
-              "storage": {
-                "verbosity": null,
-                "journal": {
-                  "verbosity": null
-                }
-              },
-              "write": {
-                "verbosity": null
-              }
-            }
-          },
-          "processManagement": {
-            "fork": null,
-            "pidFilePath": null
-          },
-          "net": {
-            "port": 27017,
-            "bindIp": null,
-            "maxIncomingConnections": null,
-            "wireObjectCheck": null,
-            "ipv6": null,
-            "unixDomainSocket": {
-              "enabled": null,
-              "pathPrefix": null,
-              "filePermissions": null
-            },
-            "http": {
-              "enabled": null,
-              "JSONPEnabled": null,
-              "RESTInterfaceEnabled": null
-            },
-            "ssl": {
-              "mode": null,
-              "PEMKeyFile": null,
-              "PEMKeyPassword": null,
-              "clusterFile": null,
-              "clusterPassword": null,
-              "CAFile": null,
-              "CRLFile": null,
-              "allowConnectionsWithoutCertificates": null,
-              "allowInvalidCertificates": null,
-              "allowInvalidHostnames": null,
-              "FIPSMode": null
-            }
-          },
-          "security": {
-            "keyFile": null,
-            "clusterAuthMode": null,
-            "authorization": "disabled",
-            "javascriptEnabled": null,
-            "sasl": {
-              "hostName": null,
-              "serviceName": null,
-              "saslauthdSocketPath": null
-            }
-          },
-          "storage": {
-            "dbPath": "/var/lib/mongodb",
-            "indexBuildRetry": null,
-            "repairPath": null,
-            "journal": {
-              "enabled": true
-            },
-            "directoryPerDB": null,
-            "syncPeriodSecs": null,
-            "engine": null,
-            "mmapv1": {
-              "preallocDataFiles": null,
-              "nsSize": null,
-              "quota": {
-                "enforced": null,
-                "maxFilesPerDB": null
-              },
-              "smallFiles": null,
-              "journal": {
-                "debugFlags": null,
-                "commitIntervalMs": null
-              }
-            },
-            "wiredTiger": {
-              "engineConfig": {
-                "cacheSizeGB": null,
-                "statisticsLogDelaySecs": null,
-                "journalCompressor": null,
-                "directoryForIndexes": null
-              },
-              "collectionConfig": {
-                "blockCompressor": null
-              },
-              "indexConfig": {
-                "prefixCompression": null
-              }
-            }
-          },
-          "operationProfiling": {
-            "slowOpThresholdMs": null,
-            "mode": null
-          },
-          "replication": {
-            "oplogSizeMB": null,
-            "replSetName": null,
-            "secondaryIndexPrefetch": null
-          },
-          "sharding": {
-            "clusterRole": null,
-            "archiveMovedChunks": null
-          },
-          "auditLog": {
-            "destination": null,
-            "format": null,
-            "path": null,
-            "filter": null
-          },
-          "snmp": {
-            "subagent": null,
-            "master": null
-          }
-        },
-        "mongos": {
-          "net": {
-            "port": 27018,
-            "bindIp": "127.0.0.1"
-          },
-          "systemLog": {
-            "path": "/var/log/mongodb/mongos.log",
-            "logAppend": true,
-            "destination": "file"
-          },
-          "replication": {
-            "localPingThresholdMs": null
-          },
-          "sharding": {
-            "autoSplit": true,
-            "configDB": null,
-            "chunkSize": 64
-          }
-        },
-        "mms": {
-          "mmsApiKey": null,
-          "mmsBaseUrl": "https://api-agents.mongodb.com",
-          "httpProxy": null,
-          "krb5ConfigLocation": null,
-          "sslTrustedMMSServerCertificate": null,
-          "sslRequireValidMMSServerCertificates": null,
-          "mmsGroupId": null,
-          "logFile": "/var/log/mongodb-mms-automation/automation-agent.log",
-          "mmsConfigBackup": "/var/lib/mongodb-mms-automation/mms-cluster-config-backup.json",
-          "logLevel": "INFO",
-          "maxLogFiles": 10,
-          "maxLogFileSize": 268435456,
-          "useSslForAllConnections": null,
-          "sslClientCertificate": null,
-          "sslClientCertificatePassword": null,
-          "sslTrustedServerCertificates": null,
-          "sslRequireValidServerCertificates": null,
-          "krb5Principal": null,
-          "krb5Keytab": null,
-          "gsappiServiceName": null,
-          "enableMunin": null
-        }
-      },
-      "keyserver": "hkp://keyserver.ubuntu.com:80"
-    },
-    "chef_handler": {
-      "handler_path": "/var/chef/handlers"
-    },
-    "windows": {
-      "allow_pending_reboots": true,
-      "allow_reboot_on_failure": false,
-      "rubyzipversion": null,
-      "reboot_timeout": 60
-    },
-    "seven_zip": {
-      "url": "http://www.7-zip.org/a/7z1514-x64.msi",
-      "checksum": "cefe1a9092d8a6be68468c33910d6206b40e934fb63cab686c5cccf369fbf712",
-      "package_name": "7-Zip 15.14 (x64 edition)",
-      "default_extract_timeout": 600
-    },
-    "build-essential": {
-      "compile_time": false,
-      "msys2": {
-        "path": "\\msys2"
-      }
-    },
-    "monit": {
-      "start_delay": 0,
-      "polling_frequency": 20,
-      "pidfile": "/var/run/monit.pid",
-      "use_syslog": true,
-      "logfile": "/var/log/monit.log",
-      "idfile": "/var/.monit.id",
-      "statefile": "/var/lib/monit/state",
-      "mail_alerts": true,
-      "alert_onlyif_events": [
-
-      ],
-      "alert_ignore_events": [
-
-      ],
-      "alert_email": "root@localhost",
-      "web_interface": {
-        "enable": true,
-        "port": 2812,
-        "address": "localhost",
-        "allow": [
-          "localhost",
-          "admin:b1gbr0th3r"
-        ]
-      },
-      "mail": {
-        "hostname": "localhost",
-        "port": 25,
-        "username": null,
-        "password": null,
-        "encrypted_credentials": null,
-        "encrypted_credentials_data_bag": "credentials",
-        "from": "monit@$HOST",
-        "subject": "$SERVICE $EVENT at $DATE",
-        "message": "Monit $ACTION $SERVICE at $DATE on $HOST,\n\n$DESCRIPTION\n\nDutifully,\nMonit",
-        "security": null,
-        "timeout": 30,
-        "using_hostname": null
-      },
-      "main_config_path": "/etc/monit/monitrc",
-      "includes_dir": "/etc/monit/conf.d",
-      "default_monitrc_configs": [
-        "load",
-        "ssh"
-      ],
-      "reload_on_change": true,
-      "init_opts": "",
-      "version": null,
-      "source_install": false,
-      "source_uninstall": false,
-      "source": {
-        "version": "5.12.2",
-        "prefix": "/usr/local",
-        "url": "https://mmonit.com/monit/dist/monit-5.12.2.tar.gz",
-        "checksum": "8ab0296d1aa2351b1573481592d7b5e06de1edd49dff1b5552839605a450914c",
-        "pam_support": true,
-        "ssl_support": true,
-        "large_file_support": true,
-        "compiler_optimized": true
-      },
-      "binary_install": false,
-      "binary_uninstall": false,
-      "binary": {
-        "version": "5.12.2",
-        "prefix": "/usr",
-        "url": "http://mmonit.com/monit/dist/binary/5.12.2/monit-5.12.2-linux-x64.tar.gz",
-        "checksum": "4908143752d0ee5081a50389a9206b7c905f9f8922a062a208fecf6e729a3c77"
-      }
-    },
-    "ark": {
-      "apache_mirror": "http://apache.mirrors.tds.net",
-      "prefix_root": "/usr/local",
-      "prefix_bin": "/usr/local/bin",
-      "prefix_home": "/usr/local",
-      "tar": "/bin/tar",
-      "package_dependencies": [
-        "libtool",
-        "autoconf",
-        "make",
-        "unzip",
-        "rsync",
-        "gcc",
-        "autogen",
-        "shtool",
-        "pkg-config"
-      ]
-    },
-    "homebrew": {
-      "owner": null,
-      "auto-update": true,
-      "casks": [
-
-      ],
-      "formulas": [
-
-      ],
-      "taps": [
-
-      ],
-      "installer": {
-        "url": "https://raw.githubusercontent.com/Homebrew/install/master/install",
-        "checksum": null
-      }
-    },
     "yum-epel": {
       "repositories": [
         "epel",
@@ -662,6 +417,558 @@
       "packages": [
         "nodejs"
       ]
+    },
+    "openssl": {
+      "restart_services": [
+
+      ]
+    },
+    "postgresql": {
+      "enable_pgdg_apt": false,
+      "enable_pgdg_yum": false,
+      "use_pgdg_packages": false,
+      "server": {
+        "config_change_notify": "restart",
+        "init_package": "upstart",
+        "service_name": "postgresql",
+        "packages": [
+          "postgresql-9.3"
+        ]
+      },
+      "assign_postgres_password": true,
+      "database_name": "template1",
+      "version": "9.3",
+      "dir": "/etc/postgresql/9.3/main",
+      "client": {
+        "packages": [
+          "postgresql-client-9.3",
+          "libpq-dev"
+        ]
+      },
+      "contrib": {
+        "packages": [
+          "postgresql-contrib-9.3"
+        ]
+      },
+      "config": {
+        "listen_addresses": "localhost",
+        "port": 5432,
+        "max_connections": 100,
+        "shared_buffers": "24MB",
+        "log_line_prefix": "%t ",
+        "datestyle": "iso, mdy",
+        "default_text_search_config": "pg_catalog.english",
+        "ssl": true
+      },
+      "pg_hba": [
+        {
+          "type": "local",
+          "db": "all",
+          "user": "postgres",
+          "addr": null,
+          "method": "ident"
+        },
+        {
+          "type": "local",
+          "db": "all",
+          "user": "all",
+          "addr": null,
+          "method": "ident"
+        },
+        {
+          "type": "host",
+          "db": "all",
+          "user": "all",
+          "addr": "127.0.0.1/32",
+          "method": "md5"
+        },
+        {
+          "type": "host",
+          "db": "all",
+          "user": "all",
+          "addr": "::1/128",
+          "method": "md5"
+        }
+      ],
+      "password": {
+
+      },
+      "pgdg": {
+        "release_apt_codename": "trusty",
+        "repo_rpm_url": {
+          "9.6": {
+            "amazon": {
+              "2015": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.6/redhat/rhel-6-i386/",
+                  "package": "pgdg-ami201503-96-9.6-3.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.6/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-ami201503-96-9.6-3.noarch.rpm"
+                }
+              }
+            },
+            "centos": {
+              "7": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.6/redhat/rhel-7-x86_64/",
+                  "package": "pgdg-centos96-9.6-3.noarch.rpm"
+                }
+              },
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.6/redhat/rhel-6-i386/",
+                  "package": "pgdg-centos96-9.6-3.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.6/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-centos96-9.6-3.noarch.rpm"
+                }
+              }
+            },
+            "redhat": {
+              "7": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.6/redhat/rhel-7-x86_64/",
+                  "package": "pgdg-redhat96-9.6-3.noarch.rpm"
+                }
+              },
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.6/redhat/rhel-6-i386/",
+                  "package": "pgdg-redhat96-9.6-3.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.6/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-redhat96-9.6-3.noarch.rpm"
+                }
+              }
+            },
+            "oracle": {
+              "7": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.6/redhat/rhel-7-x86_64/",
+                  "package": "pgdg-oraclelinux96-9.6-3.noarch.rpm"
+                }
+              },
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.6/redhat/rhel-6-i386/",
+                  "package": "pgdg-oraclelinux96-9.6-3.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.6/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-oraclelinux96-9.6-3.noarch.rpm"
+                }
+              }
+            },
+            "scientific": {
+              "7": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.6/redhat/rhel-7-x86_64/",
+                  "package": "pgdg-sl96-9.6-3.noarch.rpm"
+                }
+              },
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.6/redhat/rhel-6-i386/",
+                  "package": "pgdg-sl96-9.6-3.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.6/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-sl96-9.6-3.noarch.rpm"
+                }
+              }
+            },
+            "fedora": {
+              "22": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.6/fedora/fedora-22-x86_64/",
+                  "package": "pgdg-fedora96-9.6-3.noarch.rpm"
+                }
+              },
+              "23": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.6/fedora/fedora-23-x86_64/",
+                  "package": "pgdg-fedora96-9.6-3.noarch.rpm"
+                }
+              },
+              "24": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.6/fedora/fedora-24-x86_64/",
+                  "package": "pgdg-fedora96-9.6-3.noarch.rpm"
+                }
+              }
+            }
+          },
+          "9.5": {
+            "amazon": {
+              "2015": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.5/redhat/rhel-6-i386/",
+                  "package": "pgdg-ami201503-95-9.5-3.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.5/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-ami201503-95-9.5-3.noarch.rpm"
+                }
+              }
+            },
+            "centos": {
+              "7": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/",
+                  "package": "pgdg-centos95-9.5-3.noarch.rpm"
+                }
+              },
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.5/redhat/rhel-6-i386/",
+                  "package": "pgdg-centos95-9.5-3.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.5/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-centos95-9.5-3.noarch.rpm"
+                }
+              }
+            },
+            "redhat": {
+              "7": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/",
+                  "package": "pgdg-redhat95-9.5-3.noarch.rpm"
+                }
+              },
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.5/redhat/rhel-6-i386/",
+                  "package": "pgdg-redhat95-9.5-3.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.5/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-redhat95-9.5-3.noarch.rpm"
+                }
+              }
+            },
+            "oracle": {
+              "7": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/",
+                  "package": "pgdg-oraclelinux95-9.5-3.noarch.rpm"
+                }
+              },
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.5/redhat/rhel-6-i386/",
+                  "package": "pgdg-oraclelinux95-9.5-3.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.5/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-oraclelinux95-9.5-3.noarch.rpm"
+                }
+              }
+            },
+            "scientific": {
+              "7": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.5/redhat/rhel-7-x86_64/",
+                  "package": "pgdg-sl95-9.5-3.noarch.rpm"
+                }
+              },
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.5/redhat/rhel-6-i386/",
+                  "package": "pgdg-sl95-9.5-3.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.5/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-sl95-9.5-3.noarch.rpm"
+                }
+              }
+            },
+            "fedora": {
+              "22": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.5/fedora/fedora-22-x86_64/",
+                  "package": "pgdg-fedora95-9.5-3.noarch.rpm"
+                }
+              },
+              "23": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.5/fedora/fedora-23-x86_64/",
+                  "package": "pgdg-fedora95-9.5-4.noarch.rpm"
+                }
+              },
+              "24": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.5/fedora/fedora-24-x86_64/",
+                  "package": "pgdg-fedora95-9.5-4.noarch.rpm"
+                }
+              }
+            }
+          },
+          "9.4": {
+            "redhat": {
+              "7": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/",
+                  "package": "pgdg-redhat94-9.4-2.noarch.rpm"
+                }
+              },
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.4/redhat/rhel-6-i386/",
+                  "package": "pgdg-redhat94-9.4-2.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-redhat94-9.4-2.noarch.rpm"
+                }
+              }
+            },
+            "centos": {
+              "7": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/",
+                  "package": "pgdg-centos94-9.4-2.noarch.rpm"
+                }
+              },
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.4/redhat/rhel-6-i386/",
+                  "package": "pgdg-centos94-9.4-2.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-centos94-9.4-2.noarch.rpm"
+                }
+              }
+            },
+            "fedora": {
+              "22": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.4/fedora/fedora-22-x86_64/",
+                  "package": "pgdg-fedora94-9.4-4.noarch.rpm"
+                }
+              },
+              "23": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.4/fedora/fedora-23-x86_64/",
+                  "package": "pgdg-fedora94-9.4-5.noarch.rpm"
+                }
+              },
+              "24": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.4/fedora/fedora-24-x86_64/",
+                  "package": "pgdg-fedora94-9.4-5.noarch.rpm"
+                }
+              }
+            },
+            "amazon": {
+              "2015": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.4/redhat/rhel-6-i386/",
+                  "package": "pgdg-ami201503-94-9.4-2.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-ami201503-94-9.4-2.noarch.rpm"
+                }
+              }
+            },
+            "scientific": {
+              "7": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/",
+                  "package": "pgdg-sl94-9.4-2.noarch.rpm"
+                }
+              },
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.4/redhat/rhel-6-i386/",
+                  "package": "pgdg-sl94-9.4-2.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-sl94-9.4-2.noarch.rpm"
+                }
+              }
+            },
+            "oracle": {
+              "7": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/",
+                  "package": "pgdg-oraclelinux94-9.4-2.noarch.rpm"
+                }
+              },
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.4/redhat/rhel-6-i386/",
+                  "package": "pgdg-oraclelinux94-9.4-2.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-oraclelinux94-9.4-2.noarch.rpm"
+                }
+              }
+            }
+          },
+          "9.3": {
+            "amazon": {
+              "2015": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.3/redhat/rhel-6-i386/",
+                  "package": "pgdg-redhat93-9.3-2.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.3/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-redhat93-9.3-2.noarch.rpm"
+                }
+              },
+              "2014": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.3/redhat/rhel-6-i386/",
+                  "package": "pgdg-redhat93-9.3-2.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.3/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-redhat93-9.3-2.noarch.rpm"
+                }
+              }
+            },
+            "centos": {
+              "7": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.3/redhat/rhel-7-x86_64/",
+                  "package": "pgdg-centos93-9.3-2.noarch.rpm"
+                }
+              },
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.3/redhat/rhel-6-i386/",
+                  "package": "pgdg-centos93-9.3-2.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.3/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-centos93-9.3-2.noarch.rpm"
+                }
+              }
+            },
+            "fedora": {
+              "23": {
+                "x86_64": {
+                  "url": "https://yum.postgresql.org/9.3/fedora/fedora-23-x86_64/",
+                  "package": "pgdg-fedora93-9.3-4.noarch.rpm"
+                }
+              }
+            },
+            "redhat": {
+              "7": {
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.3/redhat/rhel-7-x86_64/",
+                  "package": "pgdg-redhat93-9.3-2.noarch.rpm"
+                }
+              },
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.3/redhat/rhel-6-i386/",
+                  "package": "pgdg-redhat93-9.3-2.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.3/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-redhat93-9.3-2.noarch.rpm"
+                }
+              }
+            },
+            "oracle": {
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.3/redhat/rhel-6-i386/",
+                  "package": "pgdg-redhat93-9.3-2.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.3/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-redhat93-9.3-2.noarch.rpm"
+                }
+              }
+            },
+            "scientific": {
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.3/redhat/rhel-6-i386/",
+                  "package": "pgdg-sl93-9.3-2.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.3/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-sl93-9.3-2.noarch.rpm"
+                }
+              },
+              "5": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.3/redhat/rhel-5-i386/",
+                  "package": "pgdg-sl93-9.3-2.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.3/redhat/rhel-5-x86_64/",
+                  "package": "pgdg-sl93-9.3-2.noarch.rpm"
+                }
+              }
+            }
+          },
+          "9.2": {
+            "centos": {
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.2/redhat/rhel-6-i386/",
+                  "package": "pgdg-centos92-9.2-7.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.2/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-centos92-9.2-7.noarch.rpm"
+                }
+              }
+            },
+            "redhat": {
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.2/redhat/rhel-6-i386/",
+                  "package": "pgdg-redhat92-9.2-7.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.2/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-redhat92-9.2-7.noarch.rpm"
+                }
+              }
+            },
+            "oracle": {
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.2/redhat/rhel-6-i386/",
+                  "package": "pgdg-redhat92-9.2-7.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.2/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-redhat92-9.2-7.noarch.rpm"
+                }
+              }
+            },
+            "scientific": {
+              "6": {
+                "i386": {
+                  "url": "http://yum.postgresql.org/9.2/redhat/rhel-6-i386/",
+                  "package": "pgdg-sl92-9.2-8.noarch.rpm"
+                },
+                "x86_64": {
+                  "url": "http://yum.postgresql.org/9.2/redhat/rhel-6-x86_64/",
+                  "package": "pgdg-sl92-9.2-8.noarch.rpm"
+                }
+              }
+            }
+          }
+        }
+      },
+      "initdb_locale": "UTF-8"
     }
   },
   "automatic": {
@@ -793,12 +1100,12 @@
             "record_id": "0x0002",
             "size": "11",
             "application_identifier": "OEM Strings",
-            "String 1": "vboxVer_5.1.6",
-            "String 2": "vboxRev_110634"
+            "String 1": "vboxVer_5.1.8",
+            "String 2": "vboxRev_111374"
           }
         ],
-        "string_1": "vboxVer_5.1.6",
-        "string_2": "vboxRev_110634"
+        "string_1": "vboxVer_5.1.8",
+        "string_2": "vboxRev_111374"
       }
     },
     "etc": {
@@ -1393,8 +1700,9 @@
     },
     "virtualbox": {
       "host": {
-        "revision": "110634",
-        "version": "5.1.6"
+        "language": "en_US",
+        "revision": "111374",
+        "version": "5.1.8"
       },
       "guest": {
         "guest_additions_version": "4.3.36_Ubuntu",
@@ -1475,6 +1783,11 @@
           "size": "55624",
           "refcount": "0"
         },
+        "e1000": {
+          "size": "145227",
+          "refcount": "0",
+          "version": "7.3.21-k8-NAPI"
+        },
         "aes_x86_64": {
           "size": "17131",
           "refcount": "1"
@@ -1511,11 +1824,6 @@
         "libahci": {
           "size": "32716",
           "refcount": "1"
-        },
-        "e1000": {
-          "size": "145227",
-          "refcount": "0",
-          "version": "7.3.21-k8-NAPI"
         }
       }
     },
@@ -1592,8 +1900,8 @@
           },
           "state": "up",
           "arp": {
-            "10.0.2.2": "52:54:00:12:35:02",
-            "10.0.2.3": "52:54:00:12:35:03"
+            "10.0.2.3": "52:54:00:12:35:03",
+            "10.0.2.2": "52:54:00:12:35:02"
           },
           "routes": [
             {
@@ -1659,16 +1967,16 @@
           "eth0": {
             "tx": {
               "queuelen": "1000",
-              "bytes": "1599836",
-              "packets": "14512",
+              "bytes": "223373241",
+              "packets": "184672",
               "errors": "0",
               "drop": "0",
               "carrier": "0",
               "collisions": "0"
             },
             "rx": {
-              "bytes": "12833463",
-              "packets": "22358",
+              "bytes": "100479547",
+              "packets": "251939",
               "errors": "0",
               "drop": "0",
               "overrun": "0"
@@ -1866,7 +2174,7 @@
       "static_hostname": "dev",
       "icon_name": "computer-vm",
       "chassis": "vm",
-      "boot_id": "d2600492eab942578790c524876e3dac",
+      "boot_id": "c2faf23cb70a45d5aa155d76806168be",
       "virtualization": "oracle",
       "operating_system": "Ubuntu 14.04.5 LTS",
       "kernel": "Linux 3.13.0-100-generic",
@@ -1885,26 +2193,26 @@
         "surplus": "0"
       },
       "total": "1017788kB",
-      "free": "407660kB",
-      "buffers": "39244kB",
-      "cached": "226496kB",
-      "active": "391888kB",
-      "inactive": "123608kB",
-      "dirty": "156kB",
+      "free": "453520kB",
+      "buffers": "19764kB",
+      "cached": "113432kB",
+      "active": "425088kB",
+      "inactive": "80396kB",
+      "dirty": "116kB",
       "writeback": "0kB",
-      "anon_pages": "249820kB",
-      "mapped": "19380kB",
-      "slab": "76924kB",
-      "slab_reclaimable": "65360kB",
-      "slab_unreclaim": "11564kB",
-      "page_tables": "3708kB",
+      "anon_pages": "372320kB",
+      "mapped": "18684kB",
+      "slab": "35688kB",
+      "slab_reclaimable": "22784kB",
+      "slab_unreclaim": "12904kB",
+      "page_tables": "6032kB",
       "nfs_unstable": "0kB",
       "bounce": "0kB",
       "commit_limit": "508892kB",
-      "committed_as": "491716kB",
+      "committed_as": "767808kB",
       "vmalloc_total": "34359738367kB",
-      "vmalloc_used": "8340kB",
-      "vmalloc_chunk": "34359724028kB",
+      "vmalloc_used": "8436kB",
+      "vmalloc_chunk": "34359724540kB",
       "hugepage_size": "2048kB"
     },
     "filesystem": {
@@ -1926,13 +2234,13 @@
       },
       "tmpfs": {
         "kb_size": "101780",
-        "kb_used": "356",
-        "kb_available": "101424",
+        "kb_used": "372",
+        "kb_available": "101408",
         "percent_used": "1%",
         "mount": "/run",
         "total_inodes": "127223",
-        "inodes_used": "328",
-        "inodes_available": "126895",
+        "inodes_used": "332",
+        "inodes_available": "126891",
         "inodes_percent_used": "1%",
         "fs_type": "tmpfs",
         "mount_options": [
@@ -1945,14 +2253,14 @@
       },
       "/dev/sda1": {
         "kb_size": "41251136",
-        "kb_used": "2671276",
-        "kb_available": "36843948",
-        "percent_used": "7%",
+        "kb_used": "2885744",
+        "kb_available": "36629480",
+        "percent_used": "8%",
         "mount": "/",
         "total_inodes": "2621440",
-        "inodes_used": "138119",
-        "inodes_available": "2483321",
-        "inodes_percent_used": "6%",
+        "inodes_used": "158645",
+        "inodes_available": "2462795",
+        "inodes_percent_used": "7%",
         "fs_type": "ext4",
         "mount_options": [
           "rw"
@@ -1962,9 +2270,9 @@
       },
       "none": {
         "kb_size": "487368860",
-        "kb_used": "320053752",
-        "kb_available": "167315108",
-        "percent_used": "66%",
+        "kb_used": "328572708",
+        "kb_available": "158796152",
+        "percent_used": "68%",
         "mount": "/sys/fs/pstore",
         "total_inodes": "1000",
         "inodes_used": "0",
@@ -2129,12 +2437,12 @@
         },
         "tmpfs": {
           "kb_size": "101780",
-          "kb_used": "356",
-          "kb_available": "101424",
+          "kb_used": "372",
+          "kb_available": "101408",
           "percent_used": "1%",
           "total_inodes": "127223",
-          "inodes_used": "328",
-          "inodes_available": "126895",
+          "inodes_used": "332",
+          "inodes_available": "126891",
           "inodes_percent_used": "1%",
           "fs_type": "tmpfs",
           "mount_options": [
@@ -2150,13 +2458,13 @@
         },
         "/dev/sda1": {
           "kb_size": "41251136",
-          "kb_used": "2671276",
-          "kb_available": "36843948",
-          "percent_used": "7%",
+          "kb_used": "2885744",
+          "kb_available": "36629480",
+          "percent_used": "8%",
           "total_inodes": "2621440",
-          "inodes_used": "138119",
-          "inodes_available": "2483321",
-          "inodes_percent_used": "6%",
+          "inodes_used": "158645",
+          "inodes_available": "2462795",
+          "inodes_percent_used": "7%",
           "fs_type": "ext4",
           "mount_options": [
             "rw"
@@ -2169,9 +2477,9 @@
         },
         "none": {
           "kb_size": "487368860",
-          "kb_used": "320053752",
-          "kb_available": "167315108",
-          "percent_used": "66%",
+          "kb_used": "328572708",
+          "kb_available": "158796152",
+          "percent_used": "68%",
           "total_inodes": "1000",
           "inodes_used": "0",
           "inodes_available": "1000",
@@ -2381,12 +2689,12 @@
         },
         "/run": {
           "kb_size": "101780",
-          "kb_used": "356",
-          "kb_available": "101424",
+          "kb_used": "372",
+          "kb_available": "101408",
           "percent_used": "1%",
           "total_inodes": "127223",
-          "inodes_used": "328",
-          "inodes_available": "126895",
+          "inodes_used": "332",
+          "inodes_available": "126891",
           "inodes_percent_used": "1%",
           "fs_type": "tmpfs",
           "mount_options": [
@@ -2402,13 +2710,13 @@
         },
         "/": {
           "kb_size": "41251136",
-          "kb_used": "2671276",
-          "kb_available": "36843948",
-          "percent_used": "7%",
+          "kb_used": "2885744",
+          "kb_available": "36629480",
+          "percent_used": "8%",
           "total_inodes": "2621440",
-          "inodes_used": "138119",
-          "inodes_available": "2483321",
-          "inodes_percent_used": "6%",
+          "inodes_used": "158645",
+          "inodes_available": "2462795",
+          "inodes_percent_used": "7%",
           "fs_type": "rootfs",
           "mount_options": [
             "rw"
@@ -2501,9 +2809,9 @@
         },
         "/vagrant": {
           "kb_size": "487368860",
-          "kb_used": "320053752",
-          "kb_available": "167315108",
-          "percent_used": "66%",
+          "kb_used": "328572708",
+          "kb_available": "158796152",
+          "percent_used": "68%",
           "total_inodes": "1000",
           "inodes_used": "0",
           "inodes_available": "1000",
@@ -2521,9 +2829,9 @@
         },
         "/home/vagrant/mftk-back-office": {
           "kb_size": "487368860",
-          "kb_used": "320053752",
-          "kb_available": "167315108",
-          "percent_used": "66%",
+          "kb_used": "328572708",
+          "kb_available": "158796152",
+          "percent_used": "68%",
           "total_inodes": "1000",
           "inodes_used": "0",
           "inodes_available": "1000",
@@ -2541,9 +2849,9 @@
         },
         "/tmp/vagrant-chef/dc00a64a602b559aba41fe70a2e4cb36/roles": {
           "kb_size": "487368860",
-          "kb_used": "320053752",
-          "kb_available": "167315108",
-          "percent_used": "66%",
+          "kb_used": "328572708",
+          "kb_available": "158796152",
+          "percent_used": "68%",
           "total_inodes": "1000",
           "inodes_used": "0",
           "inodes_available": "1000",
@@ -2561,9 +2869,9 @@
         },
         "/tmp/vagrant-chef/f2ee38747bb7ec7cb8b8c53bdd6f9789/nodes": {
           "kb_size": "487368860",
-          "kb_used": "320053752",
-          "kb_available": "167315108",
-          "percent_used": "66%",
+          "kb_used": "328572708",
+          "kb_available": "158796152",
+          "percent_used": "68%",
           "total_inodes": "1000",
           "inodes_used": "0",
           "inodes_available": "1000",
@@ -2581,9 +2889,9 @@
         },
         "/tmp/vagrant-chef/82a4d349d380790858b818782f1891b9/cookbooks": {
           "kb_size": "487368860",
-          "kb_used": "320053752",
-          "kb_available": "167315108",
-          "percent_used": "66%",
+          "kb_used": "328572708",
+          "kb_available": "158796152",
+          "percent_used": "68%",
           "total_inodes": "1000",
           "inodes_used": "0",
           "inodes_available": "1000",
@@ -2601,9 +2909,9 @@
         },
         "/tmp/vagrant-chef/3b8ef861935927aa05a398e72c31d19f/cookbooks": {
           "kb_size": "487368860",
-          "kb_used": "320053752",
-          "kb_available": "167315108",
-          "percent_used": "66%",
+          "kb_used": "328572708",
+          "kb_available": "158796152",
+          "percent_used": "68%",
           "total_inodes": "1000",
           "inodes_used": "0",
           "inodes_available": "1000",
@@ -2621,9 +2929,9 @@
         },
         "/tmp/vagrant-chef/f034bcc8ec1df244437e470e14e4ef7a/data_bags": {
           "kb_size": "487368860",
-          "kb_used": "320053752",
-          "kb_available": "167315108",
-          "percent_used": "66%",
+          "kb_used": "328572708",
+          "kb_available": "158796152",
+          "percent_used": "68%",
           "total_inodes": "1000",
           "inodes_used": "0",
           "inodes_available": "1000",
@@ -2641,9 +2949,9 @@
         },
         "/tmp/vagrant-chef/b0eb41d6b7dbbe9bc80e0a6921dc9ceb/cookbooks": {
           "kb_size": "487368860",
-          "kb_used": "320053752",
-          "kb_available": "167315108",
-          "percent_used": "66%",
+          "kb_used": "328572708",
+          "kb_available": "158796152",
+          "percent_used": "68%",
           "total_inodes": "1000",
           "inodes_used": "0",
           "inodes_available": "1000",
@@ -2777,13 +3085,13 @@
         "tmpfs,/run": {
           "device": "tmpfs",
           "kb_size": "101780",
-          "kb_used": "356",
-          "kb_available": "101424",
+          "kb_used": "372",
+          "kb_available": "101408",
           "percent_used": "1%",
           "mount": "/run",
           "total_inodes": "127223",
-          "inodes_used": "328",
-          "inodes_available": "126895",
+          "inodes_used": "332",
+          "inodes_available": "126891",
           "inodes_percent_used": "1%",
           "fs_type": "tmpfs",
           "mount_options": [
@@ -2797,14 +3105,14 @@
         "/dev/sda1,/": {
           "device": "/dev/sda1",
           "kb_size": "41251136",
-          "kb_used": "2671276",
-          "kb_available": "36843948",
-          "percent_used": "7%",
+          "kb_used": "2885744",
+          "kb_available": "36629480",
+          "percent_used": "8%",
           "mount": "/",
           "total_inodes": "2621440",
-          "inodes_used": "138119",
-          "inodes_available": "2483321",
-          "inodes_percent_used": "6%",
+          "inodes_used": "158645",
+          "inodes_available": "2462795",
+          "inodes_percent_used": "7%",
           "fs_type": "ext4",
           "mount_options": [
             "rw"
@@ -2890,9 +3198,9 @@
         "none,/vagrant": {
           "device": "none",
           "kb_size": "487368860",
-          "kb_used": "320053752",
-          "kb_available": "167315108",
-          "percent_used": "66%",
+          "kb_used": "328572708",
+          "kb_available": "158796152",
+          "percent_used": "68%",
           "mount": "/vagrant",
           "total_inodes": "1000",
           "inodes_used": "0",
@@ -2902,9 +3210,9 @@
         "none,/home/vagrant/mftk-back-office": {
           "device": "none",
           "kb_size": "487368860",
-          "kb_used": "320053752",
-          "kb_available": "167315108",
-          "percent_used": "66%",
+          "kb_used": "328572708",
+          "kb_available": "158796152",
+          "percent_used": "68%",
           "mount": "/home/vagrant/mftk-back-office",
           "total_inodes": "1000",
           "inodes_used": "0",
@@ -2914,9 +3222,9 @@
         "none,/tmp/vagrant-chef/dc00a64a602b559aba41fe70a2e4cb36/roles": {
           "device": "none",
           "kb_size": "487368860",
-          "kb_used": "320053752",
-          "kb_available": "167315108",
-          "percent_used": "66%",
+          "kb_used": "328572708",
+          "kb_available": "158796152",
+          "percent_used": "68%",
           "mount": "/tmp/vagrant-chef/dc00a64a602b559aba41fe70a2e4cb36/roles",
           "total_inodes": "1000",
           "inodes_used": "0",
@@ -2926,9 +3234,9 @@
         "none,/tmp/vagrant-chef/f2ee38747bb7ec7cb8b8c53bdd6f9789/nodes": {
           "device": "none",
           "kb_size": "487368860",
-          "kb_used": "320053752",
-          "kb_available": "167315108",
-          "percent_used": "66%",
+          "kb_used": "328572708",
+          "kb_available": "158796152",
+          "percent_used": "68%",
           "mount": "/tmp/vagrant-chef/f2ee38747bb7ec7cb8b8c53bdd6f9789/nodes",
           "total_inodes": "1000",
           "inodes_used": "0",
@@ -2938,9 +3246,9 @@
         "none,/tmp/vagrant-chef/82a4d349d380790858b818782f1891b9/cookbooks": {
           "device": "none",
           "kb_size": "487368860",
-          "kb_used": "320053752",
-          "kb_available": "167315108",
-          "percent_used": "66%",
+          "kb_used": "328572708",
+          "kb_available": "158796152",
+          "percent_used": "68%",
           "mount": "/tmp/vagrant-chef/82a4d349d380790858b818782f1891b9/cookbooks",
           "total_inodes": "1000",
           "inodes_used": "0",
@@ -2950,9 +3258,9 @@
         "none,/tmp/vagrant-chef/3b8ef861935927aa05a398e72c31d19f/cookbooks": {
           "device": "none",
           "kb_size": "487368860",
-          "kb_used": "320053752",
-          "kb_available": "167315108",
-          "percent_used": "66%",
+          "kb_used": "328572708",
+          "kb_available": "158796152",
+          "percent_used": "68%",
           "mount": "/tmp/vagrant-chef/3b8ef861935927aa05a398e72c31d19f/cookbooks",
           "total_inodes": "1000",
           "inodes_used": "0",
@@ -2962,9 +3270,9 @@
         "none,/tmp/vagrant-chef/f034bcc8ec1df244437e470e14e4ef7a/data_bags": {
           "device": "none",
           "kb_size": "487368860",
-          "kb_used": "320053752",
-          "kb_available": "167315108",
-          "percent_used": "66%",
+          "kb_used": "328572708",
+          "kb_available": "158796152",
+          "percent_used": "68%",
           "mount": "/tmp/vagrant-chef/f034bcc8ec1df244437e470e14e4ef7a/data_bags",
           "total_inodes": "1000",
           "inodes_used": "0",
@@ -2974,9 +3282,9 @@
         "none,/tmp/vagrant-chef/b0eb41d6b7dbbe9bc80e0a6921dc9ceb/cookbooks": {
           "device": "none",
           "kb_size": "487368860",
-          "kb_used": "320053752",
-          "kb_available": "167315108",
-          "percent_used": "66%",
+          "kb_used": "328572708",
+          "kb_available": "158796152",
+          "percent_used": "68%",
           "mount": "/tmp/vagrant-chef/b0eb41d6b7dbbe9bc80e0a6921dc9ceb/cookbooks",
           "total_inodes": "1000",
           "inodes_used": "0",
@@ -3185,7 +3493,7 @@
         "model": "61",
         "model_name": "Intel(R) Core(TM) i7-5557U CPU @ 3.10GHz",
         "stepping": "4",
-        "mhz": "3099.833",
+        "mhz": "3100.188",
         "cache_size": "4096 KB",
         "physical_id": "0",
         "core_id": "0",
@@ -3251,11 +3559,11 @@
       }
     },
     "cloud_v2": null,
-    "ohai_time": 1478109050.8724463,
-    "uptime_seconds": 954,
-    "uptime": "15 minutes 54 seconds",
-    "idletime_seconds": 821,
-    "idletime": "13 minutes 41 seconds",
+    "ohai_time": 1479408685.3674664,
+    "uptime_seconds": 115171,
+    "uptime": "1 day 07 hours 59 minutes 31 seconds",
+    "idletime_seconds": 110062,
+    "idletime": "1 day 06 hours 34 minutes 22 seconds",
     "command": {
       "ps": "ps -ef"
     },
@@ -6085,8 +6393,11 @@
       "nodejs::nodejs_from_package",
       "nodejs::repo",
       "apt::default",
-      "mongodb3::default",
-      "mongodb3::package_repo",
+      "postgresql::client",
+      "postgresql::ca_certificates",
+      "postgresql::server",
+      "postgresql::server_debian",
+      "postgresql::server_conf",
       "nodejs::npm",
       "nodejs::install"
     ],
@@ -6103,8 +6414,8 @@
       "nodejs": {
         "version": "2.4.5"
       },
-      "mongodb3": {
-        "version": "5.3.0"
+      "postgresql": {
+        "version": "5.1.0"
       },
       "magic_shell": {
         "version": "1.0.0"
@@ -6130,17 +6441,14 @@
       "homebrew": {
         "version": "2.1.0"
       },
-      "yum": {
-        "version": "3.12.0"
-      },
-      "user": {
-        "version": "0.4.2"
-      },
-      "runit": {
-        "version": "1.7.8"
+      "openssl": {
+        "version": "6.0.0"
       },
       "ohai": {
         "version": "4.2.0"
+      },
+      "yum": {
+        "version": "3.12.0"
       },
       "seven_zip": {
         "version": "2.0.2"
@@ -6153,9 +6461,6 @@
       },
       "windows": {
         "version": "1.44.3"
-      },
-      "packagecloud": {
-        "version": "0.2.5"
       },
       "chef_handler": {
         "version": "1.4.0"

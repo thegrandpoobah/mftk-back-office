@@ -7,13 +7,13 @@ DEPENDENCIES
   mftk-back-office
     path: .
     metadata: true
-  mongodb3 (~> 5.3.0)
   monit
     git: https://github.com/phlipper/chef-monit.git
     revision: f027aea655a0ef2ea6d0b7bdde00975268a82ef9
   nodejs
     git: https://github.com/redguide/nodejs.git
     revision: 11577692dd2b5fd7da9b87b1fa20dae02d8b2a41
+  postgresql (~> 5.1.0)
 
 GRAPH
   apt (4.0.2)
@@ -37,18 +37,13 @@ GRAPH
   main (0.0.0)
     aws (>= 3.4.1)
     magic_shell (>= 0.0.0)
-    mongodb3 (>= 5.3.0)
     monit (>= 0.0.0)
     nodejs (>= 2.4.4)
+    postgresql (>= 5.1.0)
   mftk-back-office (0.0.0)
   mingw (1.2.4)
     compat_resource (>= 0.0.0)
     seven_zip (>= 0.0.0)
-  mongodb3 (5.3.0)
-    apt (>= 0.0.0)
-    runit (~> 1.7.0)
-    user (>= 0.0.0)
-    yum (>= 0.0.0)
   monit (1.5.4)
     build-essential (>= 0.0.0)
   nodejs (2.4.5)
@@ -59,12 +54,13 @@ GRAPH
     yum-epel (>= 0.0.0)
   ohai (4.2.0)
     compat_resource (>= 12.10)
-  packagecloud (0.2.5)
-  runit (1.7.8)
-    packagecloud (>= 0.0.0)
+  openssl (6.0.0)
+  postgresql (5.1.0)
+    apt (>= 1.9.0)
+    build-essential (>= 2.0.0)
+    openssl (>= 4.0)
   seven_zip (2.0.2)
     windows (>= 1.2.2)
-  user (0.4.2)
   windows (1.44.3)
     chef_handler (>= 0.0.0)
   yum (3.12.0)

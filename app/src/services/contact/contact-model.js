@@ -18,16 +18,13 @@ module.exports = function(sequelize) {
       allowNull: false
     },
     emails: {
-      // type: Sequelize.ARRAY(Sequelize.STRING)
-      type: Sequelize.STRING // TODO: use postgreql instead
+      type: Sequelize.ARRAY(Sequelize.STRING)
     },
     phones: {
-      // type: Sequelize.ARRAY(Sequelize.STRING)
-      type: Sequelize.STRING // TODO: use postgresql instead
+      type: Sequelize.ARRAY(Sequelize.STRING)
     },
     addresses: {
-      //type: Sequelize.JSON
-      type: Sequelize.STRING // TODO: use postgresql instead 
+      type: Sequelize.JSON
     }
   }, {
     freezeTableName: true

@@ -19,7 +19,8 @@ module.exports = function(sequelize) {
     },
     active: {
       type: Sequelize.BOOLEAN,
-      allowNull: false
+      allowNull: false,
+      defaultValue: true
     },
     dateOfBirth: {
       type: Sequelize.DATEONLY,
@@ -48,11 +49,11 @@ module.exports = function(sequelize) {
         '6th Dan Black Belt',
         '7th Dan Black Belt',
         '8th Dan Black Belt',
-        '9th Dan Black Belt')
+        '9th Dan Black Belt'
+      )
     },
     roles: {
-      // type: Sequelize.ARRAY(Sequelize.ENUM('Student', 'Demo Team', 'Instructor'))
-      type: Sequelize.ENUM('Student', 'Demo Team', 'Instructor')
+      type: Sequelize.ARRAY(Sequelize.STRING)
     }
   }, {
     freezeTableName: true,

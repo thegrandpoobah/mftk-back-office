@@ -1,11 +1,8 @@
 'use strict';
 
 const note = require('./note');
-
 const attendance = require('./attendance');
-
 const division = require('./division');
-
 const contact = require('./contact');
 const account = require('./account');
 const student = require('./student');
@@ -19,11 +16,10 @@ const Sequelize = require('sequelize');
 module.exports = function() {
   const app = this;
 
-  fs.ensureDirSync( path.dirname(app.get('sqlite')) );
-  const sequelize = new Sequelize('feathers', null, null, {
-    dialect: 'sqlite',
-    storage: app.get('sqlite'),
-    logging: false
+
+  const sequelize = new Sequelize(app.get('postgres'), {
+    dialect: 'postgres',
+    logging: console.log
   });
   app.set('sequelize', sequelize);
 
@@ -34,6 +30,7 @@ module.exports = function() {
   app.configure(contact);
   app.configure(division);
   app.configure(attendance);
+  app.configure(note);
 
   // Setup relationships
   const models = sequelize.models;
@@ -43,6 +40,4 @@ module.exports = function() {
     .forEach(model => model.associate(models));
 
   sequelize.sync();
-
-  app.configure(note);
 };

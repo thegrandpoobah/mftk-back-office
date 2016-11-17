@@ -10,7 +10,8 @@ const Sequelize = require('sequelize');
 module.exports = function(sequelize) {
   const account = sequelize.define('account', {
     active: {
-      type: Sequelize.STRING,
+      type: Sequelize.BOOLEAN,
+      defaultValue: true,
       allowNull: false
     },
   }, {

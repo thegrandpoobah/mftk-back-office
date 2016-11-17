@@ -10,11 +10,16 @@ const Sequelize = require('sequelize');
 module.exports = function(sequelize) {
   const note = sequelize.define('note', {
     text: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       allowNull: false
     }
   }, {
-    freezeTableName: true
+    freezeTableName: true,
+    classMethods: {
+      associate(models) {
+        note.belongsTo(models.student, { as: 'instructor' });
+      }
+    }
   });
 
   return note;
