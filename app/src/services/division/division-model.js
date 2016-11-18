@@ -18,11 +18,11 @@ module.exports = function(sequelize) {
       allowNull: false
     },
     startTime: {
-      type: Sequelize.DATE,
+      type: Sequelize.INTEGER,
       allowNull: false
     },
     endTime: {
-      type: Sequelize.DATE,
+      type: Sequelize.INTEGER,
       allowNull: false
     }
   }, {

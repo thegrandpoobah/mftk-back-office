@@ -1,0 +1,15 @@
+{
+  "name": {
+    "placeholder": "Enter a name for the class"
+  },
+  "dayOfTheWeek": {
+    "type": "select",
+    "sort": false
+  },
+  "startTime": {
+    "type": "time"
+  },
+  "endTime": {
+    "type": "time"
+  }
+}

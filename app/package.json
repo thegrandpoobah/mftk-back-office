@@ -38,7 +38,9 @@
     "numeral": "^1.5.3",
     "passport-google-oauth20": "^1.0.0",
     "passport-google-token": "^0.1.2",
-    "qwest": "^4.4.5"
+    "qwest": "^4.4.5",
+    "select2": "^4.0.3",
+    "select2-bootstrap-theme": "0.1.0-beta.9"
   },
   "devDependencies": {
     "bootstrap-loader": "^1.1.2",
@@ -50,6 +52,7 @@
     "handlebars-loader": "^1.3.0",
     "html-webpack-plugin": "^2.22.0",
     "imports-loader": "^0.6.5",
+    "json-loader": "^0.5.4",
     "modernizr-loader": "0.0.5",
     "node-sass": "^3.8.0",
     "resolve-url-loader": "^1.6.0",

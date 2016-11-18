@@ -1,0 +1,28 @@
+{
+  "title": "Create Class",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Name",
+      "required": true
+    },
+    "dayOfTheWeek": {
+      "type": "string",
+      "title": "Day of the Week",
+      "enum": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "default": "Monday",
+      "required": true
+    },
+    "startTime": {
+      "type": "string",
+      "title": "Starting Time",
+      "required": true
+    },
+    "endTime": {
+      "type": "string",
+      "title": "Ending Time",
+      "required": true
+    }
+  }
+}

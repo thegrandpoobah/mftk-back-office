@@ -1,11 +1,13 @@
 'use strict';
 
+const curriculumLog = require('./curriculumLog');
 const note = require('./note');
 const attendance = require('./attendance');
 const division = require('./division');
 const contact = require('./contact');
 const account = require('./account');
 const student = require('./student');
+const studentSearch = require('./studentSearch');
 const authentication = require('./authentication');
 const user = require('./user');
 
@@ -26,11 +28,13 @@ module.exports = function() {
   app.configure(authentication);
   app.configure(user);
   app.configure(student);
+  app.configure(studentSearch);
   app.configure(account);
   app.configure(contact);
   app.configure(division);
   app.configure(attendance);
   app.configure(note);
+  app.configure(curriculumLog);
 
   // Setup relationships
   const models = sequelize.models;
@@ -39,5 +43,7 @@ module.exports = function() {
     .filter(model => model.associate)
     .forEach(model => model.associate(models));
 
-  sequelize.sync();
+  sequelize.sync().done(function() {
+    models.student.addFullTextIndex();
+  })
 };

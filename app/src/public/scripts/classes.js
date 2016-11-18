@@ -10,6 +10,32 @@ var templates = {
   'index': require('../classes/index.html.handlebars')
 }
 
+function onCreateClick() {
+  var v = this.getValue()
+
+  v.startTime = moment(v.startTime, 'h:mm:ss a').diff(moment(v.startTime, 'h:mm:ss a').startOf('day'), 'minutes')
+  v.endTime = moment(v.endTime, 'h:mm:ss a').diff(moment(v.endTime, 'h:mm:ss a').startOf('day'), 'minutes')
+
+  qwest
+    .post("/divisions", v, {dataType: 'json', responseType: 'json'})
+    .then(function(xhr, response) {
+      Aviator.navigate("/admin/classes/")
+    })
+}
+
+function onUpdateClick(classId) {
+  var v = this.getValue()
+
+  v.startTime = moment(v.startTime, 'h:mm:ss a').diff(moment(v.startTime, 'h:mm:ss a').startOf('day'), 'minutes')
+  v.endTime = moment(v.endTime, 'h:mm:ss a').diff(moment(v.endTime, 'h:mm:ss a').startOf('day'), 'minutes')
+
+  qwest
+    .put("/divisions/" + classId, v, {dataType: 'json', responseType: 'json'})
+    .then(function(xhr, response) {
+      Aviator.navigate("/admin/classes/")
+    })
+}
+
 module.exports = {
   index: function() {
     qwest.get('/divisions').then(function(xhr, response) {
@@ -18,51 +44,13 @@ module.exports = {
   },
   create: function() {
     $("#spa-target").empty().alpaca({
-      "schema": {
-        "title": "Create Class",
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "title": "Name",
-            "required": true
-          },
-          "dayOfTheWeek": {
-            "type": "string",
-            "title": "Day of the Week",
-            "enum": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-            "default": "Monday",
-            "required": true
-          },
-          "startTime": {
-            "type": "string",
-            "title": "Starting Time",
-            "required": true
-          },
-          "endTime": {
-            "type": "string",
-            "title": "Ending Time",
-            "required": true
-          }
-        }
-      },
+      "schema": require('./new-class-schema.json'),
       "options": {
         "form": {
           "buttons": {
             "submit": {
               "title": "Create",
-              "click": function() {
-                var v = this.getValue()
-
-                v.startTime = moment(v.startTime, "h:mm:ss a").format() 
-                v.endTime = moment(v.endTime, "h:mm:ss a").format()
-
-                qwest
-                  .post("/divisions", v, {dataType: 'json', responseType: 'json'})
-                  .then(function(xhr, response) {
-                    Aviator.navigate("/admin/classes/")
-                  })
-              }
+              "click": onCreateClick
             },
             "back": {
               "title": "Back",
@@ -72,74 +60,25 @@ module.exports = {
             }
           }
         },
-        "fields": {
-          "name": {
-            "placeholder": "Enter a name for the class"
-          },
-          "dayOfTheWeek": {
-            "type": "select",
-            "sort": false
-          },
-          "startTime": {
-            "type": "time"
-          },
-          "endTime": {
-            "type": "time"
-          }
-        }
+        "fields": require('./new-class-options.json'),
       },
       "view": "bootstrap-create"
     })
   },
   edit: function(request) {
     qwest.get('/divisions/' + request.namedParams.id).then(function(xhr, response) {
+      response.startTime = moment().startOf('day').add(response.startTime, 'minutes').format('h:mm:ss a')
+      response.endTime = moment().startOf('day').add(response.endTime, 'minutes').format('h:mm:ss a')
+
       $("#spa-target").empty().alpaca({
         "data": response,
-        "schema": {
-          "title": "Edit Class",
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "title": "Name",
-              "required": true
-            },
-            "dayOfTheWeek": {
-              "type": "string",
-              "title": "Day of the Week",
-              "enum": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-              "required": true,
-              "default": "Monday"
-            },
-            "startTime": {
-              "type": "string",
-              "title": "Starting Time",
-              "required": true
-            },
-            "endTime": {
-              "type": "string",
-              "title": "Ending Time",
-              "required": true
-            }
-          }
-        },
+        "schema": require('./edit-class-schema.json'),
         "options": {
           "form": {
             "buttons": {
               "submit": {
                 "title": "Update",
-                "click": function() {
-                  var v = this.getValue()
-
-                  v.startTime = moment(v.startTime, "h:mm:ss a").format() 
-                  v.endTime = moment(v.endTime, "h:mm:ss a").format()
-
-                  qwest
-                    .put("/divisions/" + request.namedParams.id, v, {dataType: 'json', responseType: 'json'})
-                    .then(function(xhr, response) {
-                      Aviator.navigate("/admin/classes/")
-                    })
-                }
+                "click": function() { return onUpdateClick.call(this, request.namedParams.id) }
               },
               "back": {
                 "title": "Back",
@@ -149,21 +88,7 @@ module.exports = {
               }
             }
           },
-          "fields": {
-            "name": {
-              "placeholder": "Enter a name for the class"
-            },
-            "dayOfTheWeek": {
-              "type": "select",
-              "sort": false
-            },
-            "startTime": {
-              "type": "time"
-            },
-            "endTime": {
-              "type": "time"
-            }
-          }
+          "fields": require('./edit-class-options.json')
         },
         "view": "bootstrap-edit"
       })

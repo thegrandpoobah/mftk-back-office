@@ -7,13 +7,25 @@ require('../styles/main.scss')
 Aviator.linkSelector = 'a.aviator'
 Aviator.setRoutes({
   '/admin': {
+    '/accounts': {
+      target: require('./accounts'),
+      '/': 'index',
+      'new': 'create',
+      ':id': {
+        '/edit': 'edit',
+        '/notes': 'notes',
+        '/delete': 'delete'
+      }
+    },
     '/students': {
       target: require('./students'),
       '/': 'index',
       '/new': 'create',
       '/:id': {
         '/edit': 'edit',
-        '/delete': 'delete' 
+        '/attendance': 'attendance',
+        '/notes': 'notes',
+        '/delete': 'delete'
       }
     },
     '/classes': {
@@ -26,13 +38,22 @@ Aviator.setRoutes({
       }
     }
   },
+  '/new-disciplinary-note': {
+    target: require('./new-disciplinary-note'),
+    '/': 'index'
+  },
+  '/curriculum-log': {
+    target: require('./curriculum-log'),
+    '/': 'index'
+  },
   '/instructor-sign-in': {
     target: require('./instructor-sign-in'),
     '/': 'index'
   },
   '/student-sign-in': {
     target: require('./student-sign-in'),
-    '/': 'index'
+    '/': 'index',
+    '/sign-in': 'signIn'
   }
 })
 Aviator.dispatch()

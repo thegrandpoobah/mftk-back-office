@@ -1,0 +1,18 @@
+{{#.}}
+<div>
+  Disciplinary Notes for {{[0].student.firstName}} {{[0].student.lastName}}
+</div>
+{{/.}}
+{{^.}}
+  No notes found.
+{{/.}}
+
+{{#.}}
+<div class="panel panel-default">
+  </div>
+    <div>Date: {{createdAt}}</div>
+    <div>Instructor: {{instructor.firstName}} {{instructor.lastName}}</div>
+    <div>{{text}}
+  </div>
+</div>
+{{/.}}

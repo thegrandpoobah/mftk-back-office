@@ -1,0 +1,181 @@
+{
+  "title": "Edit Student",
+  "type": "object",
+  "properties": {
+    "firstName": {
+      "type": "string",
+      "title": "First Name",
+      "required": true
+    },
+    "lastName": {
+      "type": "string",
+      "title": "Last Name",
+      "required": true
+    },
+    "gender": {
+      "type": "string",
+      "title": "Gender",
+      "enum": ["Male", "Female"]
+    },
+    "active": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "rank": {
+      "type": "string",
+      "title": "Rank",
+      "enum": [
+        "White",
+        "Yellow Stripe",
+        "Yellow",
+        "Orange Stripe",
+        "Orange",
+        "Green Stripe",
+        "Green",
+        "Purple",
+        "Blue",
+        "Brown",
+        "Red",
+        "Black Tip",
+        "Poomdae",
+        "1st Dan Black Belt",
+        "2nd Dan Black Belt",
+        "3rd Dan Black Belt",
+        "4th Dan Black Belt",
+        "5th Dan Black Belt",
+        "6th Dan Black Belt",
+        "7th Dan Black Belt",
+        "8th Dan Black Belt",
+        "9th Dan Black Belt"
+      ],
+      "default": "White",
+      "required": true
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["Student", "Demo Team", "Instructor"]
+      },
+      "default": ["Student"]
+    },
+    "dateOfBirth": {
+      "type": "string",
+      "title": "Date Of Birth"
+    },
+    "currentAccount": {
+      "type": "string",
+      "title": "Current Account"
+    },
+    "changeAccount": {
+      "type": "string",
+      "title": "Change Account?",
+      "enum": ["Keep Current Account", "Existing Account", "New Account"],
+      "default": "Keep Current Account",
+      "required": true
+    },
+    "accountId": {
+      "type": "number",
+      "title": "Account"
+    },
+    "accountObject": {
+      "title": "New Account",
+      "type": "object",
+      "properties": {
+        "active": {
+          "type": "boolean",
+          "default": true
+        },
+        "contacts": {
+          "type": "array",
+          "title": "Contacts",
+          "minItems": 1,
+          "default": [{}],
+          "items": {
+            "type": "object",
+            "properties": {
+              "sameAsStudent": {
+                "type": "boolean",
+                "default": true
+              },
+              "firstName": {
+                "type": "string",
+                "title": "First Name",
+                "required": true
+              },
+              "lastName": {
+                "type": "string",
+                "title": "Last Name",
+                "required": true
+              },
+              "gender": {
+                "type": "string",
+                "title": "Gender",
+                "enum": ["Male", "Female"]
+              },
+              "emails": {
+                "title": "E-mails",
+                "type": "array",
+                "default": [{}],
+                "items": {
+                  "type": "string"
+                }
+              },
+              "phones": {
+                "title": "Phone Numbers",
+                "type": "array",
+                "default": [{}],
+                "items": {
+                  "type": "string"
+                }
+              },
+              "addresses": {
+                "title": "Addresses",
+                "type": "array",
+                "default": [{}],
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "address1": {
+                      "title": "Address 1",
+                      "type": "string"
+                    },
+                    "address2": {
+                      "title": "Address 2",
+                      "type": "string"
+                    },
+                    "city": {
+                      "title": "City",
+                      "type": "string"
+                    },
+                    "province": {
+                      "title": "Province",
+                      "type": "string"
+                    },
+                    "country": {
+                      "title": "Country",
+                      "type": "string"
+                    },
+                    "postalCode": {
+                      "title": "Postal Code",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "dependencies": {
+              "firstName": ["sameAsStudent"],
+              "lastName": ["sameAsStudent"]
+            }
+          }
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "accountId": ["changeAccount"],
+    "accountObject": ["changeAccount"]
+  }
+}

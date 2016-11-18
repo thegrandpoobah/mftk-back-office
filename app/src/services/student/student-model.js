@@ -27,8 +27,7 @@ module.exports = function(sequelize) {
       allowNull: false,
     },
     gender: {
-      type: Sequelize.ENUM('Male', 'Female'),
-      allowNull: false
+      type: Sequelize.ENUM('Male', 'Female')
     },
     rank: {
       type: Sequelize.ENUM(
@@ -68,6 +67,49 @@ module.exports = function(sequelize) {
         student.belongsTo(models.account);
         student.hasMany(models.attendance, { as: 'attendance' });
         student.hasMany(models.note, { as: 'notes' });
+      },
+      getSearchVector() {
+        return 'fts_text';
+      },
+      addFullTextIndex() {
+        if(sequelize.options.dialect !== 'postgres') {
+          console.log('Not creating search index, must be using POSTGRES to do this');
+          return;
+        }
+
+        var searchFields = ['"firstName"', '"lastName"'];
+        var Student = this;
+
+        var vectorName = Student.getSearchVector();
+        sequelize
+          .query('ALTER TABLE "' + Student.tableName + '" ADD COLUMN "' + vectorName + '" TSVECTOR')
+          .then(function() {
+            return sequelize
+              .query('UPDATE "' + Student.tableName + '" SET "' + vectorName + '" = to_tsvector(\'simple\', ' + searchFields.join(' || \' \' || ') + ')')
+              .error(console.log);
+          }).then(function() {
+            return sequelize
+              .query('CREATE INDEX student_search_idx ON "' + Student.tableName + '" USING gin("' + vectorName + '");')
+              .error(console.log);
+          }).then(function() {
+            return sequelize
+              .query('CREATE TRIGGER student_vector_update BEFORE INSERT OR UPDATE ON "' + Student.tableName + '" FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger("' + vectorName + '", \'pg_catalog.simple\', ' + searchFields.join(', ') + ')')
+              .error(console.log);
+          }).error(console.log);
+      },
+      search(role, query) {
+        if(sequelize.options.dialect !== 'postgres') {
+          console.log('Search is only implemented on POSTGRES database');
+          return;
+        }
+
+        var Student = this;
+
+        query = sequelize.getQueryInterface().escape(query + ':*');
+        role = sequelize.getQueryInterface().escape(role);
+        
+        return sequelize
+          .query('SELECT * FROM "' + Student.tableName + '" WHERE ' + role + ' = ANY(roles) AND "active" = true AND "' + Student.getSearchVector() + '" @@ ' + query + ';', {model: student, type: sequelize.QueryTypes.SELECT})
       }
     }
   });

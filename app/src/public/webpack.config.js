@@ -29,6 +29,7 @@ module.exports = {
         loaders: [
             { test: /\.handlebars$/, loader: "handlebars-loader" },
             { test: /\.modernizrrc$/, loader: "modernizr" },
+            { test: /\.json$/, loader: "json-loader" },
             { test: /\.css$/, loader: ExtractTextPlugin.extract("style", ["css"]) },
             { test: /\.scss$/, loader: ExtractTextPlugin.extract("style", ["css", "sass"]) },
             { test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/, loader: "url-loader?limit=8196&name=fonts/[hash].[ext]" },
@@ -43,8 +44,9 @@ module.exports = {
     },
     resolve: {
       alias: {
-        'jquery': path.resolve(path.join(__dirname, '../..', 'node_modules', 'jquery')),
+        jquery: path.resolve(path.join(__dirname, '../..', 'node_modules', 'jquery')),
         alpaca: 'alpaca/dist/alpaca/bootstrap/alpaca',
+        select2: 'select2/dist/js/select2',
         modernizr$: path.join(__dirname, ".modernizrrc")
       }
     },

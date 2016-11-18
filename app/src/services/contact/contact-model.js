@@ -18,8 +18,7 @@ module.exports = function(sequelize) {
       allowNull: false
     },
     gender: {
-      type: Sequelize.ENUM('Male', 'Female'),
-      allowNull: false
+      type: Sequelize.ENUM('Male', 'Female')
     },
     emails: {
       type: Sequelize.ARRAY(Sequelize.STRING)
