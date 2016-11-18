@@ -38,9 +38,10 @@ Aviator.setRoutes({
       }
     }
   },
-  '/new-disciplinary-note': {
-    target: require('./new-disciplinary-note'),
-    '/': 'index'
+  '/disciplinary-note': {
+    target: require('./disciplinary-note'),
+    '/': 'index',
+    '/create': 'create'
   },
   '/curriculum-log': {
     target: require('./curriculum-log'),
