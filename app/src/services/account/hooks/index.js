@@ -1,5 +1,7 @@
 'use strict';
 
+const populateContacts = require('./populateContacts');
+
 const globalHooks = require('../../../hooks');
 const hooks = require('feathers-hooks');
 
@@ -16,8 +18,8 @@ exports.before = {
 
 exports.after = {
   all: [],
-  find: [],
-  get: [],
+  find: [populateContacts()],
+  get: [populateContacts()],
   create: [],
   update: [],
   patch: [],

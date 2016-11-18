@@ -8,10 +8,11 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Name</th>
+        <th>Student Name</th>
         <th>Date of Birth</th>
         <th>Rank</th>
         <th>Roles</th>
+        <th>Account</th>
         <th></th>
       </tr>
     </thead>
@@ -21,10 +22,25 @@
           <td>{{firstName}} {{lastName}}</td>
           <td>{{dateOfBirth}}</td>
           <td>{{rank}}</td>
-          <td>{{roles}}</td>
+          <td>{{#roles}}{{.}}{{/roles}}</td>
           <td>
-            <a class="btn btn-default btn-xs aviator" href="/admin/students/{{id}}/edit/" role="button">Edit</a>
-            <a class="btn btn-danger btn-xs aviator" href="/admin/students/{{id}}/delete/" role="button">Delete</a>
+            {{#account.contacts.[0]}}
+              <a href="/admin/accounts/{{../id}}/edit/">{{firstName}} {{lastName}}</a>
+            {{/account.contacts.[0]}}
+          </td>
+          <td>
+            <div class="btn-group">
+              <a class="btn btn-default btn-xs aviator" href="/admin/students/{{id}}/edit/" role="button">Edit</a>
+              <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li><a class="aviator" href="/admin/students/{{id}}/attendance/">View Attendance</a></li>
+                <li><a class="aviator" href="/admin/students/{{id}}/notes/">View Notes</a></li>
+                <li><a class="aviator" href="/admin/students/{{id}}/delete/">Delete</a></li>
+              </ul>
+            </div>
           </td>
         </tr>
       {{/data}}

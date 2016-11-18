@@ -26,6 +26,10 @@ module.exports = function(sequelize) {
       type: Sequelize.DATEONLY,
       allowNull: false,
     },
+    gender: {
+      type: Sequelize.ENUM('Male', 'Female'),
+      allowNull: false
+    },
     rank: {
       type: Sequelize.ENUM(
         'White',
@@ -54,6 +58,8 @@ module.exports = function(sequelize) {
     },
     roles: {
       type: Sequelize.ARRAY(Sequelize.STRING)
+      // ideally, this would just be Sequelize.ARRAY(Sequelize.ENUM('Student', 'Instructor', 'Demo Team'))
+      // but this is prevented by https://github.com/sequelize/sequelize/issues/1498
     }
   }, {
     freezeTableName: true,
