@@ -16,9 +16,9 @@ module.exports = function(sequelize) {
   }, {
     freezeTableName: true,
     classMethods: {
-      associate(models) {
-        attendance.belongsTo(models.division, { as: 'division' });
-        attendance.belongsTo(models.student, { as: 'student' });
+      associate() {
+        attendance.belongsTo(sequelize.models.division, { as: 'division' });
+        attendance.belongsTo(sequelize.models.student, { as: 'student' });
       }
     }
   });

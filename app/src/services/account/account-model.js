@@ -17,10 +17,10 @@ module.exports = function(sequelize) {
   }, {
     freezeTableName: true,
     classMethods: {
-      associate(models) {
-        account.hasMany(models.contact, { as: 'contacts' });
-        account.hasMany(models.student, { as: 'students' });
-        account.hasMany(models.note, { as: 'notes' });
+      associate() {
+        account.hasMany(sequelize.models.contact, { as: 'contacts' });
+        account.hasMany(sequelize.models.student, { as: 'students' });
+        account.hasMany(sequelize.models.note, { as: 'notes' });
       }
     }
   });

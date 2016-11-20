@@ -32,9 +32,9 @@ module.exports = function(sequelize) {
   }, {
     freezeTableName: true,
     classMethods: {
-      associate(models) {
-        curriculumLog.belongsTo(models.division, { as: 'division' });
-        curriculumLog.belongsTo(models.student, { as: 'instructor' });
+      associate() {
+        curriculumLog.belongsTo(sequelize.models.division, { as: 'division' });
+        curriculumLog.belongsTo(sequelize.models.student, { as: 'instructor' });
       }
     }
   });

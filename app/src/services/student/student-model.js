@@ -63,10 +63,10 @@ module.exports = function(sequelize) {
   }, {
     freezeTableName: true,
     classMethods: {
-      associate(models) {
-        student.belongsTo(models.account);
-        student.hasMany(models.attendance, { as: 'attendance' });
-        student.hasMany(models.note, { as: 'notes' });
+      associate() {
+        student.belongsTo(sequelize.models.account, { as: 'account' });
+        student.hasMany(sequelize.models.attendance, { as: 'attendance' });
+        student.hasMany(sequelize.models.note, { as: 'notes' });
       },
       getSearchVector() {
         return 'fts_text';

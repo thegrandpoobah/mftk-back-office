@@ -8,7 +8,13 @@ exports.before = {
   all: [],
   find: [],
   get: [],
-  create: [],
+  create: [function(opts) {
+    return function(hook) {
+      // console.log('the hook object is AMAZING', hook.app.models.student.attributes)
+      console.log('the hook object is AMAZING', hook.app.services.students.Model.attributes)
+      return Promise.resolve(hook)
+    }
+  }()],
   update: [],
   patch: [],
   remove: []

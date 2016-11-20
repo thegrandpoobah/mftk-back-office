@@ -27,23 +27,23 @@ module.exports = function() {
 
   app.configure(authentication);
   app.configure(user);
-  app.configure(student);
-  app.configure(studentSearch);
   app.configure(account);
   app.configure(contact);
+  app.configure(student);
+  app.configure(studentSearch);
   app.configure(division);
   app.configure(attendance);
   app.configure(note);
   app.configure(curriculumLog);
 
   // Setup relationships
-  const models = sequelize.models;
-  Object.keys(models)
-    .map(name => models[name])
-    .filter(model => model.associate)
-    .forEach(model => model.associate(models));
+  const services = app.services;
+  Object.keys(services)
+    .map(name => services[name])
+    .filter(service => service.Model && service.Model.associate)
+    .forEach(service => service.Model.associate());
 
   sequelize.sync().done(function() {
-    models.student.addFullTextIndex();
+    services.students.Model.addFullTextIndex();
   })
 };
