@@ -1,5 +1,5 @@
 {
-  "title": "Edit Class",
+  "title": "Create Class",
   "type": "object",
   "properties": {
     "name": {
@@ -7,12 +7,21 @@
       "title": "Name",
       "required": true
     },
+    "types": {
+      "type": "array",
+      "title": "Class Types",
+      "items": {
+        "type": "string",
+        "enum": ["Tiny Tigers", "Children", "Adult", "Demo Team", "Olympic Sparring"]
+      },
+      "required": true
+    },
     "dayOfTheWeek": {
       "type": "string",
       "title": "Day of the Week",
       "enum": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-      "required": true,
-      "default": "Monday"
+      "default": "Monday",
+      "required": true
     },
     "startTime": {
       "type": "string",

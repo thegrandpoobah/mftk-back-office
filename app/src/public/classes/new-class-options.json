@@ -1,0 +1,27 @@
+{
+  "name": {
+    "placeholder": "Enter a name for the class"
+  },
+  "types": {
+    "type": "checkbox",
+    "sort": false
+  },
+  "dayOfTheWeek": {
+    "type": "select",
+    "sort": false
+  },
+  "startTime": {
+    "type": "time",
+    "dateFormat": "h:mm a",
+    "picker": {
+      "format": "h:mm a"
+    }
+  },
+  "endTime": {
+    "type": "time",
+    "dateFormat": "h:mm a",
+    "picker": {
+      "format": "h:mm a"
+    }
+  }
+}

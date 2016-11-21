@@ -6,7 +6,7 @@ var FaviconsWebpackPlugin = require("favicons-webpack-plugin")
 
 module.exports = {
     entry: {
-        app: "./scripts/main.js",
+        app: "./index.js",
         vendor: [
             "jquery",
             "lodash",

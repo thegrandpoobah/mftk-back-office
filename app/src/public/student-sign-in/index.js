@@ -6,22 +6,22 @@ var moment = require('moment')
 require('select2')
 
 var templates = {
-  'index': require('../student-sign-in/index.html.handlebars'),
-  'class-pretty-name': require('../student-sign-in/class-pretty-name.html.handlebars')
+  'index': require('./index.html.handlebars'),
+  'class-pretty-name': require('./class-pretty-name.html.handlebars')
 }
 
 var timeInterval
 var currentDivision
+var divisionList = []
 
 module.exports = {
   index: function() {
-    var divisionList = []
 
     $('#spa-target').empty().html(templates['index']({
       currentTime: moment().format('h:mm:ss a')
     }))
 
-    qwest.get("/divisions").then(function(xhr, response) {
+    qwest.get("/divisions?dayOfTheWeek=" + moment().format('dddd')).then(function(xhr, response) {
       divisionList = response.data
     })
 
@@ -68,10 +68,8 @@ module.exports = {
         nowMinutes = now.diff(moment(now).startOf('day'), 'minutes')
 
         divisionList.forEach(function(division) {
-          if (division.dayOfTheWeek === now.format('dddd')) {
-            if (division.startTime - 10 <= nowMinutes && division.endTime - 10 >= nowMinutes) {
-              currentDivision = division
-            }
+          if (division.startTime - 10 <= nowMinutes && division.endTime - 10 >= nowMinutes) {
+            currentDivision = division
           }
         })
 

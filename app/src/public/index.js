@@ -2,7 +2,7 @@ require('modernizr')
 
 var Aviator = require('aviator')
 
-require('../styles/main.scss')
+require('./styles/main.scss')
 
 Aviator.linkSelector = 'a.aviator'
 Aviator.setRoutes({

@@ -7,13 +7,18 @@ var moment = require('moment')
 require('alpaca')
 
 var templates = {
-  'index': require('../curriculumLogs/index.html.handlebars')
+  'index': require('./index.html.handlebars')
 }
 
 module.exports = {
   index: function() {
-    qwest.get('/curriculumLogs').then(function(xhr, response) {
-      $('#spa-target').empty().html(templates['index'](response))
-    })
+  },
+  create: function() {
+  },
+  edit: function(request) {
+  },
+  notes: function(request) {
+  },
+  delete: function(request) {
   }
 }

@@ -7,9 +7,9 @@ var moment = require('moment')
 require('alpaca')
 
 var templates = {
-  'index': require('../students/index.html.handlebars'),
-  'notes': require('../students/notes.html.handlebars'),
-  'attendance': require('../students/attendance.html.handlebars')
+  'index': require('./index.html.handlebars'),
+  'notes': require('./notes.html.handlebars'),
+  'attendance': require('./attendance.html.handlebars')
 }
 
 function createAccount(student, account) {
@@ -162,7 +162,7 @@ module.exports = {
   },
   notes: function(request) {
     qwest.get('/notes?studentId=' + request.namedParams.id).then(function(xhr, response) {
-      $("#spa-target").empty().html(templates['notes'](response))
+      $("#spa-target").empty().html(templates['notes'](response.data, {foo: function() { return 'HIIII' }}))
     })
   },
   delete: function(request) {

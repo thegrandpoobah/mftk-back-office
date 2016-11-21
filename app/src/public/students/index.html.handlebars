@@ -22,7 +22,14 @@
           <td>{{firstName}} {{lastName}}</td>
           <td>{{dateOfBirth}}</td>
           <td>{{rank}}</td>
-          <td>{{#roles}}{{.}}{{/roles}}</td>
+          <td>
+            {{#roles}}
+              {{#if @last}}
+                {{.}}
+              {{^}}
+                {{.}}, 
+              {{/if}}
+            {{/roles}}</td>
           <td>
             {{#account.contacts.[0]}}
               <a href="/admin/accounts/{{../id}}/edit/">{{firstName}} {{lastName}}</a>

@@ -16,7 +16,16 @@ exports.before = {
 
 exports.after = {
   all: [],
-  find: [],
+  find: [
+    hooks.populate('instructor', {
+      service: '/students',
+      field: 'instructorId'  
+    }),
+    hooks.populate('student', {
+      service: '/students',
+      field: 'studentId'  
+    })
+  ],
   get: [],
   create: [],
   update: [],

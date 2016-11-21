@@ -9,6 +9,7 @@
     <thead>
       <tr>
         <th>Class Name</th>
+        <th>Types</th>
         <th>Day of the Week</th>
         <th>Start Time</th>
         <th>End Time</th>
@@ -18,7 +19,18 @@
     <tbody class="table-hover">
       {{#data}}
         <tr>
-          <td>{{name}}</td>
+          <td>
+            {{name}}
+          </td>
+          <td>
+            {{#types}}
+              {{#if @last}}
+                {{.}}
+              {{^}}
+                {{.}}, 
+              {{/if}}
+            {{/types}}
+          </td>
           <td>{{dayOfTheWeek}}</td>
           <td>{{startTime}}</td>
           <td>{{endTime}}</td>

@@ -1,0 +1,74 @@
+<div>
+  
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#log-lesson" aria-controls="tiny-tigers" role="tab" data-toggle="tab">Log Lesson</a></li>
+    <li role="presentation"><a href="#tiny-tigers" aria-controls="tiny-tigers" role="tab" data-toggle="tab">Tiny Tigers</a></li>
+    <li role="presentation"><a href="#children" aria-controls="children" role="tab" data-toggle="tab">Children</a></li>
+    <li role="presentation"><a href="#adults" aria-controls="adults" role="tab" data-toggle="tab">Adults</a></li>
+    <li role="presentation"><a href="#demo-team" aria-controls="demo-team" role="tab" data-toggle="tab">Demo Team</a></li>
+    <li role="presentation"><a href="#olympic-sparring" aria-controls="olympic-sparring" role="tab" data-toggle="tab">Olympic Sparring</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="log-lesson">
+      <form>
+        <div class="form-group">
+          <label for="">Class:</label>
+          <select class="form-control division-select">
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="">Instructor:</label>
+          <select class="form-control instructor-select"></select>
+        </div>
+
+        <div class="form-group">
+          <span class="help-block">What was taught in today's class?</span>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th><abbr title="Poomsae Forms">PF</abbr></th>
+                <th><abbr title="Appreciation Forms">AF</abbr></th>
+                <th><abbr title="Self Defence">SD</abbr></th>
+                <th><abbr title="Step Sparring">SS</abbr></th>
+                <th style="width: 100%;">Additional Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input class="form-control" type="text" placeholder="Additional Notes"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="form-group">
+          <a href="/curriculum-log/create/" class="btn btn-primary aviator">Log Lesson</a></td>
+        </div>
+      </form>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="tiny-tigers">
+      {{>logTable}}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="children">
+      {{>logTable}}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="adults">
+      {{>logTable}}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="demo-team">
+      {{>logTable}}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="olympic-sparring">
+      {{>logTable}}
+    </div>
+  </div>
+
+</div>

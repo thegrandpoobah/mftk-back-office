@@ -6,15 +6,17 @@ require('eonasdan-bootstrap-datetimepicker')
 var moment = require('moment')
 require('alpaca')
 
+var TIME_FORMAT = 'h:mm a'
+
 var templates = {
-  'index': require('../classes/index.html.handlebars')
+  'index': require('./index.html.handlebars')
 }
 
 function onCreateClick() {
   var v = this.getValue()
 
-  v.startTime = moment(v.startTime, 'h:mm:ss a').diff(moment(v.startTime, 'h:mm:ss a').startOf('day'), 'minutes')
-  v.endTime = moment(v.endTime, 'h:mm:ss a').diff(moment(v.endTime, 'h:mm:ss a').startOf('day'), 'minutes')
+  v.startTime = moment(v.startTime, TIME_FORMAT).diff(moment(v.startTime, TIME_FORMAT).startOf('day'), 'minutes')
+  v.endTime = moment(v.endTime, TIME_FORMAT).diff(moment(v.endTime, TIME_FORMAT).startOf('day'), 'minutes')
 
   qwest
     .post("/divisions", v, {dataType: 'json', responseType: 'json'})
@@ -26,8 +28,8 @@ function onCreateClick() {
 function onUpdateClick(classId) {
   var v = this.getValue()
 
-  v.startTime = moment(v.startTime, 'h:mm:ss a').diff(moment(v.startTime, 'h:mm:ss a').startOf('day'), 'minutes')
-  v.endTime = moment(v.endTime, 'h:mm:ss a').diff(moment(v.endTime, 'h:mm:ss a').startOf('day'), 'minutes')
+  v.startTime = moment(v.startTime, TIME_FORMAT).diff(moment(v.startTime, TIME_FORMAT).startOf('day'), 'minutes')
+  v.endTime = moment(v.endTime, TIME_FORMAT).diff(moment(v.endTime, TIME_FORMAT).startOf('day'), 'minutes')
 
   qwest
     .put("/divisions/" + classId, v, {dataType: 'json', responseType: 'json'})
@@ -67,8 +69,8 @@ module.exports = {
   },
   edit: function(request) {
     qwest.get('/divisions/' + request.namedParams.id).then(function(xhr, response) {
-      response.startTime = moment().startOf('day').add(response.startTime, 'minutes').format('h:mm:ss a')
-      response.endTime = moment().startOf('day').add(response.endTime, 'minutes').format('h:mm:ss a')
+      response.startTime = moment().startOf('day').add(response.startTime, 'minutes').format(TIME_FORMAT)
+      response.endTime = moment().startOf('day').add(response.endTime, 'minutes').format(TIME_FORMAT)
 
       $("#spa-target").empty().alpaca({
         "data": response,

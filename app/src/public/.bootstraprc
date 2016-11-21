@@ -112,5 +112,5 @@ scripts:
   tooltip: false
   popover: false
   scrollspy: false
-  tab: false
+  tab: true
   affix: false

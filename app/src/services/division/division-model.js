@@ -13,6 +13,12 @@ module.exports = function(sequelize) {
       type: Sequelize.STRING,
       allowNull: false
     },
+    types: {
+      // should be type: Sequelize.ARRAY(Sequelize.ENUM('Tiny Tigers', 'Children', 'Adult', 'Demo Team', 'Olympic Sparring'))
+      // but the adapter does not support this yet.
+      type: Sequelize.ARRAY(Sequelize.STRING),
+      allowNull: false
+    },
     dayOfTheWeek: {
       type: Sequelize.ENUM('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
       allowNull: false

@@ -5,7 +5,7 @@ require('handlebars/runtime')
 require('select2')
 
 var templates = {
-  'index': require('../disciplinary-note/index.html.handlebars')
+  'index': require('./index.html.handlebars')
 }
 
 module.exports = {
