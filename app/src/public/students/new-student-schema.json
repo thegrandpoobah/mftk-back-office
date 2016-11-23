@@ -86,7 +86,9 @@
           "type": "array",
           "title": "Contacts",
           "minItems": 1,
-          "default": [{}],
+          "default": [{
+            "sameAsStudent": true
+          }],
           "items": {
             "type": "object",
             "properties": {
@@ -128,7 +130,11 @@
               "addresses": {
                 "title": "Addresses",
                 "type": "array",
-                "default": [{}],
+                "default": [{
+                  "city": "Toronto",
+                  "province": "Ontario",
+                  "country": "Canada"
+                }],
                 "items": {
                   "type": "object",
                   "properties": {
@@ -142,15 +148,18 @@
                     },
                     "city": {
                       "title": "City",
-                      "type": "string"
+                      "type": "string",
+                      "default": "Toronto"
                     },
                     "province": {
                       "title": "Province",
-                      "type": "string"
+                      "type": "string",
+                      "default": "Ontario"
                     },
                     "country": {
                       "title": "Country",
-                      "type": "string"
+                      "type": "string",
+                      "default": "Canada"
                     },
                     "postalCode": {
                       "title": "Postal Code",
@@ -162,7 +171,8 @@
             },
             "dependencies": {
               "firstName": ["sameAsStudent"],
-              "lastName": ["sameAsStudent"]
+              "lastName": ["sameAsStudent"],
+              "gender": ["sameAsStudent"]
             }
           }
         }

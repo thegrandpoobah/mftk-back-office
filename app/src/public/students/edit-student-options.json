@@ -71,7 +71,7 @@
         "items": {
           "fields": {
             "sameAsStudent": {
-              "rightLabel": "Contact name is same as Student Name"
+              "rightLabel": "Contact is the same as Student"
             },
             "firstName": {
               "dependencies": {
@@ -79,6 +79,11 @@
               }
             },
             "lastName": {
+              "dependencies": {
+                "sameAsStudent": false
+              }
+            },
+            "gender": {
               "dependencies": {
                 "sameAsStudent": false
               }

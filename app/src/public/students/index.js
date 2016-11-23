@@ -28,6 +28,7 @@ function createAccount(student, account) {
         if (contact.sameAsStudent) {
           contact.firstName = student.firstName
           contact.lastName = student.lastName
+          contact.gender = student.gender
         }
 
         delete contact.sameAsStudent
@@ -133,7 +134,7 @@ module.exports = {
   },
   edit: function(request) {
     qwest.get('/students/' + request.namedParams.id).then(function(xhr, response) {
-      response.currentAccount = response.account.contacts[0].firstName + response.account.contacts[0].lastName
+      response.currentAccount = [response.account.contacts[0].firstName, response.account.contacts[0].lastName].join(' ')
       response.changeAccount = 'Keep Current Account'
       response.dateOfBirth = moment(response.dateOfBirth).format('MM/DD/YYYY')
 
