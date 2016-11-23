@@ -12,5 +12,21 @@
     </tr>
   </thead>
   <tbody>
+  {{#.}}
+    <tr>
+      <td>{{createdAt}}</td>
+      <td><a href="/admin/students/{{instructor.id}}/edit/" class="aviator">{{instructor.firstName}} {{instructor.lastName}}</a></td>
+      <td>{{poomsaeForms}}</td>
+      <td>{{appreciationForms}}</td>
+      <td>{{selfDefense}}</td>
+      <td>{{stepSparring}}</td>
+      <td>{{extra}}</td>
+    </tr>
+  {{/.}}
+  {{^.}}
+    <tr>
+      <td colspan="7">No lessons have been logged</td>
+    </tr>
+  {{/.}}
   </tbody>
 </table>

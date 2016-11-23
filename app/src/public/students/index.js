@@ -98,7 +98,7 @@ function onUpdateClick(originalStudent, studentId) {
 
 module.exports = {
   index: function() {
-    qwest.get('/students').then(function(xhr, response) {
+    qwest.get('/students?$sort[firstName]=1&$sort[lastName]=1').then(function(xhr, response) {
       $('#spa-target').empty().html(templates['index'](response))
     })
   },
@@ -161,7 +161,7 @@ module.exports = {
     })
   },
   notes: function(request) {
-    qwest.get('/notes?studentId=' + request.namedParams.id).then(function(xhr, response) {
+    qwest.get('/notes?$sort[createdAt]=-1&studentId=' + request.namedParams.id).then(function(xhr, response) {
       $("#spa-target").empty().html(templates['notes'](response.data, {foo: function() { return 'HIIII' }}))
     })
   },

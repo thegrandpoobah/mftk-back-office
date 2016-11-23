@@ -15,15 +15,24 @@ module.exports = {
   index: function() {
     qwest
       .get('/divisions?dayOfTheWeek=' + moment().format('dddd'))
-      .then(function(xhr, response) {
+      .get('/curriculumLogs?$sort[createdAt]=1&type=Tiny%20Tigers')
+      .get('/curriculumLogs?$sort[createdAt]=1&type=Children')
+      .get('/curriculumLogs?$sort[createdAt]=1&type=Adults')
+      .get('/curriculumLogs?$sort[createdAt]=1&type=Demo%20Team')
+      .get('/curriculumLogs?$sort[createdAt]=1&type=Olympic%20Sparring')
+      .then(function(responses) {
         $('#spa-target').empty().html(templates['index']({
-          today: moment().format('YYYY/MM/DD')
+          'tiny-tigers': responses[1][1].data,
+          'children': responses[2][1].data,
+          'adults': responses[3][1].data,
+          'demo-team': responses[4][1].data,
+          'olympic-sparring': responses[5][1].data
         }))
 
         $('.division-select').select2({
           placeholder: 'Select a class',
           theme: 'bootstrap',
-          data: response.data.map(function(division) {
+          data: responses[0][1].data.map(function(division) {
             return {
               id: division.id,
               text: templates['class-pretty-name'](division)
@@ -62,6 +71,23 @@ module.exports = {
           },
           minimumInputLength: 1
         });
+      })
+  },
+  create: function() {
+    var cl = {}
+
+    cl.divisionId = $('.division-select').val()
+    cl.instructorId = $('.instructor-select').val()
+    cl.poomsaeForms = $('.cl-form .pf-checkbox').is(':checked')
+    cl.appreciationForms = $('.cl-form .af-checkbox').is(':checked')
+    cl.selfDefense = $('.cl-form .sd-checkbox').is(':checked')
+    cl.stepSparring = $('.cl-form .ss-checkbox').is(':checked')
+    cl.extra = $('.cl-form .notes-input').val()
+
+    qwest
+      .post('/curriculumLogs', cl, {dataType: 'json', responseType: 'json'})
+      .then(function(xhr, response) {
+        Aviator.navigate('/curriculum-log/')
       })
   }
 }

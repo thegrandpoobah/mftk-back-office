@@ -11,7 +11,7 @@
 
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="log-lesson">
-      <form>
+      <form class="cl-form">
         <div class="form-group">
           <label for="">Class:</label>
           <select class="form-control division-select">
@@ -38,11 +38,11 @@
             </thead>
             <tbody>
               <tr>
-                <td><input type="checkbox"></td>
-                <td><input type="checkbox"></td>
-                <td><input type="checkbox"></td>
-                <td><input type="checkbox"></td>
-                <td><input class="form-control" type="text" placeholder="Additional Notes"></td>
+                <td><input class="pf-checkbox" type="checkbox"></td>
+                <td><input class="af-checkbox" type="checkbox"></td>
+                <td><input class="sd-checkbox" type="checkbox"></td>
+                <td><input class="ss-checkbox" type="checkbox"></td>
+                <td><input class="notes-input form-control" type="text" placeholder="Additional Notes"></td>
               </tr>
             </tbody>
           </table>
@@ -55,19 +55,29 @@
     </div>
 
     <div role="tabpanel" class="tab-pane" id="tiny-tigers">
-      {{>logTable}}
+      {{#with tiny-tigers}}
+        {{>logTable}}
+      {{/with}}
     </div>
     <div role="tabpanel" class="tab-pane" id="children">
-      {{>logTable}}
+      {{#with children}}
+        {{>logTable}}
+      {{/with}}
     </div>
     <div role="tabpanel" class="tab-pane" id="adults">
-      {{>logTable}}
+      {{#with adults}}
+        {{>logTable}}
+      {{/with}}
     </div>
     <div role="tabpanel" class="tab-pane" id="demo-team">
-      {{>logTable}}
+      {{#with demo-team}}
+        {{>logTable}}
+      {{/with}}
     </div>
     <div role="tabpanel" class="tab-pane" id="olympic-sparring">
-      {{>logTable}}
+      {{#with olympic-sparring}}
+        {{>logTable}}
+      {{/with}}
     </div>
   </div>
 

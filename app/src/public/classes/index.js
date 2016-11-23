@@ -40,7 +40,7 @@ function onUpdateClick(classId) {
 
 module.exports = {
   index: function() {
-    qwest.get('/divisions').then(function(xhr, response) {
+    qwest.get('/divisions?$sort[dayOfTheWeek]=1&$sort[startTime]=1').then(function(xhr, response) {
       $('#spa-target').empty().html(templates['index'](response))
     })
   },

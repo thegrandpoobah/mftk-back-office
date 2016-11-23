@@ -45,7 +45,8 @@ Aviator.setRoutes({
   },
   '/curriculum-log': {
     target: require('./curriculum-log'),
-    '/': 'index'
+    '/': 'index',
+    '/create': 'create'
   },
   '/instructor-sign-in': {
     target: require('./instructor-sign-in'),
