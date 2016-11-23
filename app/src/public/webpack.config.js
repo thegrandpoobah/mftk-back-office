@@ -32,7 +32,8 @@ module.exports = {
             { test: /\.json$/, loader: "json-loader" },
             { test: /\.css$/, loader: ExtractTextPlugin.extract("style", ["css"]) },
             { test: /\.scss$/, loader: ExtractTextPlugin.extract("style", ["css", "sass"]) },
-            { test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/, loader: "url-loader?limit=8196&name=fonts/[hash].[ext]" },
+            { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&minetype=application/font-woff" },
+            { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" },
             { 
                 test: require.resolve('alpaca/dist/alpaca/bootstrap/alpaca'),
                 loader: 'script!imports?this=>{umd:false%2CjQuery:jQuery%2CHandlebars:Handlebars}',

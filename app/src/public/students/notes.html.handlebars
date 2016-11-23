@@ -1,15 +1,34 @@
+{{^.}}
+  <div class="alert alert-success">No Disciplinary Notes for this Student</div> 
+{{/.}}
+
 {{#each .}}
   {{#if @first}}
     <div>
-      Disciplinary Notes for {{student.firstName}} {{student.lastName}}
+      <h3>Disciplinary Notes for <a href="/admin/students/{{student.id}}/edit/" class="aviator">{{student.firstName}} {{student.lastName}}</a></h3>
     </div>
   {{/if}}
+{{/each}}
 
+{{#each .}}
   <div class="panel panel-default">
-    <div>
-      <div>Date: {{createdAt}}</div>
-      <div>Instructor: {{instructor.firstName}} {{instructor.lastName}}</div>
-      <div>{{text}}</div>
+    <div class="panel-body">
+      <div class="form-group">
+        <label for="">Date:</label>
+        <div>{{date createdAt format="L LT"}}</div>
+      </div>
+      <div class="form-group">
+        <label for="">Instructor:</label>
+        <div><a href="/admin/students/{{instructor.id}}/edit/" class="aviator">{{instructor.firstName}} {{instructor.lastName}}</a></div>
+      </div>
+      <div class="form-group">
+        <label for="">Disciplinary note</label>
+        <div>{{text}}</div>
+      </div>
     </div>
   </div>
 {{/each}}
+
+<div>
+  <a href="/admin/students/" class="btn btn-default aviator">Back</a>
+</div>

@@ -2,6 +2,7 @@ require('modernizr')
 
 var Aviator = require('aviator')
 
+require('font-awesome-webpack')
 require('./styles/main.scss')
 
 Aviator.linkSelector = 'a.aviator'

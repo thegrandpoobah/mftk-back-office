@@ -14,12 +14,40 @@
   <tbody>
   {{#.}}
     <tr>
-      <td>{{createdAt}}</td>
-      <td><a href="/admin/students/{{instructor.id}}/edit/" class="aviator">{{instructor.firstName}} {{instructor.lastName}}</a></td>
-      <td>{{poomsaeForms}}</td>
-      <td>{{appreciationForms}}</td>
-      <td>{{selfDefense}}</td>
-      <td>{{stepSparring}}</td>
+      <td>{{date createdAt format="L"}}</td>
+      <td style="white-space: nowrap;"><a href="/admin/students/{{instructor.id}}/edit/" class="aviator">{{instructor.firstName}} {{instructor.lastName}}</a></td>
+      <td>
+        {{#poomsaeForms}}
+          <i class="fa fa-check" aria-hidden="true"></i>
+        {{/poomsaeForms}}
+        {{^poomsaeForms}}
+          <i class="fa fa-times" aria-hidden="true"></i>
+        {{/poomsaeForms}}
+      </td>
+      <td>
+        {{#appreciationForms}}
+          <i class="fa fa-check" aria-hidden="true"></i>
+        {{/appreciationForms}}
+        {{^appreciationForms}}
+          <i class="fa fa-times" aria-hidden="true"></i>
+        {{/appreciationForms}}
+      </td>
+      <td>
+        {{#selfDefense}}
+          <i class="fa fa-check" aria-hidden="true"></i>
+        {{/selfDefense}}
+        {{^selfDefense}}
+          <i class="fa fa-times" aria-hidden="true"></i>
+        {{/selfDefense}}
+      </td>
+      <td>
+        {{#stepSparring}}
+          <i class="fa fa-check" aria-hidden="true"></i>
+        {{/stepSparring}}
+        {{^stepSparring}}
+          <i class="fa fa-times" aria-hidden="true"></i>
+        {{/stepSparring}}
+      </td>
       <td>{{extra}}</td>
     </tr>
   {{/.}}

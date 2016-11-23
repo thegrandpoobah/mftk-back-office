@@ -1,10 +1,16 @@
 var Aviator = require('aviator')
 var qwest = require('qwest')
 var $ = require('jquery')
-require('handlebars/runtime')
+var Handlebars = require('handlebars/runtime')
 require('eonasdan-bootstrap-datetimepicker')
 var moment = require('moment')
 require('alpaca')
+
+Handlebars.registerHelper({
+  'date': function (date, opts) {
+    return moment(date).format(opts.hash.format)
+  }
+})
 
 var templates = {
   'index': require('./index.html.handlebars'),
