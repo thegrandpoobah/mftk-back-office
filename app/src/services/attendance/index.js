@@ -16,10 +16,10 @@ module.exports = function(){
   };
 
   // Initialize our service with any options it requires
-  app.use('/attendance', service(options));
+  app.use('/attendances', service(options));
 
   // Get our initialize service to that we can bind hooks
-  const attendanceService = app.service('/attendance');
+  const attendanceService = app.service('/attendances');
 
   // Set up our before hooks
   attendanceService.before(hooks.before);

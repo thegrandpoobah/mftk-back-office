@@ -1,16 +1,8 @@
-{{^.}}
-  <div class="alert alert-success">No Disciplinary Notes for this Student</div> 
-{{/.}}
+<div>
+  <h3>Disciplinary Notes for <a href="/admin/students/{{student.id}}/edit/" class="aviator">{{student.firstName}} {{student.lastName}}</a></h3>
+</div>
 
-{{#each .}}
-  {{#if @first}}
-    <div>
-      <h3>Disciplinary Notes for <a href="/admin/students/{{student.id}}/edit/" class="aviator">{{student.firstName}} {{student.lastName}}</a></h3>
-    </div>
-  {{/if}}
-{{/each}}
-
-{{#each .}}
+{{#notes}}
   <div class="panel panel-default">
     <div class="panel-body">
       <div class="form-group">
@@ -22,12 +14,15 @@
         <div><a href="/admin/students/{{instructor.id}}/edit/" class="aviator">{{instructor.firstName}} {{instructor.lastName}}</a></div>
       </div>
       <div class="form-group">
-        <label for="">Disciplinary note</label>
+        <label for="">Disciplinary Note</label>
         <div>{{text}}</div>
       </div>
     </div>
   </div>
-{{/each}}
+{{/notes}}
+{{^notes}}
+  <div class="alert alert-success">No Disciplinary Notes for {{student.firstName}} {{student.lastName}}</div> 
+{{/notes}}
 
 <div>
   <a href="/admin/students/" class="btn btn-default aviator">Back</a>

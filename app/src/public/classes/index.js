@@ -10,15 +10,7 @@ var TIME_FORMAT = 'h:mm a'
 
 Handlebars.registerHelper({
   'time': function (t) {
-    // console.log(t)
-
     return moment().startOf('day').add(t, 'minutes').format(TIME_FORMAT)
-
-    // var tt = moment(t, TIME_FORMAT).diff(moment(t, TIME_FORMAT).startOf('day'), 'minutes')
-
-    // console.log(tt)
-
-    // return moment(t).format(TIME_FORMAT)
   }
 })
 

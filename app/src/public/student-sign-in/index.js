@@ -1,9 +1,17 @@
 var Aviator = require('aviator')
 var qwest = require('qwest')
 var $ = require('jquery')
-require('handlebars/runtime')
+var Handlebars = require('handlebars/runtime')
 var moment = require('moment')
 require('select2')
+
+var TIME_FORMAT = 'h:mma'
+
+Handlebars.registerHelper({
+  'time': function (t) {
+    return moment().startOf('day').add(t, 'minutes').format(TIME_FORMAT)
+  }  
+})
 
 var templates = {
   'index': require('./index.html.handlebars'),
@@ -16,14 +24,14 @@ var divisionList = []
 
 module.exports = {
   index: function() {
-
     $('#spa-target').empty().html(templates['index']({
       currentTime: moment().format('h:mm:ss a')
     }))
 
-    qwest.get("/divisions?dayOfTheWeek=" + moment().format('dddd')).then(function(xhr, response) {
-      divisionList = response.data
-    })
+    qwest.get("/divisions?dayOfTheWeek=" + moment().format('dddd'))
+      .then(function(xhr, response) {
+        divisionList = response.data
+      })
 
     $(".student-select").select2({
       placeholder: 'Select a Student',
@@ -84,8 +92,9 @@ module.exports = {
       signInTime: moment().format()
     }
 
-    qwest.post("/attendance", attendance, {dataType: 'json', responseType: 'json'}).then(function(xhr, response) {
-      Aviator.navigate('/student-sign-in/').refresh()
-    })
+    qwest.post("/attendances", attendance, {dataType: 'json', responseType: 'json'})
+      .then(function(xhr, response) {
+        Aviator.navigate('/student-sign-in/').refresh()
+      })
   }
 }

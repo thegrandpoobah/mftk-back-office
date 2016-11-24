@@ -23,8 +23,6 @@ module.exports = function(options) {
         account.contacts = contacts
         hook.result = account
 
-        console.log(hook.result)
-
         return hook
       })
   };

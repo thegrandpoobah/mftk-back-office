@@ -6,10 +6,15 @@ require('eonasdan-bootstrap-datetimepicker')
 var moment = require('moment')
 require('alpaca')
 
+var TIME_FORMAT = 'h:mma'
+
 Handlebars.registerHelper({
   'date': function (date, opts) {
     return moment(date).format(opts.hash.format)
-  }
+  },
+  'time': function (t) {
+    return moment().startOf('day').add(t, 'minutes').format(TIME_FORMAT)
+  }  
 })
 
 var templates = {
@@ -23,7 +28,7 @@ module.exports = {
       .get('/divisions?dayOfTheWeek=' + moment().format('dddd'))
       .get('/curriculumLogs?$sort[createdAt]=1&type=Tiny%20Tigers')
       .get('/curriculumLogs?$sort[createdAt]=1&type=Children')
-      .get('/curriculumLogs?$sort[createdAt]=1&type=Adults')
+      .get('/curriculumLogs?$sort[createdAt]=1&type=Adult')
       .get('/curriculumLogs?$sort[createdAt]=1&type=Demo%20Team')
       .get('/curriculumLogs?$sort[createdAt]=1&type=Olympic%20Sparring')
       .then(function(responses) {

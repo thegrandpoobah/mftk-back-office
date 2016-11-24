@@ -6,10 +6,15 @@ require('eonasdan-bootstrap-datetimepicker')
 var moment = require('moment')
 require('alpaca')
 
+var TIME_FORMAT = 'h:mma'
+
 Handlebars.registerHelper({
   'date': function (date, opts) {
     return moment(date).format(opts.hash.format)
-  }
+  },
+  'time': function (t) {
+    return moment().startOf('day').add(t, 'minutes').format(TIME_FORMAT)
+  }  
 })
 
 var templates = {
@@ -163,14 +168,26 @@ module.exports = {
     })
   },
   attendance: function(request) {
-    qwest.get('/attendances?studentId=' + request.namedParams.id).then(function(xhr, response) {
-      $("#spa-target").empty().html(templates['attendance'](response))
-    })
+    qwest
+      .get('/students/' + request.namedParams.id)
+      .get('/attendances?$sort[createdAt]=-1&studentId=' + request.namedParams.id)
+      .then(function(responses) {
+        $("#spa-target").empty().html(templates['attendance']({
+          student: responses[0][1],
+          attendance: responses[1][1].data
+        }))
+      })
   },
   notes: function(request) {
-    qwest.get('/notes?$sort[createdAt]=-1&studentId=' + request.namedParams.id).then(function(xhr, response) {
-      $("#spa-target").empty().html(templates['notes'](response.data, {foo: function() { return 'HIIII' }}))
-    })
+    qwest
+      .get('/students/' + request.namedParams.id)
+      .get('/notes?$sort[createdAt]=-1&studentId=' + request.namedParams.id)
+      .then(function(responses) {
+        $("#spa-target").empty().html(templates['notes']({
+          student: responses[0][1],
+          notes: responses[1][1].data
+        }))
+      })
   },
   delete: function(request) {
     qwest

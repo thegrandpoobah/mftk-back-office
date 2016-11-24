@@ -12,6 +12,9 @@ var templates = {
 
 module.exports = {
   index: function() {
+    qwest.get('/accounts').then(function(xhr, response) {
+      $('#spa-target').empty().html(templates['index'](response))
+    })
   },
   create: function() {
   },

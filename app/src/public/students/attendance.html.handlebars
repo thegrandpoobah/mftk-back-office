@@ -12,17 +12,21 @@
       </tr>
     </thead>
     <tbody class="table-hover">
-      {{#data}}
+      {{#attendance}}
         <tr>
           <td>{{division.name}}</td>
-          <td>{{division.startTime}}</td>
-          <td>{{signInTime}}</td>
+          <td>{{time division.startTime}}</td>
+          <td>{{date signInTime format="L LT"}}</td>
           <td>{{status}}</td>
         </tr>
-      {{/data}}
-      {{^data}}
+      {{/attendance}}
+      {{^attendance}}
         <td colspan="4">No attendance records found.</td>
-      {{/data}}
+      {{/attendance}}
     </tbody>
   </table>
+</div>
+
+<div>
+  <a href="/admin/students/" class="btn btn-default aviator">Back</a>
 </div>
