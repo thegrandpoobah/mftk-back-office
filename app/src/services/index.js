@@ -1,5 +1,7 @@
 'use strict';
 
+const accountSearch = require('./accountSearch');
+
 const curriculumLog = require('./curriculumLog');
 const note = require('./note');
 const attendance = require('./attendance');
@@ -45,5 +47,7 @@ module.exports = function() {
 
   sequelize.sync().done(function() {
     services.students.Model.addFullTextIndex();
+    services.contacts.Model.addFullTextIndex();
   })
+  app.configure(accountSearch);
 };

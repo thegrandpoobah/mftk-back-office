@@ -15,6 +15,7 @@
     "sort": false
   },
   "accountId": {
+    "type": "select",
     "dependencies": {
       "accountType": "Existing Account"
     }
