@@ -108,6 +108,43 @@ function onUpdateClick(originalStudent, studentId) {
     })
 }
 
+function prepareExistingAccountDropDown(ctrl) {
+  ctrl.control.css({width: '100%'}).select2({
+    placeholder: 'Select an Account',
+    theme: "bootstrap",
+    ajax: {
+      url: "/search/accounts",
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          q: params.term // search term
+        };
+      },
+      processResults: function (data, params) {
+        // parse the results into the format expected by Select2
+        // since we are using custom formatting functions we do not need to
+        // alter the remote JSON data, except to indicate that infinite
+        // scrolling can be used
+        return {
+          results: data.map(function(item) {
+            return {
+              id: item.accountId,
+              text: [item.firstName, item.lastName].join(' '),
+              data: item
+            }
+          }),
+          pagination: {
+            more: false
+          }
+        }
+      },
+      cache: true
+    },
+    minimumInputLength: 1
+  });
+}
+
 module.exports = {
   index: function() {
     qwest.get('/students?$sort[firstName]=1&$sort[lastName]=1').then(function(xhr, response) {
@@ -136,42 +173,7 @@ module.exports = {
       },
       "view": "bootstrap-create",
       "postRender": function(control) {
-        var accountIdField = control.childrenByPropertyId["accountId"]
-
-        accountIdField.control.css({width: '100%'}).select2({
-          placeholder: 'Select an Account',
-          theme: "bootstrap",
-          ajax: {
-            url: "/search/accounts",
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-              return {
-                q: params.term // search term
-              };
-            },
-            processResults: function (data, params) {
-              // parse the results into the format expected by Select2
-              // since we are using custom formatting functions we do not need to
-              // alter the remote JSON data, except to indicate that infinite
-              // scrolling can be used
-              return {
-                results: data.map(function(item) {
-                  return {
-                    id: item.accountId,
-                    text: [item.firstName, item.lastName].join(' '),
-                    data: item
-                  }
-                }),
-                pagination: {
-                  more: false
-                }
-              }
-            },
-            cache: true
-          },
-          minimumInputLength: 1
-        });
+        prepareExistingAccountDropDown(control.childrenByPropertyId["accountId"])
       }
     })
   },
@@ -201,7 +203,14 @@ module.exports = {
             }
           },
         },
-        "view": "bootstrap-edit"
+        "view": "bootstrap-edit",
+        "postRender": function(control) {
+          control.childrenByPropertyId["accountId"].control
+            .empty()
+            .append('<option value="' + response.account.id + '">' + response.currentAccount + '</option>')
+          
+          prepareExistingAccountDropDown(control.childrenByPropertyId["accountId"])
+        }
       })
     })
   },

@@ -21,6 +21,7 @@
     "sort": false
   },
   "accountId": {
+    "type": "select",
     "dependencies": {
       "changeAccount": "Existing Account"
     }
