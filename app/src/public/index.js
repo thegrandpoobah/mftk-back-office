@@ -12,7 +12,7 @@ Aviator.setRoutes({
       target: require('./accounts'),
       '/': 'index',
       '/new': 'create',
-      ':id': {
+      '/:id': {
         '/edit': 'edit',
         '/notes': 'notes',
         '/delete': 'delete'
