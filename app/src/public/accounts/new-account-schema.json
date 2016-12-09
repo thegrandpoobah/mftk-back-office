@@ -1,0 +1,93 @@
+{
+  "title": "Create Account",
+  "type": "object",
+  "properties": {
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "contacts": {
+      "type": "array",
+      "title": "Contacts",
+      "minItems": 1,
+      "default": [{}],
+      "items": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "title": "First Name",
+            "required": true
+          },
+          "lastName": {
+            "type": "string",
+            "title": "Last Name",
+            "required": true
+          },
+          "gender": {
+            "type": "string",
+            "title": "Gender",
+            "enum": ["Male", "Female"]
+          },
+          "emails": {
+            "title": "E-mails",
+            "type": "array",
+            "default": [{}],
+            "items": {
+              "type": "string"
+            }
+          },
+          "phones": {
+            "title": "Phone Numbers",
+            "type": "array",
+            "default": [{}],
+            "items": {
+              "type": "string"
+            }
+          },
+          "addresses": {
+            "title": "Addresses",
+            "type": "array",
+            "default": [{
+              "city": "Toronto",
+              "province": "Ontario",
+              "country": "Canada"
+            }],
+            "items": {
+              "type": "object",
+              "properties": {
+                "address1": {
+                  "title": "Address 1",
+                  "type": "string"
+                },
+                "address2": {
+                  "title": "Address 2",
+                  "type": "string"
+                },
+                "city": {
+                  "title": "City",
+                  "type": "string",
+                  "default": "Toronto"
+                },
+                "province": {
+                  "title": "Province",
+                  "type": "string",
+                  "default": "Ontario"
+                },
+                "country": {
+                  "title": "Country",
+                  "type": "string",
+                  "default": "Canada"
+                },
+                "postalCode": {
+                  "title": "Postal Code",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

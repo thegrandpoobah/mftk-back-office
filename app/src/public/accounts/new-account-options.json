@@ -1,0 +1,153 @@
+{
+  "active": {
+    "rightLabel": "Active Account"
+  },
+  "contacts": {
+    "label": "Contacts",
+    "actionbar": {
+      "showLabels": true,
+      "actions": [
+        {
+          "label": "Remove Contact",
+          "action": "remove"
+        },
+        {
+          "action": "up",
+          "enabled": false
+        },
+        {
+          "action": "down",
+          "enabled": false
+        },
+        {
+          "action": "add",
+          "enabled": false
+        }
+      ]
+    },
+    "toolbar": {
+      "actions": [
+        {
+          "action": "add",
+          "label": "Add Contact"
+        }
+      ]
+    },
+    "actionbarStyle": "bottom",
+    "hideToolbarWithChildren": false,
+    "collapsible": true,
+    "toolbarSticky": true,
+    "items": {
+      "fields": {
+        "emails": {
+          "actionbar": {
+            "showLabels": true,
+            "actions": [
+              {
+                "label": "Remove E-mail Address",
+                "action": "remove"
+              },
+              {
+                "action": "up",
+                "label": "Move Up"
+              },
+              {
+                "action": "down",
+                "label": "Move Down"
+              },
+              {
+                "action": "add",
+                "enabled": false
+              }
+            ]
+          },
+          "toolbar": {
+            "actions": [
+              {
+                "action": "add",
+                "label": "Add E-Mail Address"
+              }
+            ]
+          },
+          "actionbarStyle": "bottom",
+          "hideToolbarWithChildren": false,
+          "toolbarSticky": true,
+          "items": {
+            "type": "email"
+          }
+        },
+        "phones": {
+          "actionbar": {
+            "showLabels": true,
+            "actions": [
+              {
+                "label": "Remove Phone Number",
+                "action": "remove"
+              },
+              {
+                "action": "up",
+                "label": "Move Up"
+              },
+              {
+                "action": "down",
+                "label": "Move Down"
+              },
+              {
+                "action": "add",
+                "enabled": false
+              }
+            ]
+          },
+          "toolbar": {
+            "actions": [
+              {
+                "action": "add",
+                "label": "Add Phone Number"
+              }
+            ]
+          },
+          "actionbarStyle": "bottom",
+          "hideToolbarWithChildren": false,
+          "toolbarSticky": true,
+          "items": {
+            "type": "phone"
+          }
+        },
+        "addresses": {
+          "actionbar": {
+            "showLabels": true,
+            "actions": [
+              {
+                "label": "Remove Address",
+                "action": "remove"
+              },
+              {
+                "action": "up",
+                "label": "Move Up"
+              },
+              {
+                "action": "down",
+                "label": "Move Down"
+              },
+              {
+                "action": "add",
+                "enabled": false
+              }
+            ]
+          },
+          "toolbar": {
+            "actions": [
+              {
+                "action": "add",
+                "label": "Add Address"
+              }
+            ]
+          },
+          "actionbarStyle": "bottom",
+          "hideToolbarWithChildren": false,
+          "toolbarSticky": true
+        }
+      }
+    }
+  }
+}
