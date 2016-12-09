@@ -30,7 +30,51 @@ module.exports = function(sequelize) {
       type: Sequelize.JSON
     }
   }, {
-    freezeTableName: true
+    freezeTableName: true,
+    classMethods: {
+      getSearchVector() {
+        return 'fts_text';
+      },
+      addFullTextIndex() {
+        if(sequelize.options.dialect !== 'postgres') {
+          console.log('Not creating search index, must be using POSTGRES to do this');
+          return;
+        }
+
+        var searchFields = ['"firstName"', '"lastName"'];
+        var Contact = this;
+
+        var vectorName = Contact.getSearchVector();
+        sequelize
+          .query('ALTER TABLE "' + Contact.tableName + '" ADD COLUMN "' + vectorName + '" TSVECTOR')
+          .then(function() {
+            return sequelize
+              .query('UPDATE "' + Contact.tableName + '" SET "' + vectorName + '" = to_tsvector(\'simple\', ' + searchFields.join(' || \' \' || ') + ')')
+              .error(console.log);
+          }).then(function() {
+            return sequelize
+              .query('CREATE INDEX contact_search_idx ON "' + Contact.tableName + '" USING gin("' + vectorName + '");')
+              .error(console.log);
+          }).then(function() {
+            return sequelize
+              .query('CREATE TRIGGER contact_vector_update BEFORE INSERT OR UPDATE ON "' + Contact.tableName + '" FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger("' + vectorName + '", \'pg_catalog.simple\', ' + searchFields.join(', ') + ')')
+              .error(console.log);
+          }).error(console.log);
+      },
+      search(query) {
+        if(sequelize.options.dialect !== 'postgres') {
+          console.log('Search is only implemented on POSTGRES database');
+          return;
+        }
+
+        var Contact = this;
+
+        query = sequelize.getQueryInterface().escape(query + ':*');
+        
+        return sequelize
+          .query('SELECT * FROM "' + Contact.tableName + '" WHERE "' + Contact.getSearchVector() + '" @@ ' + query + ';', {model: contact, type: sequelize.QueryTypes.SELECT})
+      }
+    }
   });
 
   return contact;
