@@ -1,1 +1,63 @@
-<div>Accounts List View</div>
+<div class="panel panel-default">
+  <div class="panel-heading clearfix">
+    <div class="pull-right">
+      <a class="btn btn-default btn-sm aviator" href="/admin/accounts/new/" role="button">Create</a>
+    </div>
+    Accounts
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Active</th>
+        <th>E-mail</th>
+        <th>Phone Number</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody class="table-hover">
+      {{#data}}
+        <tr>
+          <td>
+            {{#contacts.[0]}}
+              {{firstName}} {{lastName}}
+            {{/contacts.[0]}}
+          </td>
+          <td>
+            {{#active}}
+              <i class="fa fa-check" aria-hidden="true"></i>
+            {{/active}}
+            {{^active}}
+              <i class="fa fa-times" aria-hidden="true"></i>
+            {{/active}}
+          </td>
+          <td>
+            {{#contacts.[0].emails.[0]}}
+              <a href="mailto:{{.}}">{{.}}</a>
+            {{/contacts.[0].emails.[0]}}
+          </td>
+          <td>
+            {{#contacts.[0].phones.[0]}}
+              <a href="tel:{{.}}">{{.}}</a>
+            {{/contacts.[0].phones.[0]}}
+          </td>
+          <td>
+            <div class="btn-group">
+              <a class="btn btn-default btn-xs aviator" href="/admin/accounts/{{id}}/edit/" role="button">Edit</a>
+              <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li><a class="aviator" href="/admin/accounts/{{id}}/delete/">Delete</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      {{/data}}
+      {{^data}}
+        <td colspan="5">No Accounts found</td>
+      {{/data}}
+    </tbody>
+  </table>
+</div>

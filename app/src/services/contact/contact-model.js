@@ -28,10 +28,16 @@ module.exports = function(sequelize) {
     },
     addresses: {
       type: Sequelize.JSON
+    },
+    rank: {
+      type: Sequelize.INTEGER
     }
   }, {
     freezeTableName: true,
     classMethods: {
+      associate() {
+        contact.belongsTo(sequelize.models.account, { as: 'account' })
+      },
       getSearchVector() {
         return 'fts_text';
       },

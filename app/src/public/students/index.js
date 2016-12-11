@@ -27,8 +27,9 @@ function createAccount(student, account) {
   return qwest
     .post('/accounts/', {'active': account.active}, {dataType: 'json', responseType: 'json'})
     .then(function(xhr, response) {
-      account.contacts.forEach(function(contact) {
+      account.contacts.forEach(function(contact, idx) {
         contact.accountId = response.id
+        contact.rank = idx
 
         if (contact.sameAsStudent) {
           contact.firstName = student.firstName

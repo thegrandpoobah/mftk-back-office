@@ -11,3 +11,5 @@ server/config/production.json
 encrypted_data_bag_secret
 .vagrant
 app/public
+chef/nodes/*
+

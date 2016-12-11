@@ -39,11 +39,11 @@
             },
             {
               "action": "up",
-              "enabled": false
+              "label": "Move Up"
             },
             {
               "action": "down",
-              "enabled": false
+              "label": "Move Down"
             },
             {
               "action": "add",
