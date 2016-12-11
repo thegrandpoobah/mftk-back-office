@@ -24,11 +24,19 @@
   "dependencies": {
     "alpaca": "^1.5.22",
     "aviator": "^0.6.1",
+    "body-parser": "^1.15.2",
     "bootstrap-sass": "^3.3.7",
     "bootstrap-switch": "^3.3.2",
+    "compression": "^1.6.2",
+    "cors": "^2.8.1",
     "eonasdan-bootstrap-datetimepicker": "^4.17.43",
     "express": "^4.14.0",
+    "feathers-authentication": "^0.7.12",
+    "feathers-configuration": "^0.4.1",
+    "feathers-hooks": "^1.7.0",
+    "feathers-rest": "^1.5.2",
     "feathers-sequelize": "^1.4.0",
+    "feathers-socketio": "^1.4.2",
     "font-awesome": "^4.7.0",
     "font-awesome-webpack": "0.0.4",
     "handlebars": "^4.0.5",
@@ -42,9 +50,12 @@
     "numeral": "^1.5.3",
     "passport-google-oauth20": "^1.0.0",
     "passport-google-token": "^0.1.2",
+    "pg": "^6.1.1",
     "qwest": "^4.4.5",
     "select2": "^4.0.3",
-    "select2-bootstrap-theme": "0.1.0-beta.9"
+    "select2-bootstrap-theme": "0.1.0-beta.9",
+    "sequelize": "^3.27.0",
+    "winston": "^2.3.0"
   },
   "devDependencies": {
     "bootstrap-loader": "^1.1.2",
