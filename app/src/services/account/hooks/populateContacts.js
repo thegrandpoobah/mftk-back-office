@@ -36,7 +36,10 @@ module.exports = function(options) {
     return hook.app
       .service('/contacts')
       .find({
-        query: {accountId: accountIds},
+        query: {
+          accountId: accountIds,
+          $sort: { rank: 1 }
+        },
         paginate: false
       })
       .then(contacts => {

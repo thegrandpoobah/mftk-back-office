@@ -37,7 +37,6 @@ module.exports = function(sequelize) {
     classMethods: {
       associate() {
         contact.belongsTo(sequelize.models.account, { as: 'account' })
-        contact.belongsTo(sequelize.models.student, { as: 'student' });
       },
       getSearchVector() {
         return 'fts_text';
