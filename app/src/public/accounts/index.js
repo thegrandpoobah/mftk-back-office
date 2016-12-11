@@ -18,8 +18,9 @@ function onCreateClick() {
     .then(function(xhr, response) {
       q = qwest
 
-      account.contacts.forEach(function(contact) {
+      account.contacts.forEach(function(contact, idx) {
         contact.accountId = response.id
+        contact.rank = rank
 
         q = q.post('/contacts', contact, {dataType: 'json', responseType: 'json'})
       })
@@ -34,12 +35,23 @@ function onUpdateClick(originalAccount, accountId) {
   var account = this.getValue()
   var q = qwest
 
-  account.contacts.forEach(function(contact) {
+  var processed = {}
+
+  account.contacts.forEach(function(contact, idx) {
+    contact.rank = idx
+    
     if (contact.id) {
+      processed[contact.id] = true
       q = q.put('/contacts/' + contact.id, contact, {dataType: 'json', responseType: 'json'})
     } else {
       contact.accountId = accountId
       q = q.post('/contacts/', contact, {dataType: 'json', responseType: 'json'})
+    }
+  })
+
+  originalAccount.contacts.forEach(function(contact) {
+    if (!processed[contact.id]) {
+      q = q.delete('/contacts/' + contact.id, {dataType: 'json', responseType: 'json'})
     }
   })
 
@@ -81,6 +93,10 @@ module.exports = {
   },
   edit: function(request) {
     qwest.get('/accounts/' + request.namedParams.id).then(function(xhr, response) {
+      response.contacts.sort(function(a, b) {
+        return a.rank - b.rank
+      })
+
       $("#spa-target").empty().alpaca({
         "data": response,
         "schema": require('./edit-account-schema.json'),
@@ -108,5 +124,18 @@ module.exports = {
   notes: function(request) {
   },
   delete: function(request) {
+    qwest.get('/accounts/' + request.namedParams.id).then(function(xhr, response) {
+      var q = qwest
+
+      response.contacts.forEach(function(contact) {
+        q = q.delete('/contacts/' + contact.id)
+      })
+
+      q
+        .delete('/accounts/' + response.id)
+        .then(function() {
+          Aviator.navigate("/admin/accounts/")
+        })
+    })
   }
 }
