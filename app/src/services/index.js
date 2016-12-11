@@ -13,13 +13,10 @@ const studentSearch = require('./studentSearch');
 const authentication = require('./authentication');
 const user = require('./user');
 
-const path = require('path');
-const fs = require('fs-extra');
 const Sequelize = require('sequelize');
 
 module.exports = function() {
   const app = this;
-
 
   const sequelize = new Sequelize(app.get('postgres'), {
     dialect: 'postgres',
@@ -32,11 +29,13 @@ module.exports = function() {
   app.configure(account);
   app.configure(contact);
   app.configure(student);
-  app.configure(studentSearch);
   app.configure(division);
   app.configure(attendance);
   app.configure(note);
   app.configure(curriculumLog);
+
+  app.configure(studentSearch);
+  app.configure(accountSearch);
 
   // Setup relationships
   const services = app.services;
@@ -45,9 +44,8 @@ module.exports = function() {
     .filter(service => service.Model && service.Model.associate)
     .forEach(service => service.Model.associate());
 
-  sequelize.sync().done(function() {
+  sequelize.sync().then(function() {
     services.students.Model.addFullTextIndex();
     services.contacts.Model.addFullTextIndex();
   })
-  app.configure(accountSearch);
 };
