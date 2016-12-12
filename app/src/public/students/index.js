@@ -146,9 +146,19 @@ function prepareExistingAccountDropDown(ctrl) {
   });
 }
 
+function responseToModel(response) {
+  response.dateOfBirth = moment(response.dateOfBirth.split('T')[0])
+
+  return response
+}
+
 module.exports = {
   index: function() {
     qwest.get('/students?$sort[firstName]=1&$sort[lastName]=1').then(function(xhr, response) {
+      if (response.data) {
+        response.data = response.data.map(responseToModel)
+      }
+
       $('#spa-target').empty().html(templates['index'](response))
     })
   },
@@ -180,6 +190,8 @@ module.exports = {
   },
   edit: function(request) {
     qwest.get('/students/' + request.namedParams.id).then(function(xhr, response) {
+      response = responseToModel(response)
+
       response.currentAccount = [response.account.contacts[0].firstName, response.account.contacts[0].lastName].join(' ')
       response.changeAccount = 'Keep Current Account'
       response.dateOfBirth = moment(response.dateOfBirth).format('MM/DD/YYYY')
