@@ -6,7 +6,6 @@ package 'build-essential'
 package 'git'
 package 'zip'
 package 'awscli'
-package 'sqlite3'
 
 nodejs_npm "webpack"
 nodejs_npm "mocha"
