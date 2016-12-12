@@ -9,7 +9,7 @@
     <thead>
       <tr>
         <th>Student Name</th>
-        <th>Date of Birth</th>
+        <th>Age (Date of Birth)</th>
         <th>Rank</th>
         <th>Roles</th>
         <th>Account</th>
@@ -20,7 +20,7 @@
       {{#data}}
         <tr>
           <td>{{firstName}} {{lastName}}</td>
-          <td>{{date dateOfBirth format="L"}}</td>
+          <td>{{age dateOfBirth}} ({{date dateOfBirth format="L"}})</td>
           <td>{{rank}}</td>
           <td>
             {{#roles}}
@@ -54,7 +54,7 @@
         </tr>
       {{/data}}
       {{^data}}
-        <td colspan="5">No students found</td>
+        <td colspan="6">No students found</td>
       {{/data}}
     </tbody>
   </table>

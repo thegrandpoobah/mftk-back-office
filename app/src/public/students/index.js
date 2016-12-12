@@ -14,7 +14,10 @@ Handlebars.registerHelper({
   },
   'time': function (t) {
     return moment().startOf('day').add(t, 'minutes').format(TIME_FORMAT)
-  }  
+  },
+  'age': function (d) {
+    return moment(d).toNow(true) + ' old'
+  }
 })
 
 var templates = {
