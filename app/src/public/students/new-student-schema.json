@@ -69,6 +69,7 @@
       "type": "string",
       "title": "Account",
       "enum": ["New Account", "Existing Account"],
+      "default": ["Existing Account"],
       "required": true
     },
     "accountId": {
