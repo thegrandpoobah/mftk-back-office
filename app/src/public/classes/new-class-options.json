@@ -14,14 +14,16 @@
     "type": "time",
     "dateFormat": "h:mm a",
     "picker": {
-      "format": "h:mm a"
+      "format": "h:mm a",
+      "stepping": 5
     }
   },
   "endTime": {
     "type": "time",
     "dateFormat": "h:mm a",
     "picker": {
-      "format": "h:mm a"
+      "format": "h:mm a",
+      "stepping": 5
     }
   }
 }
