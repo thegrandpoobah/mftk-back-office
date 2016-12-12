@@ -62,7 +62,8 @@
     },
     "dateOfBirth": {
       "type": "string",
-      "title": "Date Of Birth"
+      "title": "Date Of Birth",
+      "required": true
     },
     "accountType": {
       "type": "string",
