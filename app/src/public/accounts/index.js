@@ -6,6 +6,8 @@ require('eonasdan-bootstrap-datetimepicker')
 var moment = require('moment')
 require('alpaca')
 
+qwest.setDefaultDataType('json')
+
 var templates = {
   'index': require('./index.html.handlebars')
 }
@@ -14,7 +16,7 @@ function onCreateClick() {
   var account = this.getValue()
 
   return qwest
-    .post('/accounts/', {'active': account.active}, {dataType: 'json', responseType: 'json'})
+    .post('/api/accounts/', {'active': account.active})
     .then(function(xhr, response) {
       q = qwest
 
@@ -22,7 +24,7 @@ function onCreateClick() {
         contact.accountId = response.id
         contact.rank = rank
 
-        q = q.post('/contacts', contact, {dataType: 'json', responseType: 'json'})
+        q = q.post('/api/contacts', contact)
       })
 
       q.then(function() {
@@ -42,20 +44,20 @@ function onUpdateClick(originalAccount, accountId) {
     
     if (contact.id) {
       processed[contact.id] = true
-      q = q.put('/contacts/' + contact.id, contact, {dataType: 'json', responseType: 'json'})
+      q = q.put('/api/contacts/' + contact.id, contact)
     } else {
       contact.accountId = accountId
-      q = q.post('/contacts/', contact, {dataType: 'json', responseType: 'json'})
+      q = q.post('/api/contacts/', contact)
     }
   })
 
   originalAccount.contacts.forEach(function(contact) {
     if (!processed[contact.id]) {
-      q = q.delete('/contacts/' + contact.id, {dataType: 'json', responseType: 'json'})
+      q = q.delete('/api/contacts/' + contact.id)
     }
   })
 
-  q = q.put('/accounts/' + accountId, {'active': account.active}, {dataType: 'json', responseType: 'json'})
+  q = q.put('/api/accounts/' + accountId, {'active': account.active})
 
   q.then(function() {
     Aviator.navigate('/admin/accounts/')
@@ -64,7 +66,7 @@ function onUpdateClick(originalAccount, accountId) {
 
 module.exports = {
   index: function() {
-    qwest.get('/accounts').then(function(xhr, response) {
+    qwest.get('/api/accounts').then(function(xhr, response) {
       $('#spa-target').empty().html(templates['index'](response))
     })
   },
@@ -92,7 +94,7 @@ module.exports = {
     })
   },
   edit: function(request) {
-    qwest.get('/accounts/' + request.namedParams.id).then(function(xhr, response) {
+    qwest.get('/api/accounts/' + request.namedParams.id).then(function(xhr, response) {
       response.contacts.sort(function(a, b) {
         return a.rank - b.rank
       })
@@ -124,15 +126,15 @@ module.exports = {
   notes: function(request) {
   },
   delete: function(request) {
-    qwest.get('/accounts/' + request.namedParams.id).then(function(xhr, response) {
+    qwest.get('/api/accounts/' + request.namedParams.id).then(function(xhr, response) {
       var q = qwest
 
       response.contacts.forEach(function(contact) {
-        q = q.delete('/contacts/' + contact.id)
+        q = q.delete('/api/contacts/' + contact.id)
       })
 
       q
-        .delete('/accounts/' + response.id)
+        .delete('/api/accounts/' + response.id)
         .then(function() {
           Aviator.navigate("/admin/accounts/")
         })

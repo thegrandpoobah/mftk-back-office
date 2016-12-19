@@ -10,16 +10,16 @@ module.exports = function(){
   const options = {
     Model: account(app.get('sequelize')),
     paginate: {
-      default: 5,
-      max: 25
+      default: 250,
+      max: 250
     }
   };
 
   // Initialize our service with any options it requires
-  app.use('/accounts', service(options));
+  app.use('/api/accounts', service(options));
 
   // Get our initialize service to that we can bind hooks
-  const accountService = app.service('/accounts');
+  const accountService = app.service('/api/accounts');
 
   // Set up our before hooks
   accountService.before(hooks.before);

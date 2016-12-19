@@ -10,16 +10,16 @@ module.exports = function(){
   const options = {
     Model: student(app.get('sequelize')),
     paginate: {
-      default: 5,
-      max: 25
+      default: 250,
+      max: 250
     }
   };
 
   // Initialize our service with any options it requires
-  app.use('/students', service(options));
+  app.use('/api/students', service(options));
 
   // Get our initialize service to that we can bind hooks
-  const studentService = app.service('/students');
+  const studentService = app.service('/api/students');
 
   // Set up our before hooks
   studentService.before(hooks.before);

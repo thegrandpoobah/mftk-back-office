@@ -6,6 +6,8 @@ require('eonasdan-bootstrap-datetimepicker')
 var moment = require('moment')
 require('alpaca')
 
+qwest.setDefaultDataType('json')
+
 var TIME_FORMAT = 'h:mma'
 
 Handlebars.registerHelper({
@@ -28,7 +30,7 @@ var templates = {
 
 function createAccount(student, account) {
   return qwest
-    .post('/accounts/', {'active': account.active}, {dataType: 'json', responseType: 'json'})
+    .post('/api/accounts/', {'active': account.active})
     .then(function(xhr, response) {
       account.contacts.forEach(function(contact, idx) {
         contact.accountId = response.id
@@ -42,7 +44,7 @@ function createAccount(student, account) {
 
         delete contact.sameAsStudent
 
-        qwest.post('/contacts', contact, {dataType: 'json', responseType: 'json'})
+        qwest.post('/api/contacts', contact)
       })
 
       return response.id
@@ -61,7 +63,7 @@ function onCreateClick() {
       delete student.accountObject
 
       qwest
-        .post('/students', student, {dataType: 'json', responseType: 'json'})
+        .post('/api/students', student)
         .then(function(xhr, response) {
           Aviator.navigate('/admin/students/')
         })
@@ -70,7 +72,7 @@ function onCreateClick() {
     delete student.accountType
 
     qwest
-      .post('/students', student, {dataType: 'json', responseType: 'json'})
+      .post('/api/students', student)
       .then(function(xhr, response) {
         Aviator.navigate('/admin/students/')
       })
@@ -93,7 +95,7 @@ function onUpdateClick(originalStudent, studentId) {
       delete student.accountObject
 
       qwest
-        .put('/students/' + studentId, student, {dataType: 'json', responseType: 'json'})
+        .put('/api/students/' + studentId, student)
         .then(function(xhr, response) {
           Aviator.navigate('/admin/students/')
         })
@@ -106,7 +108,7 @@ function onUpdateClick(originalStudent, studentId) {
   }
 
   qwest
-    .put('/students/' + studentId, student, {dataType: 'json', responseType: 'json'})
+    .put('/api/students/' + studentId, student)
     .then(function(xhr, response) {
       Aviator.navigate('/admin/students/')
     })
@@ -117,7 +119,7 @@ function prepareExistingAccountDropDown(ctrl) {
     placeholder: 'Select an Account',
     theme: "bootstrap",
     ajax: {
-      url: "/search/accounts",
+      url: "/api/search/accounts",
       dataType: 'json',
       delay: 250,
       data: function (params) {
@@ -157,7 +159,7 @@ function responseToModel(response) {
 
 module.exports = {
   index: function() {
-    qwest.get('/students?$sort[firstName]=1&$sort[lastName]=1').then(function(xhr, response) {
+    qwest.get('/api/students?$sort[firstName]=1&$sort[lastName]=1').then(function(xhr, response) {
       if (response.data) {
         response.data = response.data.map(responseToModel)
       }
@@ -192,7 +194,7 @@ module.exports = {
     })
   },
   edit: function(request) {
-    qwest.get('/students/' + request.namedParams.id).then(function(xhr, response) {
+    qwest.get('/api/students/' + request.namedParams.id).then(function(xhr, response) {
       response = responseToModel(response)
 
       response.currentAccount = [response.account.contacts[0].firstName, response.account.contacts[0].lastName].join(' ')
@@ -232,8 +234,8 @@ module.exports = {
   },
   attendance: function(request) {
     qwest
-      .get('/students/' + request.namedParams.id)
-      .get('/attendances?$sort[createdAt]=-1&studentId=' + request.namedParams.id)
+      .get('/api/students/' + request.namedParams.id)
+      .get('/api/attendances?$sort[createdAt]=-1&studentId=' + request.namedParams.id)
       .then(function(responses) {
         $("#spa-target").empty().html(templates['attendance']({
           student: responses[0][1],
@@ -243,8 +245,8 @@ module.exports = {
   },
   notes: function(request) {
     qwest
-      .get('/students/' + request.namedParams.id)
-      .get('/notes?$sort[createdAt]=-1&studentId=' + request.namedParams.id)
+      .get('/api/students/' + request.namedParams.id)
+      .get('/api/notes?$sort[createdAt]=-1&studentId=' + request.namedParams.id)
       .then(function(responses) {
         $("#spa-target").empty().html(templates['notes']({
           student: responses[0][1],
@@ -254,7 +256,7 @@ module.exports = {
   },
   delete: function(request) {
     qwest
-      .delete("/students/" + request.namedParams.id)
+      .delete("/api/students/" + request.namedParams.id)
       .then(function(xhr, response) {
         Aviator.navigate("/admin/students/")
       })

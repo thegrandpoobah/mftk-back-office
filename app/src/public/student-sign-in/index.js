@@ -5,6 +5,8 @@ var Handlebars = require('handlebars/runtime')
 var moment = require('moment')
 require('select2')
 
+qwest.setDefaultDataType('json')
+
 var TIME_FORMAT = 'h:mma'
 
 Handlebars.registerHelper({
@@ -28,7 +30,7 @@ module.exports = {
       currentTime: moment().format('h:mm:ss a')
     }))
 
-    qwest.get("/divisions?dayOfTheWeek=" + moment().format('dddd'))
+    qwest.get("/api/divisions?dayOfTheWeek=" + moment().format('dddd'))
       .then(function(xhr, response) {
         divisionList = response.data
       })
@@ -37,7 +39,7 @@ module.exports = {
       placeholder: 'Select a Student',
       theme: "bootstrap",
       ajax: {
-        url: "/search/students",
+        url: "/api/search/students",
         dataType: 'json',
         delay: 250,
         data: function (params) {
@@ -92,7 +94,7 @@ module.exports = {
       signInTime: moment().format()
     }
 
-    qwest.post("/attendances", attendance, {dataType: 'json', responseType: 'json'})
+    qwest.post("/api/attendances", attendance, {dataType: 'json', responseType: 'json'})
       .then(function(xhr, response) {
         Aviator.navigate('/student-sign-in/').refresh()
       })

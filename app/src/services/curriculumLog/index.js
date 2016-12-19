@@ -10,8 +10,8 @@ module.exports = function(){
   const options = {
     Model: curriculumLog(app.get('sequelize')),
     paginate: {
-      default: 5,
-      max: 25
+      default: 250,
+      max: 250
     }
   };
 
@@ -27,7 +27,7 @@ module.exports = function(){
       return currentFind.call({Model:{
         findAndCount(q) {
           q.include = [{
-            model: app.service('/divisions').Model,
+            model: app.service('/api/divisions').Model,
             as: 'division',
             required: true
           }]
@@ -35,7 +35,7 @@ module.exports = function(){
           // not sure if this is the right way of doing this
           // but it works.
           q.where = srv.Model.sequelize.and(
-            { '$division.types$': srv.Model.sequelize.literal("division.types @> array['"+searchType+"']::varchar[]") },
+            { '$division.types$': srv.Model.sequelize.literal(`division.types @> array['${searchType}']::varchar[]`) },
             q.where)
           
           return srv.Model.findAndCount(q)
@@ -47,10 +47,10 @@ module.exports = function(){
   }
 
   // Initialize our service with any options it requires
-  app.use('/curriculumLogs', srv);
+  app.use('/api/curriculumLogs', srv);
 
   // Get our initialize service to that we can bind hooks
-  const curriculumLogService = app.service('/curriculumLogs');
+  const curriculumLogService = app.service('/api/curriculumLogs');
 
   // Set up our before hooks
   curriculumLogService.before(hooks.before);
