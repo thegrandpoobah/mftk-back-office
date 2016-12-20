@@ -34,7 +34,7 @@ module.exports = function(options) {
     })
 
     return hook.app
-      .service('/contacts')
+      .service('/api/contacts')
       .find({
         query: {
           accountId: accountIds,

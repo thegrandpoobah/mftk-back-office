@@ -17,12 +17,12 @@ module.exports = function(){
   const app = this;
 
   // Initialize our service with any options it requires
-  app.use('/search/students', new Service({
+  app.use('/api/search/students', new Service({
     Model: student(app.get('sequelize'))
   }));
 
   // Get our initialize service to that we can bind hooks
-  const studentSearchService = app.service('/search/students');
+  const studentSearchService = app.service('/api/search/students');
 
   // Set up our before hooks
   studentSearchService.before(hooks.before);

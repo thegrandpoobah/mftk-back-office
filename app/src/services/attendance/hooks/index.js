@@ -18,21 +18,21 @@ exports.after = {
   all: [],
   find: [
     hooks.populate('student', {
-      service: '/students',
+      service: '/api/students',
       field: 'studentId'
     }),
     hooks.populate('division', {
-      service: '/divisions',
+      service: '/api/divisions',
       field: 'divisionId'
     })
   ],
   get: [
     hooks.populate('student', {
-      service: '/students',
+      service: '/api/students',
       field: 'studentId'  
     }),
     hooks.populate('division', {
-      service: '/divisions',
+      service: '/api/divisions',
       field: 'divisionId'
     })
   ],

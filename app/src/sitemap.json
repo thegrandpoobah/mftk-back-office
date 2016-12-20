@@ -1,0 +1,46 @@
+{
+  "/admin": {
+    "/accounts": {
+      "/": "index",
+      "/new": "create",
+      "/:id": {
+        "/edit": "edit",
+        "/notes": "notes",
+        "/delete": "delete"
+      }
+    },
+    "/students": {
+      "/": "index",
+      "/new": "create",
+      "/:id": {
+        "/edit": "edit",
+        "/attendance": "attendance",
+        "/notes": "notes",
+        "/delete": "delete"
+      }
+    },
+    "/classes": {
+      "/": "index",
+      "/new": "create",
+      "/:id": {
+        "/edit": "edit",
+        "/delete": "delete" 
+      }
+    }
+  },
+  "/disciplinary-note": {
+    "/": "index",
+    "/create": "create"
+  },
+  "/curriculum-log": {
+    "/": "index",
+    "/create": "create"
+  },
+  "/instructor-sign-in": {
+    "/": "index"
+  },
+  "/student-sign-in": {
+    "/": "index",
+    "/sign-in": "signIn"
+  }
+}

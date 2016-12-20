@@ -39,13 +39,14 @@ module.exports = function() {
 
   // Setup relationships
   const services = app.services;
+
   Object.keys(services)
     .map(name => services[name])
     .filter(service => service.Model && service.Model.associate)
     .forEach(service => service.Model.associate());
 
   sequelize.sync().then(function() {
-    services.students.Model.addFullTextIndex();
-    services.contacts.Model.addFullTextIndex();
+    services['api/students'].Model.addFullTextIndex();
+    services['api/contacts'].Model.addFullTextIndex();
   })
 };

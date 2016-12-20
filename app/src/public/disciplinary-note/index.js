@@ -4,6 +4,8 @@ var $ = require('jquery')
 require('handlebars/runtime')
 require('select2')
 
+qwest.setDefaultDataType('json')
+
 var templates = {
   'index': require('./index.html.handlebars')
 }
@@ -16,7 +18,7 @@ module.exports = {
       placeholder: 'Select a Student',
       theme: "bootstrap",
       ajax: {
-        url: "/search/students",
+        url: "/api/search/students",
         dataType: 'json',
         delay: 250,
         data: function (params) {
@@ -48,7 +50,7 @@ module.exports = {
       placeholder: 'Select an Instructor',
       theme: "bootstrap",
       ajax: {
-        url: "/search/students",
+        url: "/api/search/students",
         dataType: 'json',
         delay: 250,
         data: function (params) {
@@ -83,7 +85,7 @@ module.exports = {
       text: $('.note').val()
     }
 
-    qwest.post("/notes", note, {dataType: 'json', responseType: 'json'}).then(function(xhr, response) {
+    qwest.post("/api/notes", note, {dataType: 'json', responseType: 'json'}).then(function(xhr, response) {
       Aviator.navigate('/disciplinary-note/').refresh()
     })
   }

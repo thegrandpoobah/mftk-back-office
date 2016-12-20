@@ -6,6 +6,8 @@ require('eonasdan-bootstrap-datetimepicker')
 var moment = require('moment')
 require('alpaca')
 
+qwest.setDefaultDataType('json')
+
 var TIME_FORMAT = 'h:mm a'
 
 Handlebars.registerHelper({
@@ -25,7 +27,7 @@ function onCreateClick() {
   v.endTime = moment(v.endTime, TIME_FORMAT).diff(moment(v.endTime, TIME_FORMAT).startOf('day'), 'minutes')
 
   qwest
-    .post("/divisions", v, {dataType: 'json', responseType: 'json'})
+    .post("/api/divisions", v)
     .then(function(xhr, response) {
       Aviator.navigate("/admin/classes/")
     })
@@ -38,7 +40,7 @@ function onUpdateClick(classId) {
   v.endTime = moment(v.endTime, TIME_FORMAT).diff(moment(v.endTime, TIME_FORMAT).startOf('day'), 'minutes')
 
   qwest
-    .put("/divisions/" + classId, v, {dataType: 'json', responseType: 'json'})
+    .put("/api/divisions/" + classId, v)
     .then(function(xhr, response) {
       Aviator.navigate("/admin/classes/")
     })
@@ -46,7 +48,7 @@ function onUpdateClick(classId) {
 
 module.exports = {
   index: function() {
-    qwest.get('/divisions?$sort[dayOfTheWeek]=1&$sort[startTime]=1').then(function(xhr, response) {
+    qwest.get('/api/divisions?$sort[dayOfTheWeek]=1&$sort[startTime]=1').then(function(xhr, response) {
       $('#spa-target').empty().html(templates['index'](response))
     })
   },
@@ -74,7 +76,7 @@ module.exports = {
     })
   },
   edit: function(request) {
-    qwest.get('/divisions/' + request.namedParams.id).then(function(xhr, response) {
+    qwest.get('/api/divisions/' + request.namedParams.id).then(function(xhr, response) {
       response.startTime = moment().startOf('day').add(response.startTime, 'minutes').format(TIME_FORMAT)
       response.endTime = moment().startOf('day').add(response.endTime, 'minutes').format(TIME_FORMAT)
 
@@ -104,7 +106,7 @@ module.exports = {
   },
   delete: function(request) {
     qwest
-      .delete("/divisions/" + request.namedParams.id)
+      .delete("/api/divisions/" + request.namedParams.id)
       .then(function(xhr, response) {
         Aviator.navigate("/admin/classes/")
       })

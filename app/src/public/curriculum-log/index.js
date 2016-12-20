@@ -6,6 +6,8 @@ require('eonasdan-bootstrap-datetimepicker')
 var moment = require('moment')
 require('alpaca')
 
+qwest.setDefaultDataType('json')
+
 var TIME_FORMAT = 'h:mma'
 
 Handlebars.registerHelper({
@@ -25,12 +27,12 @@ var templates = {
 module.exports = {
   index: function() {
     qwest
-      .get('/divisions?dayOfTheWeek=' + moment().format('dddd'))
-      .get('/curriculumLogs?$sort[createdAt]=1&type=Tiny%20Tigers')
-      .get('/curriculumLogs?$sort[createdAt]=1&type=Children')
-      .get('/curriculumLogs?$sort[createdAt]=1&type=Adult')
-      .get('/curriculumLogs?$sort[createdAt]=1&type=Demo%20Team')
-      .get('/curriculumLogs?$sort[createdAt]=1&type=Olympic%20Sparring')
+      .get('/api/divisions?dayOfTheWeek=' + moment().format('dddd'))
+      .get('/api/curriculumLogs?$sort[createdAt]=1&type=Tiny%20Tigers')
+      .get('/api/curriculumLogs?$sort[createdAt]=1&type=Children')
+      .get('/api/curriculumLogs?$sort[createdAt]=1&type=Adult')
+      .get('/api/curriculumLogs?$sort[createdAt]=1&type=Demo%20Team')
+      .get('/api/curriculumLogs?$sort[createdAt]=1&type=Olympic%20Sparring')
       .then(function(responses) {
         $('#spa-target').empty().html(templates['index']({
           'tiny-tigers': responses[1][1].data,
@@ -55,7 +57,7 @@ module.exports = {
           placeholder: 'Select an Instructor',
           theme: "bootstrap",
           ajax: {
-            url: "/search/students",
+            url: "/api/search/students",
             dataType: 'json',
             delay: 250,
             data: function (params) {
@@ -96,7 +98,7 @@ module.exports = {
     cl.extra = $('.cl-form .notes-input').val()
 
     qwest
-      .post('/curriculumLogs', cl, {dataType: 'json', responseType: 'json'})
+      .post('/api/curriculumLogs', cl, {dataType: 'json', responseType: 'json'})
       .then(function(xhr, response) {
         Aviator.navigate('/curriculum-log/')
       })

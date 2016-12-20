@@ -17,13 +17,13 @@ exports.after = {
   all: [],
   find: [
     hooks.populate('account', {
-      service: '/accounts',
+      service: '/api/accounts',
       field: 'accountId'
     })
   ],
   get: [
     hooks.populate('account', {
-      service: '/accounts',
+      service: '/api/accounts',
       field: 'accountId'  
     })
   ],
