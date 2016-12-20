@@ -8,14 +8,12 @@
 const Sequelize = require('sequelize');
 
 module.exports = function(sequelize) {
-  const user = sequelize.define('users', {
+  const user = sequelize.define('user', {
     githubId: {
       type: Sequelize.STRING,
       allowNull: true
     },
-  }, {
-    freezeTableName: true
-  });
+  }, {});
 
   return user;
 };

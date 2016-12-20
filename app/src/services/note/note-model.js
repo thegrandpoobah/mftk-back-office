@@ -14,7 +14,6 @@ module.exports = function(sequelize) {
       allowNull: false
     }
   }, {
-    freezeTableName: true,
     classMethods: {
       associate() {
         note.belongsTo(sequelize.models.student, { as: 'instructor' });
