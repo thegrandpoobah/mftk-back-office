@@ -1,62 +1,36 @@
 require('modernizr')
 
+var _ = require('lodash')
 var Aviator = require('aviator')
 
 require('font-awesome-webpack')
 require('./styles/main.scss')
+var sitemap = require('../sitemap.json')
 
 Aviator.linkSelector = 'a.aviator'
-Aviator.setRoutes({
+Aviator.setRoutes(_.defaultsDeep(sitemap, {
   '/admin': {
     '/accounts': {
-      target: require('./accounts'),
-      '/': 'index',
-      '/new': 'create',
-      '/:id': {
-        '/edit': 'edit',
-        '/notes': 'notes',
-        '/delete': 'delete'
-      }
+      target: require('./accounts')
     },
     '/students': {
-      target: require('./students'),
-      '/': 'index',
-      '/new': 'create',
-      '/:id': {
-        '/edit': 'edit',
-        '/attendance': 'attendance',
-        '/notes': 'notes',
-        '/delete': 'delete'
-      }
+      target: require('./students')
     },
     '/classes': {
-      target: require('./classes'),
-      '/': 'index',
-      '/new': 'create',
-      '/:id': {
-        '/edit': 'edit',
-        '/delete': 'delete' 
-      }
+      target: require('./classes')
     }
   },
   '/disciplinary-note': {
-    target: require('./disciplinary-note'),
-    '/': 'index',
-    '/create': 'create'
+    target: require('./disciplinary-note')
   },
   '/curriculum-log': {
-    target: require('./curriculum-log'),
-    '/': 'index',
-    '/create': 'create'
+    target: require('./curriculum-log')
   },
   '/instructor-sign-in': {
-    target: require('./instructor-sign-in'),
-    '/': 'index'
+    target: require('./instructor-sign-in')
   },
   '/student-sign-in': {
-    target: require('./student-sign-in'),
-    '/': 'index',
-    '/sign-in': 'signIn'
+    target: require('./student-sign-in')
   }
-})
+}))
 Aviator.dispatch()
