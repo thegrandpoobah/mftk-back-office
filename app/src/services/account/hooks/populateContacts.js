@@ -25,19 +25,13 @@ module.exports = function(options) {
       accounts = [accounts]
     }
 
-    const accountIds = accounts.map(function(i) {
-      return i.id
-    })
-
-    accounts = accounts.map(function(i) {
-      return i.toJSON()
-    })
+    accounts = accounts.map(acct => acct.toJSON())
 
     return hook.app
       .service('/api/contacts')
       .find({
         query: {
-          accountId: accountIds,
+          accountId: accounts.map(acct => acct.id),
           $sort: { rank: 1 }
         },
         paginate: false
@@ -45,13 +39,13 @@ module.exports = function(options) {
       .then(contacts => {
         const accountMap = {}
 
-        accounts.forEach(function(i) {
-          accountMap[i.id] = i
-          accountMap[i.id].contacts = []
+        accounts.forEach(acct => {
+          accountMap[acct.id] = acct
+          accountMap[acct.id].contacts = []
         })
 
-        contacts.forEach(function(i) {
-          accountMap[i.accountId].contacts.push(i)
+        contacts.forEach(acct => {
+          accountMap[acct.accountId].contacts.push(acct)
         })
 
         if (!isArray) {

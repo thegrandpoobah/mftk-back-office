@@ -15,7 +15,6 @@ module.exports = function(sequelize) {
       allowNull: false
     },
   }, {
-    freezeTableName: true,
     classMethods: {
       associate() {
         account.hasMany(sequelize.models.contact, { as: 'contacts' });

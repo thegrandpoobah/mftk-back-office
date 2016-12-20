@@ -61,7 +61,6 @@ module.exports = function(sequelize) {
       // but this is prevented by https://github.com/sequelize/sequelize/issues/1498
     }
   }, {
-    freezeTableName: true,
     classMethods: {
       associate() {
         student.belongsTo(sequelize.models.account, { as: 'account' });

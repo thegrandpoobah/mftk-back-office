@@ -30,7 +30,6 @@ module.exports = function(sequelize) {
       allowNull: false
     }
   }, {
-    freezeTableName: true,
     classMethods: {
       associate() {
         curriculumLog.belongsTo(sequelize.models.division, { as: 'division' });

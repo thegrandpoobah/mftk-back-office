@@ -31,9 +31,7 @@ module.exports = function(sequelize) {
       type: Sequelize.INTEGER,
       allowNull: false
     }
-  }, {
-    freezeTableName: true
-  });
+  }, {});
 
   return division;
 };

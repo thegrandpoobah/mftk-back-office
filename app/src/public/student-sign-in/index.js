@@ -94,7 +94,7 @@ module.exports = {
       signInTime: moment().format()
     }
 
-    qwest.post("/api/attendances", attendance, {dataType: 'json', responseType: 'json'})
+    qwest.post("/api/attendances", attendance)
       .then(function(xhr, response) {
         Aviator.navigate('/student-sign-in/').refresh()
       })

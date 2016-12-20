@@ -33,7 +33,6 @@ module.exports = function(sequelize) {
       type: Sequelize.INTEGER
     }
   }, {
-    freezeTableName: true,
     classMethods: {
       associate() {
         contact.belongsTo(sequelize.models.account, { as: 'account' })
