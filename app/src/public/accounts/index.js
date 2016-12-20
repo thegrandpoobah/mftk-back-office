@@ -22,9 +22,9 @@ function onCreateClick() {
 
       account.contacts.forEach(function(contact, idx) {
         contact.accountId = response.id
-        contact.rank = rank
+        contact.rank = idx
 
-        q = q.post('/api/contacts', contact)
+        q = q.post('/api/contacts/', contact)
       })
 
       q.then(function() {
