@@ -31,7 +31,7 @@ module.exports = function(options) {
       .service('/api/contacts')
       .find({
         query: {
-          accountId: accounts.map(acct => i.id),
+          accountId: accounts.map(acct => acct.id),
           $sort: { rank: 1 }
         },
         paginate: false
