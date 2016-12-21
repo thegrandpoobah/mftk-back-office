@@ -98,7 +98,7 @@ module.exports = {
     cl.extra = $('.cl-form .notes-input').val()
 
     qwest
-      .post('/api/curriculumLogs', cl, {dataType: 'json', responseType: 'json'})
+      .post('/api/curriculumLogs', cl)
       .then(function(xhr, response) {
         Aviator.navigate('/curriculum-log/')
       })

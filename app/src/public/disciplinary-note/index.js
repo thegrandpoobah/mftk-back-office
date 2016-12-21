@@ -34,7 +34,11 @@ module.exports = {
           // scrolling can be used
           return {
             results: data.map(function(item) {
-              return {id: item.id, text: [item.firstName, item.lastName].join(' '), data: item}
+              return {
+                id: item.id,
+                text: [item.firstName, item.lastName].join(' '),
+                data: item
+              }
             }),
             pagination: {
               more: false
@@ -66,7 +70,11 @@ module.exports = {
           // scrolling can be used
           return {
             results: data.map(function(item) {
-              return {id: item.id, text: [item.firstName, item.lastName].join(' '), data: item}
+              return {
+                id: item.id,
+                text: [item.firstName, item.lastName].join(' '),
+                data: item
+              }
             }),
             pagination: {
               more: false
@@ -85,7 +93,7 @@ module.exports = {
       text: $('.note').val()
     }
 
-    qwest.post("/api/notes", note, {dataType: 'json', responseType: 'json'}).then(function(xhr, response) {
+    qwest.post("/api/notes", note).then(function(xhr, response) {
       Aviator.navigate('/disciplinary-note/').refresh()
     })
   }
