@@ -294,7 +294,7 @@ module.exports = {
       .get('/api/students/' + request.namedParams.id)
       .then(function(xhr, response) {
         response.ranks.forEach(function(rank) {
-          rank.promotedOn = moment(rank.promotedOn).format('MM/DD/YYYY')
+          rank.promotedOn = moment(rank.promotedOn.split('T')[0])
         })
 
         $("#spa-target").empty().alpaca({
