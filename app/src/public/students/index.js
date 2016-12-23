@@ -1,6 +1,7 @@
 var Aviator = require('aviator')
 var qwest = require('qwest')
 var $ = require('jquery')
+var _ = require('lodash')
 require('eonasdan-bootstrap-datetimepicker')
 var moment = require('moment')
 require('alpaca')
@@ -50,7 +51,15 @@ function onCreateClick() {
       qwest
         .post('/api/students', student)
         .then(function(xhr, response) {
-          Aviator.navigate('/admin/students/')
+          qwest
+            .post('/api/ranks', {
+              rank: 'White',
+              promotedOn: moment(),
+              studentId: response.id 
+            })
+            .then(function() {
+              Aviator.navigate('/admin/students/')
+            })
         })
     })
   } else {
@@ -59,7 +68,15 @@ function onCreateClick() {
     qwest
       .post('/api/students', student)
       .then(function(xhr, response) {
-        Aviator.navigate('/admin/students/')
+        qwest
+          .post('/api/ranks', {
+            rank: 'White',
+            promotedOn: moment(),
+            studentId: response.id 
+          })
+          .then(function() {
+            Aviator.navigate('/admin/students/')
+          })
       })
   }
 }
@@ -98,6 +115,37 @@ function onUpdateClick(originalStudent, studentId) {
       Aviator.navigate('/admin/students/')
     })
 }
+
+function onUpdatePromotionHistoryClick(originalRanks, studentId) {
+  var ranks = this.getValue()
+  var visitedRanks = {}
+
+  var q = qwest
+
+  ranks.forEach(function(rank) {
+    if (rank.id) {
+      visitedRanks[rank.id] = true
+
+      q = q.put('/api/ranks/' + rank.id, rank)
+    } else {
+      rank.studentId = studentId
+      q = q.post('/api/ranks/', rank)
+    }
+  })
+
+  originalRanks.forEach(function(rank) {
+    if (visitedRanks[rank.id]) {
+      return
+    }
+
+    q = q.delete('/api/ranks/' + rank.id)
+  })
+
+  q.then(function() {
+    Aviator.navigate('/admin/students/')
+  })
+}
+
 
 function prepareExistingAccountDropDown(ctrl) {
   ctrl.control.css({width: '100%'}).select2({
@@ -195,7 +243,9 @@ module.exports = {
             "buttons": {
               "submit": {
                 "title": "Update",
-                "click": function() { return onUpdateClick.call(this, response, request.namedParams.id) }
+                "click": function() {
+                  return onUpdateClick.call(this, response, request.namedParams.id)
+                }
               },
               "back": {
                 "title": "Back",
@@ -239,6 +289,61 @@ module.exports = {
         }))
       })
   },
+  ranks: function(request) {
+    qwest
+      .get('/api/students/' + request.namedParams.id)
+      .then(function(xhr, response) {
+        response.ranks.forEach(function(rank) {
+          rank.promotedOn = moment(rank.promotedOn).format('MM/DD/YYYY')
+        })
+
+        $("#spa-target").empty().alpaca({
+          "data": response.ranks,
+          "schema": require('./ranks-schema.json'),
+          "options": _.merge({}, require('./ranks-options.json'), {
+            "toolbar": {
+              "actions": [
+                {
+                  "action": "add",
+                  "label": "Add Promotion",
+                  "click": function(key, action) {
+                    // i found this by looking through Alpaca's code
+                    // pretty sure that I am breaking encapsulation, but
+                    // whatever
+                    var self = this
+
+                    this.handleActionBarAddItemClick(0, function(item) {
+                      self.handleActionBarMoveItemDownClick(0, function(item) {
+                      })
+                    })
+                  }
+                }
+              ]
+            },
+            "form": {
+              "buttons": {
+                "submit": {
+                  "title": "Update",
+                  "click": function() { 
+                    return onUpdatePromotionHistoryClick.call(this, response.ranks, request.namedParams.id)
+                  }
+                },
+                "back": {
+                  "title": "Back",
+                  "click": function() {
+                    Aviator.navigate("/admin/students/")
+                  }
+                }
+              }
+            }
+          }),
+          "view": "bootstrap-edit",
+          "postRender": function(control) {
+            $(".rank-table .table-responsive").removeClass("table-responsive")
+          }
+        })
+      })
+  }, 
   delete: function(request) {
     qwest
       .delete("/api/students/" + request.namedParams.id)

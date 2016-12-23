@@ -10,7 +10,7 @@
       <tr>
         <th>Student Name</th>
         <th>Age (Date of Birth)</th>
-        <th>Rank</th>
+        <th>Rank (Last Promoted)</th>
         <th>Roles</th>
         <th>Account</th>
         <th></th>
@@ -20,8 +20,8 @@
       {{#data}}
         <tr>
           <td>{{firstName}} {{lastName}}</td>
-          <td>{{age dateOfBirth}} ({{date dateOfBirth format="L"}})</td>
-          <td>{{rank}}</td>
+          <td>{{age dateOfBirth}} old ({{date dateOfBirth format="L"}})</td>
+          <td>{{ranks.[0].rank}} ({{age ranks.[0].promotedOn}} ago)</td>
           <td>
             {{#roles}}
               {{#if @last}}
@@ -45,7 +45,7 @@
               <ul class="dropdown-menu dropdown-menu-right">
                 <li><a class="aviator" href="/admin/students/{{id}}/attendance/">View Attendance</a></li>
                 <li><a class="aviator" href="/admin/students/{{id}}/notes/">View Notes</a></li>
-                <li><a class="aviator" href="/admin/students/{{id}}/promote/">Promote Rank</a></li>
+                <li><a class="aviator" href="/admin/students/{{id}}/ranks/">Promotion History</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a class="aviator" href="/admin/students/{{id}}/delete/">Delete</a></li>
               </ul>

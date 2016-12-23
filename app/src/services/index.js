@@ -1,15 +1,15 @@
 'use strict';
 
-const accountSearch = require('./accountSearch');
-
 const curriculumLog = require('./curriculumLog');
 const note = require('./note');
 const attendance = require('./attendance');
 const division = require('./division');
 const contact = require('./contact');
 const account = require('./account');
+const accountSearch = require('./accountSearch');
 const student = require('./student');
 const studentSearch = require('./studentSearch');
+const rank = require('./rank');
 const authentication = require('./authentication');
 const user = require('./user');
 
@@ -28,6 +28,7 @@ module.exports = function() {
   app.configure(user);
   app.configure(account);
   app.configure(contact);
+  app.configure(rank);
   app.configure(student);
   app.configure(division);
   app.configure(attendance);

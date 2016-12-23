@@ -16,6 +16,7 @@
         "/edit": "edit",
         "/attendance": "attendance",
         "/notes": "notes",
+        "/ranks": "ranks",
         "/delete": "delete"
       }
     },
