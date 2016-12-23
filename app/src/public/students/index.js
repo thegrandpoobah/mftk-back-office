@@ -1,26 +1,11 @@
 var Aviator = require('aviator')
 var qwest = require('qwest')
 var $ = require('jquery')
-var Handlebars = require('handlebars/runtime')
 require('eonasdan-bootstrap-datetimepicker')
 var moment = require('moment')
 require('alpaca')
 
 qwest.setDefaultDataType('json')
-
-var TIME_FORMAT = 'h:mma'
-
-Handlebars.registerHelper({
-  'date': function (date, opts) {
-    return moment(date).format(opts.hash.format)
-  },
-  'time': function (t) {
-    return moment().startOf('day').add(t, 'minutes').format(TIME_FORMAT)
-  },
-  'age': function (d) {
-    return moment(d).toNow(true) + ' old'
-  }
-})
 
 var templates = {
   'index': require('./index.html.handlebars'),
