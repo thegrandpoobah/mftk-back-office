@@ -3,11 +3,8 @@
     "rightLabel": "Active Student"
   },
   "dateOfBirth": {
-    "type": "date"
-  },
-  "rank": {
-    "type": "select",
-    "sort": false
+    "type": "date",
+    "placeholder": "mm/dd/yyyy"
   },
   "roles": {
     "type": "checkbox",

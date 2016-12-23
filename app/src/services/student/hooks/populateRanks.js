@@ -17,42 +17,42 @@ module.exports = function(options) {
   options = Object.assign({}, defaults, options);
 
   return function(hook) {
-    let accounts = getItems(hook)
+    let students = getItems(hook)
     let isArray = true
 
-    if (!Array.isArray(accounts)) {
+    if (!Array.isArray(students)) {
       isArray = false
-      accounts = [accounts]
+      students = [students]
     }
 
-    accounts = accounts.map(acct => acct.toJSON())
+    students = students.map(student => student.toJSON())
 
     return hook.app
-      .service('/api/contacts')
+      .service('/api/ranks')
       .find({
         query: {
-          accountId: accounts.map(acct => acct.id),
-          $sort: { rank: 1 }
+          studentId: students.map(student => student.id),
+          $sort: { promotedOn: -1 }
         },
         paginate: false
       })
-      .then(contacts => {
-        const accountMap = {}
+      .then(ranks => {
+        const studentMap = {}
 
-        accounts.forEach(acct => {
-          accountMap[acct.id] = acct
-          accountMap[acct.id].contacts = []
+        students.forEach(student => {
+          studentMap[student.id] = student
+          studentMap[student.id].ranks = []
         })
 
-        contacts.forEach(contact => {
-          accountMap[contact.accountId].contacts.push(contact)
+        ranks.forEach(rank => {
+          studentMap[rank.studentId].ranks.push(rank)
         })
 
         if (!isArray) {
-          accounts = accounts[0]
-          hook.result = accounts
+          students = students[0]
+          hook.result = students
         } else {
-          hook.result.data = accounts
+          hook.result.data = students
         }
 
         return hook

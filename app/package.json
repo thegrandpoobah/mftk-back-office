@@ -18,6 +18,7 @@
   "scripts": {
     "test": "npm run jshint && npm run mocha",
     "jshint": "jshint src/. test/. --config",
+    "webpack": "cd src/public ; webpack; cd -",
     "start": "node src/",
     "mocha": "mocha test/ --recursive"
   },

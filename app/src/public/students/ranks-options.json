@@ -1,0 +1,49 @@
+{
+  "type": "table",
+  "fieldClass": "rank-table",
+  "actionbar": {
+    "showLabels": true,
+    "actions": [
+      {
+        "label": "Remove",
+        "action": "remove"
+      },
+      {
+        "action": "up",
+        "label": "Move Up",
+        "enabled": false
+      },
+      {
+        "action": "down",
+        "label": "Move Down",
+        "enabled": false
+      },
+      {
+        "action": "add",
+        "enabled": false
+      }
+    ]
+  },
+  "actionbarStyle": "bottom",
+  "hideToolbarWithChildren": false,
+  "collapsible": true,
+  "toolbarSticky": true,
+  "items": {
+    "fields": {
+      "id": {
+        "hidden": true
+      },
+      "rank": {
+        "type": "select",
+        "sort": false
+      },
+      "promotedOn": {
+        "type": "date",
+        "placeholder": "mm/dd/yyyy"
+      },
+      "studentId": {
+        "hidden": true
+      }
+    }
+  }
+}

@@ -24,36 +24,10 @@ module.exports = function(sequelize) {
     },
     dateOfBirth: {
       type: Sequelize.DATEONLY,
-      allowNull: false,
+      allowNull: false
     },
     gender: {
       type: Sequelize.ENUM('Male', 'Female')
-    },
-    rank: {
-      type: Sequelize.ENUM(
-        'White',
-        'Yellow Stripe',
-        'Yellow',
-        'Orange Stripe',
-        'Orange',
-        'Green Stripe',
-        'Green',
-        'Purple',
-        'Blue',
-        'Brown',
-        'Red',
-        'Black Tip',
-        'Poomdae',
-        '1st Dan Black Belt',
-        '2nd Dan Black Belt',
-        '3rd Dan Black Belt',
-        '4th Dan Black Belt',
-        '5th Dan Black Belt',
-        '6th Dan Black Belt',
-        '7th Dan Black Belt',
-        '8th Dan Black Belt',
-        '9th Dan Black Belt'
-      )
     },
     roles: {
       type: Sequelize.ARRAY(Sequelize.STRING)
@@ -66,6 +40,7 @@ module.exports = function(sequelize) {
         student.belongsTo(sequelize.models.account, { as: 'account' });
         student.hasMany(sequelize.models.attendance, { as: 'attendance' });
         student.hasMany(sequelize.models.note, { as: 'notes' });
+        student.hasMany(sequelize.models.rank, { as: 'ranks' });
       },
       getSearchVector() {
         return 'fts_text';

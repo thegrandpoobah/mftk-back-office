@@ -5,10 +5,6 @@
   "dateOfBirth": {
     "type": "date"
   },
-  "rank": {
-    "type": "select",
-    "sort": false
-  },
   "roles": {
     "type": "checkbox",
     "label": "Roles",

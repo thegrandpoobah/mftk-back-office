@@ -22,36 +22,6 @@
       "required": true,
       "default": true
     },
-    "rank": {
-      "type": "string",
-      "title": "Rank",
-      "enum": [
-        "White",
-        "Yellow Stripe",
-        "Yellow",
-        "Orange Stripe",
-        "Orange",
-        "Green Stripe",
-        "Green",
-        "Purple",
-        "Blue",
-        "Brown",
-        "Red",
-        "Black Tip",
-        "Poomdae",
-        "1st Dan Black Belt",
-        "2nd Dan Black Belt",
-        "3rd Dan Black Belt",
-        "4th Dan Black Belt",
-        "5th Dan Black Belt",
-        "6th Dan Black Belt",
-        "7th Dan Black Belt",
-        "8th Dan Black Belt",
-        "9th Dan Black Belt"
-      ],
-      "default": "White",
-      "required": true
-    },
     "roles": {
       "type": "array",
       "items": {
