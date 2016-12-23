@@ -44,8 +44,8 @@ module.exports = function(options) {
           accountMap[acct.id].contacts = []
         })
 
-        contacts.forEach(acct => {
-          accountMap[acct.accountId].contacts.push(acct)
+        contacts.forEach(contact => {
+          accountMap[contact.accountId].contacts.push(contact)
         })
 
         if (!isArray) {
