@@ -5,7 +5,7 @@ file '/usr/local/bin/mftk-back-office' do
 	content <<-EOF
 #!/bin/bash
 cd /srv/www/current
-node server.js &
+npm start &
 echo "$!" > /var/run/mftk-back-office.pid
 EOF
 	mode '0744'
@@ -15,6 +15,11 @@ end
 
 monit_monitrc "mftk-back-office" do
 	variables({})
+end
+
+rds_db_instance = search("aws_opsworks_rds_db_instance").first
+magic_shell_environment 'POSTGRES_URI' do
+	value "postgres://#{rds_db_instance['db_user']}:#{rds_db_instance['db_password']}@#{rds_db_instance['address']}/mftk"
 end
 
 app = search("aws_opsworks_app").first
@@ -67,4 +72,5 @@ execute 'restart mftk-back-office' do
 	command 'monit restart mftk-back-office'
 	returns [0, 1]
 end
+
 

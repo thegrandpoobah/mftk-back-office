@@ -1,12 +1,11 @@
 {
-  "host": "mftk-back-office-app.feathersjs.com",
+  "host": "localhost",
   "port": 80,
-  "sqlite": "SQLITE_DB",
   "public": "../public/",
   "auth": {
     "idField": "id",
     "token": {
-      "secret": "FEATHERS_AUTH_SECRET"
+      "secret": "evGqNH6bgb1mZ25TX3CyfVMmcitBpaq9SOrk6/9j69MwI4wKffPTny58NvJOvjv2zSjV4RvvgfE+yA8b0jxpxQ=="
     },
     "local": false,
     "google": {
