@@ -17,11 +17,6 @@ monit_monitrc "mftk-back-office" do
 	variables({})
 end
 
-rds_db_instance = search("aws_opsworks_rds_db_instance").first
-magic_shell_environment 'POSTGRES_URI' do
-	value "postgres://#{rds_db_instance['db_user']}:#{rds_db_instance['db_password']}@#{rds_db_instance['address']}/mftk"
-end
-
 app = search("aws_opsworks_app").first
 
 aws_s3_file '/tmp/mftk-back-office.zip' do
@@ -58,13 +53,16 @@ execute 'npm install' do
 	command '(cd /srv/www/current && npm install --production)'
 end
 
+rds_db_instance = search("aws_opsworks_rds_db_instance").first
+
 template '/srv/www/shared/app.env' do
 	source "app.env.erb"
 	mode 0770
 	owner 'root'
 	group 'root'
 	variables(
-		:environment => app['environment']
+		:environment => app['environment'],
+		:postgres_uri => "postgres://#{rds_db_instance['db_user']}:#{rds_db_instance['db_password']}@#{rds_db_instance['address']}/mftk"
 	)
 end
 
