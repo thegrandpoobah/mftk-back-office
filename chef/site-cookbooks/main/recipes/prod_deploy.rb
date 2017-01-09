@@ -5,7 +5,7 @@ file '/usr/local/bin/mftk-back-office' do
 	content <<-EOF
 #!/bin/bash
 cd /srv/www/current
-node server.js &
+npm start &
 echo "$!" > /var/run/mftk-back-office.pid
 EOF
 	mode '0744'
@@ -53,13 +53,16 @@ execute 'npm install' do
 	command '(cd /srv/www/current && npm install --production)'
 end
 
+rds_db_instance = search("aws_opsworks_rds_db_instance").first
+
 template '/srv/www/shared/app.env' do
 	source "app.env.erb"
 	mode 0770
 	owner 'root'
 	group 'root'
 	variables(
-		:environment => app['environment']
+		:environment => app['environment'],
+		:postgres_uri => "postgres://#{rds_db_instance['db_user']}:#{rds_db_instance['db_password']}@#{rds_db_instance['address']}/mftk"
 	)
 end
 
@@ -67,4 +70,5 @@ execute 'restart mftk-back-office' do
 	command 'monit restart mftk-back-office'
 	returns [0, 1]
 end
+
 
