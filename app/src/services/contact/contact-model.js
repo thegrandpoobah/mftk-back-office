@@ -74,7 +74,7 @@ module.exports = function(sequelize) {
 
         var Contact = this;
 
-        query = sequelize.getQueryInterface().escape(query + ':*');
+        query = sequelize.getQueryInterface().escape(query.toLocaleLowerCase() + ':*');
         
         return sequelize
           .query('SELECT * FROM "' + Contact.tableName + '" WHERE "' + Contact.getSearchVector() + '" @@ ' + query + ';', {model: contact, type: sequelize.QueryTypes.SELECT})
