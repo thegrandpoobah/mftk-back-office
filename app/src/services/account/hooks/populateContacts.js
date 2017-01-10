@@ -1,5 +1,7 @@
 'use strict';
 
+const _ = require('lodash')
+
 // src/services/account/hooks/populateContacts.js
 //
 // Use this hook to manipulate incoming or outgoing data.
@@ -48,6 +50,8 @@ module.exports = function(options) {
           accountMap[contact.accountId].contacts.push(contact)
         })
 
+        accounts = _.sortBy(accounts, ['contacts[0].firstName', 'contacts[0].lastName'])
+        
         if (!isArray) {
           accounts = accounts[0]
           hook.result = accounts
