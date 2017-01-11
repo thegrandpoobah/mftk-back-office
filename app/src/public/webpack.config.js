@@ -47,6 +47,7 @@ module.exports = {
       alias: {
         jquery: path.resolve(path.join(__dirname, '../..', 'node_modules', 'jquery')),
         alpaca: 'alpaca/dist/alpaca/bootstrap/alpaca',
+        fullcalendar: 'fullcalendar/dist/fullcalendar',
         select2: 'select2/dist/js/select2',
         modernizr$: path.join(__dirname, ".modernizrrc")
       }

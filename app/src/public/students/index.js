@@ -5,6 +5,7 @@ var _ = require('lodash')
 require('eonasdan-bootstrap-datetimepicker')
 var moment = require('moment')
 require('alpaca')
+require('fullcalendar')
 
 qwest.setDefaultDataType('json')
 
@@ -270,12 +271,28 @@ module.exports = {
   attendance: function(request) {
     qwest
       .get('/api/students/' + request.namedParams.id)
-      .get('/api/attendances?$sort[createdAt]=-1&studentId=' + request.namedParams.id)
-      .then(function(responses) {
-        $("#spa-target").empty().html(templates['attendance']({
-          student: responses[0][1],
-          attendance: responses[1][1].data
-        }))
+      .then(function(xhr, response) {
+        $("#spa-target").empty().html(templates['attendance'](response))
+
+        $('#calendar').fullCalendar({
+          events: function(start, end, timezone, callback) {
+            qwest
+              .get('/api/attendances?$sort[createdAt]=-1&studentId=' + request.namedParams.id + '&signInTime[$gte]=' + start.format() + '&signInTime[$lte]=' + end.format())
+              .then(function(xhr, response) {
+                var events = response.data.map(function(event) {
+                  return {
+                    title: event.division.name,
+                    start: moment(event.signInTime),
+                    backgroundColor: 'green',
+                    borderColor: 'green',
+                    textColor: 'white'
+                  }
+                })
+
+                callback(events)
+              })
+          }
+        })
       })
   },
   notes: function(request) {
