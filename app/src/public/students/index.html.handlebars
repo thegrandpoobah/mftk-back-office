@@ -9,6 +9,7 @@
     <thead>
       <tr>
         <th>Student Name</th>
+        <th>Active</th>
         <th>Age (Date of Birth)</th>
         <th>Rank (Last Promoted)</th>
         <th>Roles</th>
@@ -20,6 +21,14 @@
       {{#data}}
         <tr>
           <td>{{firstName}} {{lastName}}</td>
+          <td>
+            {{#active}}
+              <i class="fa fa-check" aria-hidden="true"></i>
+            {{/active}}
+            {{^active}}
+              <i class="fa fa-times" aria-hidden="true"></i>
+            {{/active}}
+          </td>
           <td>{{age dateOfBirth}} old ({{date dateOfBirth format="L"}})</td>
           <td>{{ranks.[0].rank}} ({{age ranks.[0].promotedOn}} ago)</td>
           <td>
@@ -54,7 +63,7 @@
         </tr>
       {{/data}}
       {{^data}}
-        <td colspan="6">No students found</td>
+        <td colspan="7">No students found</td>
       {{/data}}
     </tbody>
   </table>

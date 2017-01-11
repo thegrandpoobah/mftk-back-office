@@ -24,6 +24,14 @@ var timeInterval
 var currentDivision
 var divisionList = []
 
+function updateSignInButtonState() {
+  if (!currentDivision || !$('.student-select').val()) {
+    $('#btnSignIn').attr('disabled', 'disabled')
+  } else {
+    $('#btnSignIn').removeAttr('disabled')
+  }
+}
+
 module.exports = {
   index: function() {
     $('#spa-target').empty().html(templates['index']({
@@ -83,6 +91,8 @@ module.exports = {
           }
         })
 
+        updateSignInButtonState()
+
         $('.current-class').html(templates['class-pretty-name'](currentDivision))
       }, 1000)
     }
@@ -90,13 +100,19 @@ module.exports = {
   signIn: function() {
     var attendance = {
       studentId: $('.student-select').val(),
-      divisionId: currentDivision.id,
+      divisionId: (currentDivision || { id: null }).id,
       signInTime: moment().format()
+    }
+
+    if (!attendance.studentId || !attendance.divisionId) {
+      Aviator.navigate('/student-sign-in/')
+      
+      return
     }
 
     qwest.post("/api/attendances", attendance)
       .then(function(xhr, response) {
-        Aviator.navigate('/student-sign-in/').refresh()
+        Aviator.navigate('/student-sign-in/')
       })
   }
 }
