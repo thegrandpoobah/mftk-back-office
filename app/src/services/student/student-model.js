@@ -79,7 +79,7 @@ module.exports = function(sequelize) {
 
         var Student = this;
 
-        query = sequelize.getQueryInterface().escape(query + ':*');
+        query = sequelize.getQueryInterface().escape(query.toLocaleLowerCase() + ':*');
         role = sequelize.getQueryInterface().escape(role);
         
         return sequelize
