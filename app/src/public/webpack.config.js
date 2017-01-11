@@ -15,7 +15,8 @@ module.exports = {
             "moment",
             "alpaca",
             "eonasdan-bootstrap-datetimepicker", 
-            "modernizr"
+            "modernizr",
+            "fullcalendar"
             // "bootstrap-switch"
         ],
         bootstrap: ["bootstrap-loader/lib/bootstrap.loader?configFilePath="+__dirname+"/.bootstraprc!bootstrap-loader/no-op.js"]
