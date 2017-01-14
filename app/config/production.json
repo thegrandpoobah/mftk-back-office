@@ -1,6 +1,9 @@
 {
   "host": "localhost",
-  "port": 80,
+  "http_server_port": 80,
+  "https_server_port": 443,
+  "private_key_file": "../config/localhost.key",
+  "certificate_file": "../config/localhost.crt",
   "public": "../public/",
   "auth": {
     "idField": "id",
