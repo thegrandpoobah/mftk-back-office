@@ -71,4 +71,6 @@ execute 'restart mftk-back-office' do
 	returns [0, 1]
 end
 
-
+execute 'generate first certificate' do
+	command "/usr/bin/certbot certonly --webroot -w /srv/www/current/public -d #{node['cert_domain']} --non-interactive --agree-tos --email #{node['cert_email']} --rsa-key-size 4096 --post-hook \"ln --force --symbolic /etc/letsencrypt/live/#{node['cert_domain']}/fullchain.pem /srv/www/shared/localhost.crt; ln --force --symbolic /etc/letsencrypt/live/#{node['cert_domain']}/privkey.pem /srv/www/shared/localhost.key; monit restart mftk-back-office\""
+end
