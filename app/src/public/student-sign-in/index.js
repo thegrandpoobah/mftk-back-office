@@ -8,6 +8,8 @@ require('select2')
 qwest.setDefaultDataType('json')
 
 var TIME_FORMAT = 'h:mma'
+var START_BUFFER = 20
+var END_BUFFER = 20
 
 Handlebars.registerHelper({
   'time': function (t) {
@@ -86,7 +88,7 @@ module.exports = {
         nowMinutes = now.diff(moment(now).startOf('day'), 'minutes')
 
         divisionList.forEach(function(division) {
-          if (division.startTime - 10 <= nowMinutes && division.endTime - 10 >= nowMinutes) {
+          if (division.startTime - START_BUFFER <= nowMinutes && division.endTime - END_BUFFER >= nowMinutes) {
             currentDivision = division
           }
         })
