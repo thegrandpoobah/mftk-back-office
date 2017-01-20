@@ -13,3 +13,6 @@ encrypted_data_bag_secret
 app/public
 chef/nodes/*
 chef/Berksfile.lock
+app/config/localhost.crt
+app/config/localhost.key
+data
