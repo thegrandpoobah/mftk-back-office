@@ -14,7 +14,7 @@
       {{#.}}
         <tr>
           <td><a href="/admin/students/{{student.id}}/attendance/">{{student.firstName}} {{student.lastName}}</a></td>
-          <td>{{time signInTime}}</td>
+          <td>{{date signInTime format="h:mma"}}</td>
           <td>{{status}}</td>
         </tr>
       {{/.}}

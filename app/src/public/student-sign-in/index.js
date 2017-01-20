@@ -1,7 +1,6 @@
 var Aviator = require('aviator')
 var qwest = require('qwest')
 var $ = require('jquery')
-var Handlebars = require('handlebars/runtime')
 var moment = require('moment')
 require('select2')
 
@@ -10,12 +9,6 @@ qwest.setDefaultDataType('json')
 var TIME_FORMAT = 'h:mma'
 var START_BUFFER = 20
 var END_BUFFER = 20
-
-Handlebars.registerHelper({
-  'time': function (t) {
-    return moment().startOf('day').add(t, 'minutes').format(TIME_FORMAT)
-  }  
-})
 
 var templates = {
   'index': require('./index.html.handlebars'),
@@ -51,6 +44,10 @@ function setCurrentDivision(division) {
 
     qwest.get("/api/attendances?divisionId=" + currentDivision.id + "&signInTime[$gte]=" + startOfDay.format() + "&signInTime[$lte]=" + endOfDay.format())
       .then(function(xhr, response) {
+        response.data.forEach(function(rec) {
+          rec.signInTime = moment(rec.signInTime)
+        })
+
         $('#signedInStudents').html(templates['student-list'](response.data))
       })
   } else {
@@ -60,6 +57,9 @@ function setCurrentDivision(division) {
 
 module.exports = {
   index: function() {
+    currentDivision = null
+    divisionList = []
+
     $('#spa-target').empty().html(templates['index']({
       currentTime: moment().format('h:mm:ss a')
     }))
