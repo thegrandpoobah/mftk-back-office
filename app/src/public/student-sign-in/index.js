@@ -19,7 +19,8 @@ Handlebars.registerHelper({
 
 var templates = {
   'index': require('./index.html.handlebars'),
-  'class-pretty-name': require('./class-pretty-name.html.handlebars')
+  'class-pretty-name': require('./class-pretty-name.html.handlebars'),
+  'student-list': require('./student-list.html.handlebars')
 }
 
 var timeInterval
@@ -31,6 +32,29 @@ function updateSignInButtonState() {
     $('#btnSignIn').attr('disabled', 'disabled')
   } else {
     $('#btnSignIn').removeAttr('disabled')
+  }
+}
+
+function setCurrentDivision(division) {
+  if ((currentDivision || { id: -1 }).id === (division || { id: -1 }).id) {
+    return
+  }
+
+  currentDivision = division
+
+  $('.current-class').html(templates['class-pretty-name'](currentDivision))
+  updateSignInButtonState()
+
+  if (currentDivision) {
+    var startOfDay = moment().startOf('day') 
+    var endOfDay = moment().endOf('day')
+
+    qwest.get("/api/attendances?divisionId=" + currentDivision.id + "&signInTime[$gte]=" + startOfDay.format() + "&signInTime[$lte]=" + endOfDay.format())
+      .then(function(xhr, response) {
+        $('#signedInStudents').html(templates['student-list'](response.data))
+      })
+  } else {
+    $('#signedInStudents').html(templates['student-list']([]))
   }
 }
 
@@ -75,7 +99,9 @@ module.exports = {
         cache: true
       },
       minimumInputLength: 1
-    });
+    }).on('change', function(e) {
+      updateSignInButtonState()      
+    })
 
     if (!timeInterval) {
       timeInterval = window.setInterval(function() {
@@ -83,19 +109,17 @@ module.exports = {
 
         $('.current-time').html(now.format('h:mm:ss a'))
 
-        currentDivision = null
+        cDiv = null
 
         nowMinutes = now.diff(moment(now).startOf('day'), 'minutes')
 
         divisionList.forEach(function(division) {
           if (division.startTime - START_BUFFER <= nowMinutes && division.endTime - END_BUFFER >= nowMinutes) {
-            currentDivision = division
+            cDiv = division
           }
         })
 
-        updateSignInButtonState()
-
-        $('.current-class').html(templates['class-pretty-name'](currentDivision))
+        setCurrentDivision(cDiv)
       }, 1000)
     }
   },
@@ -114,6 +138,10 @@ module.exports = {
 
     qwest.post("/api/attendances", attendance)
       .then(function(xhr, response) {
+        var store = currentDivision
+        currentDivision = null
+        setCurrentDivision(store)
+
         Aviator.navigate('/student-sign-in/')
       })
   }

@@ -1,0 +1,26 @@
+<div class="panel panel-default">
+  <div class="panel-heading clearfix">
+    Signed In Students
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+      	<th>Student</th>
+        <th>Sign in Time</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody class="table-hover">
+      {{#.}}
+        <tr>
+          <td><a href="/admin/students/{{student.id}}/attendance/">{{student.firstName}} {{student.lastName}}</a></td>
+          <td>{{time signInTime}}</td>
+          <td>{{status}}</td>
+        </tr>
+      {{/.}}
+      {{^.}}
+        <td colspan="3">No students signed in yet.</td>
+      {{/.}}
+    </tbody>
+  </table>
+</div>
