@@ -17,7 +17,6 @@ module.exports = {
             "eonasdan-bootstrap-datetimepicker", 
             "modernizr",
             "fullcalendar"
-            // "bootstrap-switch"
         ],
         bootstrap: ["bootstrap-loader/lib/bootstrap.loader?configFilePath="+__dirname+"/.bootstraprc!bootstrap-loader/no-op.js"]
     },
@@ -53,11 +52,8 @@ module.exports = {
         modernizr$: path.join(__dirname, ".modernizrrc")
       }
     },
-    //devtool: 'source-map',
+    devtool: 'source-map',
     plugins: [
-        // new webpack.ProvidePlugin({
-        //     "window.moment": "moment"
-        // }),
         // new webpack.optimize.UglifyJsPlugin({
         //     compress: {
         //         warnings: false
