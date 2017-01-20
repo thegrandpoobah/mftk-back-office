@@ -231,8 +231,13 @@ module.exports = {
     qwest.get('/api/students/' + request.namedParams.id).then(function(xhr, response) {
       response = responseToModel(response)
 
-      response.currentAccount = [response.account.contacts[0].firstName, response.account.contacts[0].lastName].join(' ')
-      response.changeAccount = 'Keep Current Account'
+      if (response.account) {
+        response.currentAccount = [response.account.contacts[0].firstName, response.account.contacts[0].lastName].join(' ')
+        response.changeAccount = 'Keep Current Account'
+      } else {
+        response.changeAccount = 'New Account'
+      }
+
       response.dateOfBirth = moment(response.dateOfBirth).format('MM/DD/YYYY')
 
       $("#spa-target").empty().alpaca({
@@ -259,10 +264,12 @@ module.exports = {
         },
         "view": "bootstrap-edit",
         "postRender": function(control) {
-          control.childrenByPropertyId["accountId"].control
-            .empty()
-            .append('<option value="' + response.account.id + '">' + response.currentAccount + '</option>')
-          
+          if (response.account) {
+            control.childrenByPropertyId["accountId"].control
+              .empty()
+              .append('<option value="' + response.account.id + '">' + response.currentAccount + '</option>')
+          }
+
           prepareExistingAccountDropDown(control.childrenByPropertyId["accountId"])
         }
       })

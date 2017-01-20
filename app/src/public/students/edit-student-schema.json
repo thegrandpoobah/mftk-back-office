@@ -48,7 +48,8 @@
     },
     "accountId": {
       "type": "number",
-      "title": "Account"
+      "title": "Account",
+      "required": true
     },
     "accountObject": {
       "title": "New Account",
