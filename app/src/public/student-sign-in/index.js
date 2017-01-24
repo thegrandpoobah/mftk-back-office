@@ -8,7 +8,6 @@ qwest.setDefaultDataType('json')
 
 var TIME_FORMAT = 'h:mma'
 var START_BUFFER = 20
-var END_BUFFER = 20
 
 var templates = {
   'index': require('./index.html.handlebars'),
@@ -64,7 +63,7 @@ module.exports = {
       currentTime: moment().format('h:mm:ss a')
     }))
 
-    qwest.get("/api/divisions?dayOfTheWeek=" + moment().format('dddd'))
+    qwest.get("/api/divisions?$sort[startTime]=1&dayOfTheWeek=" + moment().format('dddd'))
       .then(function(xhr, response) {
         divisionList = response.data
       })
@@ -89,7 +88,11 @@ module.exports = {
           // scrolling can be used
           return {
             results: data.map(function(item) {
-              return {id: item.id, text: [item.firstName, item.lastName].join(' '), data: item}
+              return {
+                id: item.id,
+                text: [item.firstName, item.lastName].join(' '),
+                data: item
+              }
             }),
             pagination: {
               more: false
@@ -106,15 +109,15 @@ module.exports = {
     if (!timeInterval) {
       timeInterval = window.setInterval(function() {
         var now = moment()
+        var nowMinutes = now.diff(moment(now).startOf('day'), 'minutes')
+        var cDiv = null
 
         $('.current-time').html(now.format('h:mm:ss a'))
 
-        cDiv = null
-
-        nowMinutes = now.diff(moment(now).startOf('day'), 'minutes')
-
         divisionList.forEach(function(division) {
-          if (division.startTime - START_BUFFER <= nowMinutes && division.endTime - END_BUFFER >= nowMinutes) {
+          var endBuffer = Math.ceil((division.endTime - division.startTime) * 0.25)
+
+          if (!cDiv && division.startTime - START_BUFFER <= nowMinutes && division.endTime - endBuffer >= nowMinutes) {
             cDiv = division
           }
         })
@@ -143,6 +146,13 @@ module.exports = {
         setCurrentDivision(store)
 
         Aviator.navigate('/student-sign-in/')
+      })
+  },
+  delete: function(request) {
+    qwest
+      .delete("/api/attendances/" + request.namedParams.id)
+      .then(function(xhr, response) {
+        Aviator.navigate("/student-sign-in/")
       })
   }
 }

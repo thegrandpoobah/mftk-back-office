@@ -42,6 +42,9 @@
   },
   "/student-sign-in": {
     "/": "index",
-    "/sign-in": "signIn"
+    "/sign-in": "signIn",
+    "/:id": {
+      "/delete": "delete"
+    }
   }
 }
