@@ -117,7 +117,7 @@ module.exports = {
         divisionList.forEach(function(division) {
           var endBuffer = Math.ceil((division.endTime - division.startTime) * 0.25)
 
-          if (!cDiv && division.startTime - START_BUFFER <= nowMinutes && division.endTime - endBuffer >= nowMinutes) {
+          if (!cDiv && division.startTime - START_BUFFER <= nowMinutes && division.endTime - endBuffer > nowMinutes) {
             cDiv = division
           }
         })
