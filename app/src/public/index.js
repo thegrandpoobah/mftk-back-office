@@ -26,9 +26,6 @@ Aviator.setRoutes(_.defaultsDeep(sitemap, {
   '/curriculum-log': {
     target: require('./curriculum-log')
   },
-  '/instructor-sign-in': {
-    target: require('./instructor-sign-in')
-  },
   '/student-sign-in': {
     target: require('./student-sign-in')
   }

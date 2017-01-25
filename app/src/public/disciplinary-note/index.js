@@ -1,6 +1,7 @@
 var Aviator = require('aviator')
 var qwest = require('qwest')
 var $ = require('jquery')
+var title = require('../title')
 require('handlebars/runtime')
 require('select2')
 
@@ -12,6 +13,8 @@ var templates = {
 
 module.exports = {
   index: function() {
+    title.set('New Disciplinary Note')
+    
     $('#spa-target').empty().html(templates['index']())
 
     $(".student-select").select2({

@@ -4,6 +4,7 @@ var $ = require('jquery')
 require('handlebars/runtime')
 require('eonasdan-bootstrap-datetimepicker')
 var moment = require('moment')
+var title = require('../title')
 require('alpaca')
 
 qwest.setDefaultDataType('json')
@@ -66,11 +67,15 @@ function onUpdateClick(originalAccount, accountId) {
 
 module.exports = {
   index: function() {
+    title.set('Accounts')
+
     qwest.get('/api/accounts').then(function(xhr, response) {
       $('#spa-target').empty().html(templates['index'](response))
     })
   },
   create: function() {
+    title.set('New Account')
+
     $("#spa-target").empty().alpaca({
       "schema": require('./new-account-schema.json'),
       "options": {
@@ -98,6 +103,8 @@ module.exports = {
       response.contacts.sort(function(a, b) {
         return a.rank - b.rank
       })
+
+      title.set('Edit Account ' + [response.contacts[0].firstName, response.contacts[0].lastName].join(' '))
 
       $("#spa-target").empty().alpaca({
         "data": response,
