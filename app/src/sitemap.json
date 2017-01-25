@@ -37,9 +37,6 @@
     "/": "index",
     "/create": "create"
   },
-  "/instructor-sign-in": {
-    "/": "index"
-  },
   "/student-sign-in": {
     "/": "index",
     "/sign-in": "signIn",

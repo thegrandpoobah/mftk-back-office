@@ -4,6 +4,7 @@ var $ = require('jquery')
 var Handlebars = require('handlebars/runtime')
 require('eonasdan-bootstrap-datetimepicker')
 var moment = require('moment')
+var title = require('../title')
 require('alpaca')
 
 qwest.setDefaultDataType('json')
@@ -26,6 +27,8 @@ var templates = {
 
 module.exports = {
   index: function() {
+    title.set('Curriculum Log')
+    
     qwest
       .get('/api/divisions?dayOfTheWeek=' + moment().format('dddd'))
       .get('/api/curriculumLogs?$sort[createdAt]=1&type=Tiny%20Tigers')

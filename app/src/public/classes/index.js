@@ -4,6 +4,7 @@ var $ = require('jquery')
 var Handlebars = require('handlebars/runtime')
 require('eonasdan-bootstrap-datetimepicker')
 var moment = require('moment')
+var title = require('../title')
 require('alpaca')
 
 qwest.setDefaultDataType('json')
@@ -48,11 +49,15 @@ function onUpdateClick(classId) {
 
 module.exports = {
   index: function() {
+    title.set('Classes')
+
     qwest.get('/api/divisions?$sort[dayOfTheWeek]=1&$sort[startTime]=1').then(function(xhr, response) {
       $('#spa-target').empty().html(templates['index'](response))
     })
   },
   create: function() {
+    title.set('New Class')
+
     $("#spa-target").empty().alpaca({
       "schema": require('./new-class-schema.json'),
       "options": {
@@ -77,6 +82,8 @@ module.exports = {
   },
   edit: function(request) {
     qwest.get('/api/divisions/' + request.namedParams.id).then(function(xhr, response) {
+      title.set('Edit Class ' + response.name)
+      
       response.startTime = moment().startOf('day').add(response.startTime, 'minutes').format(TIME_FORMAT)
       response.endTime = moment().startOf('day').add(response.endTime, 'minutes').format(TIME_FORMAT)
 

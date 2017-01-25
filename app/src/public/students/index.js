@@ -4,6 +4,7 @@ var $ = require('jquery')
 var _ = require('lodash')
 require('eonasdan-bootstrap-datetimepicker')
 var moment = require('moment')
+var title = require('../title')
 require('alpaca')
 require('fullcalendar')
 
@@ -193,6 +194,8 @@ function responseToModel(response) {
 
 module.exports = {
   index: function() {
+    title.set('Students')
+
     qwest.get('/api/students?$sort[firstName]=1&$sort[lastName]=1').then(function(xhr, response) {
       if (response.data) {
         response.data = response.data.map(responseToModel)
@@ -202,6 +205,8 @@ module.exports = {
     })
   },
   create: function() {
+    title.set('New Student')
+
     $("#spa-target").empty().alpaca({
       "schema": require('./new-student-schema.json'),
       "options": {
@@ -229,6 +234,8 @@ module.exports = {
   },
   edit: function(request) {
     qwest.get('/api/students/' + request.namedParams.id).then(function(xhr, response) {
+      title.set('Edit Student ' + [response.firstName, response.lastName].join(' '))
+
       response = responseToModel(response)
 
       if (response.account) {
@@ -279,6 +286,8 @@ module.exports = {
     qwest
       .get('/api/students/' + request.namedParams.id)
       .then(function(xhr, response) {
+        title.set('Attendance for ' + [response.firstName, response.lastName].join(' '))
+
         $("#spa-target").empty().html(templates['attendance'](response))
 
         $('#calendar').fullCalendar({
@@ -307,6 +316,8 @@ module.exports = {
       .get('/api/students/' + request.namedParams.id)
       .get('/api/notes?$sort[createdAt]=-1&studentId=' + request.namedParams.id)
       .then(function(responses) {
+        title.set('Disciplinary Notes for ' + [responses[0][1].firstName, responses[0][1].lastName].join(' '))
+
         $("#spa-target").empty().html(templates['notes']({
           student: responses[0][1],
           notes: responses[1][1].data
@@ -317,6 +328,8 @@ module.exports = {
     qwest
       .get('/api/students/' + request.namedParams.id)
       .then(function(xhr, response) {
+        title.set('Rank Promotions for ' + [response.firstName, response.lastName].join(' '))
+        
         response.ranks.forEach(function(rank) {
           rank.promotedOn = moment(rank.promotedOn.split('T')[0])
         })

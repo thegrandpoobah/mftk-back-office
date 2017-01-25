@@ -2,6 +2,7 @@ var Aviator = require('aviator')
 var qwest = require('qwest')
 var $ = require('jquery')
 var moment = require('moment')
+var title = require('../title')
 require('select2')
 
 qwest.setDefaultDataType('json')
@@ -56,6 +57,8 @@ function setCurrentDivision(division) {
 
 module.exports = {
   index: function() {
+    title.set('Student Sign In')
+
     currentDivision = null
     divisionList = []
 
