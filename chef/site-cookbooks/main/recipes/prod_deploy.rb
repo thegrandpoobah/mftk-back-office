@@ -53,10 +53,6 @@ execute 'npm install' do
 	command '(cd /srv/www/current && npm install --production)'
 end
 
-execute 'database migrations' do
-	command '(cd /srv/www/current && sequelize db:migrate)'
-end
-
 rds_db_instance = search("aws_opsworks_rds_db_instance").first
 
 template '/srv/www/shared/app.env' do
@@ -68,6 +64,10 @@ template '/srv/www/shared/app.env' do
 		:environment => app['environment'],
 		:postgres_uri => "postgres://#{rds_db_instance['db_user']}:#{rds_db_instance['db_password']}@#{rds_db_instance['address']}/mftk"
 	)
+end
+
+execute 'database migrations' do
+	command '(cd /srv/www/current && NODE_ENV=production sequelize db:migrate)'
 end
 
 execute 'restart mftk-back-office' do
