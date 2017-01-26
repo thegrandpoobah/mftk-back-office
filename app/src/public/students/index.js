@@ -296,11 +296,24 @@ module.exports = {
               .get('/api/attendances?$sort[createdAt]=-1&studentId=' + request.namedParams.id + '&signInTime[$gte]=' + start.format() + '&signInTime[$lte]=' + end.format())
               .then(function(xhr, response) {
                 var events = response.data.map(function(event) {
+                  var colour = '#777'
+                  switch (event.status) {
+                    case 'Early':
+                      colour = '#5CB85C'
+                      break
+                    case 'On Time':
+                      colour = '#F0AD4E'
+                      break
+                    case 'Late':
+                      colour = '#D9534F'
+                      break
+                  }
+
                   return {
                     title: event.division.name,
                     start: moment(event.signInTime),
-                    backgroundColor: 'green',
-                    borderColor: 'green',
+                    backgroundColor: colour,
+                    borderColor: colour,
                     textColor: 'white'
                   }
                 })

@@ -6,6 +6,12 @@ const http = require('http');
 const https = require('https');
 const app = require('./app');
 
+const sequelize = app.get('sequelize')
+sequelize.sync().then(function() {
+  app.services['api/students'].Model.addFullTextIndex();
+  app.services['api/contacts'].Model.addFullTextIndex();
+})
+
 const port80forwarder = express()
 port80forwarder.use(function (req, res, next) {
 	return res.redirect('https://' + req.headers.host + req.url)

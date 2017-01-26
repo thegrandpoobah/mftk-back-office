@@ -16,7 +16,7 @@
         <tr>
           <td><a href="/admin/students/{{student.id}}/attendance/" class="aviator">{{student.firstName}} {{student.lastName}}</a></td>
           <td>{{date signInTime format="h:mma"}}</td>
-          <td>{{status}}</td>
+          <td><span class="label label-{{statusClass status}}">{{status}}</span></td>
           <td class="text-right"><a href="/student-sign-in/{{id}}/delete/" class="aviator btn btn-default btn-xs">Delete</a></td>
         </tr>
       {{/.}}

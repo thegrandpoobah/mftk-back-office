@@ -32,6 +32,11 @@
       "type": "string",
       "title": "Ending Time",
       "required": true
+    },
+    "timezone": {
+      "type": "string",
+      "required": true,
+      "default": "America/Toronto"
     }
   }
 }

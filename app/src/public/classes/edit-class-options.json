@@ -25,5 +25,8 @@
       "format": "h:mm a",
       "stepping": 5
     }
+  },
+  "timezone": {
+    "hidden": true
   }
 }

@@ -53,6 +53,10 @@ execute 'npm install' do
 	command '(cd /srv/www/current && npm install --production)'
 end
 
+execute 'database migrations' do
+	command '(cd /srv/www/current && sequelize db:migrate)'
+end
+
 rds_db_instance = search("aws_opsworks_rds_db_instance").first
 
 template '/srv/www/shared/app.env' do

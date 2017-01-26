@@ -51,25 +51,32 @@ module.exports = function(sequelize) {
           return;
         }
 
-        var searchFields = ['"firstName"', '"lastName"'];
         var Student = this;
-
         var vectorName = Student.getSearchVector();
-        sequelize
-          .query('ALTER TABLE "' + Student.tableName + '" ADD COLUMN "' + vectorName + '" TSVECTOR')
-          .then(function() {
-            return sequelize
-              .query('UPDATE "' + Student.tableName + '" SET "' + vectorName + '" = to_tsvector(\'simple\', ' + searchFields.join(' || \' \' || ') + ')')
-              .error(console.log);
-          }).then(function() {
-            return sequelize
-              .query('CREATE INDEX student_search_idx ON "' + Student.tableName + '" USING gin("' + vectorName + '");')
-              .error(console.log);
-          }).then(function() {
-            return sequelize
-              .query('CREATE TRIGGER student_vector_update BEFORE INSERT OR UPDATE ON "' + Student.tableName + '" FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger("' + vectorName + '", \'pg_catalog.simple\', ' + searchFields.join(', ') + ')')
-              .error(console.log);
-          }).error(console.log);
+
+        sequelize.getQueryInterface().describeTable(Student.tableName).then(attributes => {
+          if (attributes[vectorName]) {
+            return
+          }
+
+          var searchFields = ['"firstName"', '"lastName"'];
+
+          sequelize
+            .query('ALTER TABLE "' + Student.tableName + '" ADD COLUMN "' + vectorName + '" TSVECTOR')
+            .then(function() {
+              return sequelize
+                .query('UPDATE "' + Student.tableName + '" SET "' + vectorName + '" = to_tsvector(\'simple\', ' + searchFields.join(' || \' \' || ') + ')')
+                .error(console.log);
+            }).then(function() {
+              return sequelize
+                .query('CREATE INDEX student_search_idx ON "' + Student.tableName + '" USING gin("' + vectorName + '");')
+                .error(console.log);
+            }).then(function() {
+              return sequelize
+                .query('CREATE TRIGGER student_vector_update BEFORE INSERT OR UPDATE ON "' + Student.tableName + '" FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger("' + vectorName + '", \'pg_catalog.simple\', ' + searchFields.join(', ') + ')')
+                .error(console.log);
+            }).error(console.log);
+        })
       },
       search(role, query) {
         if(sequelize.options.dialect !== 'postgres') {

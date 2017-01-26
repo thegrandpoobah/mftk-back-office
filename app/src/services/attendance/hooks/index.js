@@ -1,6 +1,7 @@
 'use strict';
 
 const singleAttendance = require('./singleAttendance');
+const attendanceStatus = require('./attendanceStatus');
 
 const globalHooks = require('../../../hooks');
 const hooks = require('feathers-hooks');
@@ -10,7 +11,7 @@ exports.before = {
   all: [],
   find: [],
   get: [],
-  create: [singleAttendance()],
+  create: [attendanceStatus(), singleAttendance()],
   update: [],
   patch: [],
   remove: []
