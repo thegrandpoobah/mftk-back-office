@@ -3,6 +3,7 @@ include_recipe 'postgresql::client'
 include_recipe 'postgresql::server'
 include_recipe 'openssl'
 
+package 'htop'
 package 'build-essential'
 package 'git'
 package 'zip'

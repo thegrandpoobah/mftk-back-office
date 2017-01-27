@@ -5,7 +5,7 @@ file '/usr/local/bin/mftk-back-office' do
 	content <<-EOF
 #!/bin/bash
 cd /srv/www/current
-npm start &
+node src/ &
 echo "$!" > /var/run/mftk-back-office.pid
 EOF
 	mode '0744'
@@ -67,7 +67,7 @@ template '/srv/www/shared/app.env' do
 end
 
 execute 'database migrations' do
-	command '(cd /srv/www/current && NODE_ENV=production sequelize db:migrate)'
+	command '/bin/bash -c \'source /srv/www/shared/app.env ; (cd /srv/www/current && sequelize db:migrate)\''
 end
 
 execute 'restart mftk-back-office' do
