@@ -23,8 +23,6 @@ module.exports = function(options) {
 	  		}
 	  	}
   	}).then(function(result) {
-  		console.log(result)
-
   		if (result.total >= 1) {
   			hook.result = result.data[0]
   		}

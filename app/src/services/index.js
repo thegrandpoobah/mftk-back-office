@@ -45,9 +45,4 @@ module.exports = function() {
     .map(name => services[name])
     .filter(service => service.Model && service.Model.associate)
     .forEach(service => service.Model.associate());
-
-  sequelize.sync().then(function() {
-    services['api/students'].Model.addFullTextIndex();
-    services['api/contacts'].Model.addFullTextIndex();
-  })
 };

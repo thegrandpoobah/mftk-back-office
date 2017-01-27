@@ -12,6 +12,7 @@ nodejs_npm "webpack"
 nodejs_npm "mocha"
 nodejs_npm "feathers"
 nodejs_npm "feathers-cli"
+nodejs_npm "sequelize-cli"
 
 aws_secret = data_bag_item('passwords', 'aws')
 

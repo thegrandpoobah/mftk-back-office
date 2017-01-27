@@ -12,6 +12,14 @@ module.exports = function(sequelize) {
     signInTime: {
       type: Sequelize.DATE,
       allowNull: false
+    },
+    status: {
+      type: Sequelize.ENUM(
+        'Early',
+        'On Time',
+        'Late'
+      ),
+      allowNull: false
     }
   }, {
     classMethods: {

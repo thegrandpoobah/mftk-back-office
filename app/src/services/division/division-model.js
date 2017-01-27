@@ -30,7 +30,12 @@ module.exports = function(sequelize) {
     endTime: {
       type: Sequelize.INTEGER,
       allowNull: false
-    }
+    },
+    timezone: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      defaultValue: 'America/Toronto'
+    }      
   }, {});
 
   return division;

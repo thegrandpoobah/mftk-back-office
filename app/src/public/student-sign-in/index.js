@@ -71,6 +71,10 @@ module.exports = {
         divisionList = response.data
       })
 
+    $(".override-select").select2({
+      theme: "bootstrap"
+    })
+
     $(".student-select").select2({
       placeholder: 'Select a Student',
       theme: "bootstrap",
@@ -133,9 +137,14 @@ module.exports = {
     var attendance = {
       studentId: $('.student-select').val(),
       divisionId: (currentDivision || { id: null }).id,
-      signInTime: moment().format()
+      signInTime: moment().format(),
+      status: $('.override-select').val()
     }
 
+    if (attendance.status === 'Auto') {
+      delete attendance.status
+    }
+    
     if (!attendance.studentId || !attendance.divisionId) {
       Aviator.navigate('/student-sign-in/')
       

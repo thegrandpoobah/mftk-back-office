@@ -46,25 +46,32 @@ module.exports = function(sequelize) {
           return;
         }
 
-        var searchFields = ['"firstName"', '"lastName"'];
         var Contact = this;
-
         var vectorName = Contact.getSearchVector();
-        sequelize
-          .query('ALTER TABLE "' + Contact.tableName + '" ADD COLUMN "' + vectorName + '" TSVECTOR')
-          .then(function() {
-            return sequelize
-              .query('UPDATE "' + Contact.tableName + '" SET "' + vectorName + '" = to_tsvector(\'simple\', ' + searchFields.join(' || \' \' || ') + ')')
-              .error(console.log);
-          }).then(function() {
-            return sequelize
-              .query('CREATE INDEX contact_search_idx ON "' + Contact.tableName + '" USING gin("' + vectorName + '");')
-              .error(console.log);
-          }).then(function() {
-            return sequelize
-              .query('CREATE TRIGGER contact_vector_update BEFORE INSERT OR UPDATE ON "' + Contact.tableName + '" FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger("' + vectorName + '", \'pg_catalog.simple\', ' + searchFields.join(', ') + ')')
-              .error(console.log);
-          }).error(console.log);
+
+        sequelize.getQueryInterface().describeTable(Contact.tableName).then(attributes => {
+          if (attributes[vectorName]) {
+            return
+          }
+
+          var searchFields = ['"firstName"', '"lastName"'];
+
+          sequelize
+            .query('ALTER TABLE "' + Contact.tableName + '" ADD COLUMN "' + vectorName + '" TSVECTOR')
+            .then(function() {
+              return sequelize
+                .query('UPDATE "' + Contact.tableName + '" SET "' + vectorName + '" = to_tsvector(\'simple\', ' + searchFields.join(' || \' \' || ') + ')')
+                .error(console.log);
+            }).then(function() {
+              return sequelize
+                .query('CREATE INDEX contact_search_idx ON "' + Contact.tableName + '" USING gin("' + vectorName + '");')
+                .error(console.log);
+            }).then(function() {
+              return sequelize
+                .query('CREATE TRIGGER contact_vector_update BEFORE INSERT OR UPDATE ON "' + Contact.tableName + '" FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger("' + vectorName + '", \'pg_catalog.simple\', ' + searchFields.join(', ') + ')')
+                .error(console.log);
+            }).error(console.log);
+        })
       },
       search(query) {
         if(sequelize.options.dialect !== 'postgres') {

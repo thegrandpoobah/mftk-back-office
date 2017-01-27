@@ -3,6 +3,8 @@ include_recipe 'monit'
 include_recipe 'postgresql::client'
 include_recipe 'openssl'
 
+nodejs_npm "sequelize-cli"
+
 package 'zip'
 
 openssl_x509 '/srv/www/shared/localhost.crt' do

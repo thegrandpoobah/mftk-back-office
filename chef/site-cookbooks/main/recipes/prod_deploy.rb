@@ -66,6 +66,10 @@ template '/srv/www/shared/app.env' do
 	)
 end
 
+execute 'database migrations' do
+	command '(cd /srv/www/current && NODE_ENV=production sequelize db:migrate)'
+end
+
 execute 'restart mftk-back-office' do
 	command 'monit restart mftk-back-office'
 	returns [0, 1]
