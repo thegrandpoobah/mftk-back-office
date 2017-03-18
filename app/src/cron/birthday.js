@@ -7,13 +7,13 @@ const app = require('../app')
 const sequelize = app.get('sequelize')
 
 const today = moment()
-const template = fs.readFileSync(path.resolve(__dirname, 'birthday.html'))
+const template = fs.readFileSync(path.resolve(__dirname, 'birthday.html'), { encoding: 'utf-8' })
 
 app.services['api/students'].Model.findAll({
 	where: { 
 		$and: [
 			sequelize.where(sequelize.fn('date_part', 'month', sequelize.col('dateOfBirth')), { $eq: today.month() + 1 }),
-			sequelize.where(sequelize.fn('date_part', 'day', sequelize.col('dateOfBirth')), { $eq: today.date() - 1 })
+			sequelize.where(sequelize.fn('date_part', 'day', sequelize.col('dateOfBirth')), { $eq: today.date() })
 		],
 		active: true
 	},
@@ -46,12 +46,15 @@ app.services['api/students'].Model.findAll({
 		const Email = PepipostSDK.EmailController;
 
 		const data = {
-		    "api_key": "",
+		    "api_key": app.get('pepipost_api_key'),
 		    "email_details": {
 		        "fromname": "MFTK Martial Arts Academy",
 		        "subject": "Happy Birthday [%NAME%]!",
 		        "from": "birthday@tigerkims.ca",
 		        "content": template
+		    },
+		    "settings": {
+		    	"bcc": "sahab.yazdani@gmail.com"
 		    },
 		    "recipients": [
 		    	student.account.contacts[0].emails[0]
@@ -61,13 +64,15 @@ app.services['api/students'].Model.findAll({
 		    }
 		}
 
+		console.log('Sending e-mail to ' + student.account.contacts[0].emails[0])
+
 		Email.send(data, function(err_msg, parsed, context) {
 		    if (parsed.errorcode == 0) {
-		        console.log("mail sent successfully.\n");
+		        console.log('Mail sent successfully to ' + student.account.contacts[0].emails[0])
 		    } else {
-		        console.log("Email sent Failed.\n");
-		        console.log("errormessage("+parsed.errormessage+")\n");
-		        console.log("errorcode("+parsed.errorcode+")\n");
+		        console.log('Failed to send mail to ' + student.account.contacts[0].emails[0])
+		        console.log("errormessage("+parsed.errormessage+")")
+		        console.log("errorcode("+parsed.errorcode+")")
 		    }    
 		})
 	})
