@@ -78,3 +78,9 @@ end
 execute 'generate first certificate' do
 	command "/usr/bin/certbot certonly --webroot -w /srv/www/current/public -d #{node['cert_domain']} --non-interactive --agree-tos --email #{node['cert_email']} --rsa-key-size 4096 --post-hook \"ln --force --symbolic /etc/letsencrypt/live/#{node['cert_domain']}/fullchain.pem /srv/www/shared/localhost.crt; ln --force --symbolic /etc/letsencrypt/live/#{node['cert_domain']}/privkey.pem /srv/www/shared/localhost.key; monit restart mftk-back-office\""
 end
+
+cron 'birthday emails' do
+	command '/bin/bash -c \'source /srv/www/shared/app.env ; (cd /srv/www/current && node src/cron/birthday.js >> /var/log/mftk-back-office-cron.log 2>&1)\''
+	hour 0
+	minute 0
+end

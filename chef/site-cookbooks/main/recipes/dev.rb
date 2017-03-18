@@ -9,7 +9,9 @@ package 'git'
 package 'zip'
 package 'awscli'
 
-nodejs_npm "webpack"
+nodejs_npm "webpack" do
+	version "1.14.0"
+end
 nodejs_npm "mocha"
 nodejs_npm "feathers"
 nodejs_npm "feathers-cli"

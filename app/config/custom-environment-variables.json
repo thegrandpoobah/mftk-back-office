@@ -1,3 +1,4 @@
 {
-  "postgres": "POSTGRES_URI"
+  "postgres": "POSTGRES_URI",
+  "pepipost_api_key": "PEPIPOST_API_KEY"
 }
