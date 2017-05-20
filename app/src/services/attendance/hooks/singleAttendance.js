@@ -27,7 +27,7 @@ module.exports = function(options) {
   			hook.result = result.data[0]
   		}
 
-		next()
+		  next()
   	})
   };
 };

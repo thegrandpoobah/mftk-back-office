@@ -3,6 +3,7 @@
 const curriculumLog = require('./curriculumLog');
 const note = require('./note');
 const attendance = require('./attendance');
+const attendanceReport = require('./attendanceReport');
 const division = require('./division');
 const contact = require('./contact');
 const account = require('./account');
@@ -34,6 +35,8 @@ module.exports = function() {
   app.configure(attendance);
   app.configure(note);
   app.configure(curriculumLog);
+
+  app.configure(attendanceReport);
 
   app.configure(studentSearch);
   app.configure(accountSearch);
