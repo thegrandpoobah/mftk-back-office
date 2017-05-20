@@ -18,6 +18,9 @@ Aviator.setRoutes(_.defaultsDeep(sitemap, {
     },
     '/classes': {
       target: require('./classes')
+    },
+    '/reports': {
+      target: require('./reports')
     }
   },
   '/disciplinary-note': {

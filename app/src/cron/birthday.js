@@ -54,7 +54,7 @@ app.services['api/students'].Model.findAll({
 		        "content": template
 		    },
 		    "settings": {
-		    	"bcc": "sahab.yazdani@gmail.com"
+		    	"bcc": "mftk.academy+birthday@gmail.com"
 		    },
 		    "recipients": [
 		    	student.account.contacts[0].emails[0]

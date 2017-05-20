@@ -50,7 +50,7 @@
     "modernizr": "^3.3.1",
     "moment": "^2.14.1",
     "moment-timezone": "^0.5.11",
-    "numeral": "^1.5.3",
+    "numeral": "^1.5.6",
     "passport-google-oauth20": "^1.0.0",
     "passport-google-token": "^0.1.2",
     "pepipost-sdk-nodejs": "^0.4.0",
