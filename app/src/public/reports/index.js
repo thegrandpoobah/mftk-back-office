@@ -59,6 +59,7 @@ module.exports = {
               demos++
               break
             case 8: // SPARRING
+            case 21: // SPARRING
               sparring++
               break
             default:
