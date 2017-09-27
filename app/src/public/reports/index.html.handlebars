@@ -3,9 +3,9 @@
     Reports
   </div>
   <div class="container">
-      <div class='col-md-6'>
+      <div class='col-md-12'>
           <div class="form-group">
-              <div class='input-group date' id='startPicker'>
+              <div class='input-group date' id='dayPicker'>
                   <input type='text' class="form-control" />
                   <span class="input-group-addon">
                       <span class="glyphicon glyphicon-calendar"></span>
@@ -13,53 +13,45 @@
               </div>
           </div>
       </div>
-      <div class='col-md-6'>
-          <div class="form-group">
-              <div class='input-group date' id='endPicker'>
-                  <input type='text' class="form-control" />
-                  <span class="input-group-addon">
-                      <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
-              </div>
-          </div>
-      </div>
-  </div>  
-  <table class="table">
-    <thead>
-      <tr>
-        <th></th>
-        {{#days}}
-          <th>{{date . format="dd"}}</th>
-        {{/days}}
-      </tr>        
-      <tr>
-        <th>Name (<abbr title="Regular Attendance Average">R</abbr>/<abbr title="Sparring">S</abbr>/<abbr title="Demo">D</abbr>)</th>
-        {{#days}}
-          <th>{{date . format="D"}}</th>
-        {{/days}}
-      </tr>
-    </thead>
-    <tbody class="table-hover">
-      {{#data}}
-        <tr>
-          <td>
-            <a href="/admin/students/{{id}}/attendance/">
-              {{firstName}} {{lastName}}
-              <span class="badge">{{statistics.regularAverage}}</span>
-              <span class="badge">{{statistics.sparring}}/{{../maxSparring}}</span>
-              <span class="badge">{{statistics.demos}}/{{../maxDemos}}</span>
-            </a>
-          </td>
-          {{#attendance}}
-          <td {{#if colour}}style="background-color: {{colour}};"{{/if}}>
-            {{#if multiple}}{{count}}{{/if}}
-          </td>
-          {{/attendance}}
-        </tr>
-      {{/data}}
-      {{^data}}
-        <tr><td colspan="5">No Students found</td></tr>
-      {{/data}}
-    </tbody>
-  </table>
+  </div>
+  
+  <h1>Students with less than 2 times attendance per week</h1>
+  <ul>
+  {{#regular}}
+    <li>
+      <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
+        {{firstName}} {{lastName}}
+      </a>
+    </li>
+  {{/regular}}
+  {{^regular}}
+    <li>No Students Found</li>
+  {{/regular}}
+  </ul>
+  <h1>Students with less than 4 demo classes over the last 28 days</h1>
+  <ul>
+  {{#demo}}
+    <li>
+      <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
+        {{firstName}} {{lastName}}
+      </a>
+    </li>
+  {{/demo}}
+  {{^demo}}
+    <li>No Students Found</li>
+  {{/demo}}
+  </ul>
+  <h1>Students with less than 2 sparring classes over the last 28 days</h1>
+  <ul>
+  {{#sparring}}
+    <li>
+      <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
+        {{firstName}} {{lastName}}
+      </a>
+    </li>
+  {{/sparring}}
+  {{^sparring}}
+    <li>No Students Found</li>
+  {{/sparring}}
+  </ul>
 </div>

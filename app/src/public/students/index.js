@@ -290,7 +290,13 @@ module.exports = {
 
         $("#spa-target").empty().html(templates['attendance'](response))
 
+        let defaultDate = moment()
+        if (request.queryParams.month) {
+          defaultDate = moment(request.queryParams.month, 'MMYYYY')
+        }
+
         $('#calendar').fullCalendar({
+          defaultDate: defaultDate,
           events: function(start, end, timezone, callback) {
             qwest
               .get('/api/attendances?$sort[createdAt]=-1&studentId=' + request.namedParams.id + '&signInTime[$gte]=' + start.format() + '&signInTime[$lte]=' + end.format())
@@ -320,6 +326,13 @@ module.exports = {
 
                 callback(events)
               })
+
+            Aviator.navigate('/admin/students/' + request.namedParams.id + '/attendance/', {
+              queryParams: {
+                month: $('#calendar').fullCalendar('getDate').format('MMYYYY'),
+              },
+              silent: true
+            })
           }
         })
       })
