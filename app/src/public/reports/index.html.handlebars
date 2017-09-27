@@ -21,7 +21,7 @@
     <li>
       <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
         {{firstName}} {{lastName}}
-      </a>
+      </a> <span class="badge">{{numeral statistics.regularAverage format="0.00"}}/2</span>
     </li>
   {{/regular}}
   {{^regular}}
@@ -34,7 +34,7 @@
     <li>
       <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
         {{firstName}} {{lastName}}
-      </a>
+      </a> <span class="badge">{{statistics.demos}}/4</span>
     </li>
   {{/demo}}
   {{^demo}}
@@ -47,7 +47,7 @@
     <li>
       <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
         {{firstName}} {{lastName}}
-      </a>
+      </a> <span class="badge">{{statistics.sparring}}/4</span>
     </li>
   {{/sparring}}
   {{^sparring}}

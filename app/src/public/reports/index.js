@@ -2,7 +2,6 @@ var Aviator = require('aviator')
 var qwest = require('qwest')
 var moment = require('moment')
 var title = require('../title')
-var numeral = require('numeral')
 var $ = require('jquery')
 require('eonasdan-bootstrap-datetimepicker')
 
