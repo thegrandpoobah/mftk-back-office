@@ -84,3 +84,10 @@ cron 'birthday emails' do
 	hour 0
 	minute 0
 end
+
+cron 'attendance reports' do
+	command '/bin/bash -c \'source /srv/www/shared/app.env ; (cd /srv/www/current && node src/cron/attendance.js >> /var/log/mftk-back-office-cron.log 2>&1)\''
+	hour 0
+	minute 0
+	weekday 5
+end
