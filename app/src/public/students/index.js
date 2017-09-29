@@ -316,7 +316,7 @@ module.exports = {
                   }
 
                   return {
-                    title: event.division.name,
+                    title: _.get(event, 'division.name', 'Instructor'),
                     start: moment(event.signInTime),
                     backgroundColor: colour,
                     borderColor: colour,

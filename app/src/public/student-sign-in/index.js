@@ -7,7 +7,6 @@ require('select2')
 
 qwest.setDefaultDataType('json')
 
-var TIME_FORMAT = 'h:mma'
 var START_BUFFER = 20
 
 var templates = {

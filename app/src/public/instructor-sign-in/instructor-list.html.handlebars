@@ -1,0 +1,26 @@
+<div class="panel panel-default">
+  <div class="panel-heading clearfix">
+    Signed In Instructors ({{length}} signed in)
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+      	<th>Instructor</th>
+        <th>Sign in Time</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody class="table-hover">
+      {{#.}}
+        <tr>
+          <td><a href="/admin/students/{{student.id}}/attendance/" class="aviator">{{student.firstName}} {{student.lastName}}</a></td>
+          <td>{{date signInTime format="h:mma"}}</td>
+          <td class="text-right"><a href="/instructor-sign-in/{{id}}/delete/" class="aviator btn btn-default btn-xs">Delete</a></td>
+        </tr>
+      {{/.}}
+      {{^.}}
+        <td colspan="3">No instructors signed in yet.</td>
+      {{/.}}
+    </tbody>
+  </table>
+</div>

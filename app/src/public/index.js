@@ -31,6 +31,9 @@ Aviator.setRoutes(_.defaultsDeep(sitemap, {
   },
   '/student-sign-in': {
     target: require('./student-sign-in')
+  },
+  '/instructor-sign-in': {
+    target: require('./instructor-sign-in')
   }
 }))
 Aviator.dispatch()

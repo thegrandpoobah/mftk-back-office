@@ -54,4 +54,17 @@
     <li>No Students Found</li>
   {{/sparring}}
   </ul>
+  <h1>Instructors with less than 4 lessons over the last 28 days</h1>
+  <ul>
+  {{#instructor}}
+    <li>
+      <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
+        {{firstName}} {{lastName}}
+      </a> <span class="badge">{{statistics.instructor}}/4</span>
+    </li>
+  {{/instructor}}
+  {{^instructor}}
+    <li>No Instructors Found</li>
+  {{/instructor}}
+  </ul>
 </div>

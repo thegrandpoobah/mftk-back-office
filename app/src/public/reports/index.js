@@ -52,6 +52,7 @@ module.exports = {
           let demos = 0
           let sparring = 0
           let regular = 0
+          let instructor = 0
 
           student.attendance.forEach(a => {
             switch (a.divisionId) {
@@ -62,6 +63,9 @@ module.exports = {
             case 21: // SPARRING
               sparring++
               break
+            case null:
+              instructor++
+              break
             default:
               regular++
               break
@@ -71,8 +75,10 @@ module.exports = {
           student.statistics = {
             isDemoTeam: student.roles.indexOf('Demo Team') !== -1,
             isSparringTeam: student.roles.indexOf('Olympic Sparring') !== -1,
+            isInstructor: student.roles.indexOf('Instructor') !== -1,
             demos: demos,
             sparring: sparring,
+            instructor: instructor,
             regularAverage: regular/4
           }
         })
@@ -93,13 +99,20 @@ module.exports = {
             
             return acc
           }, []),
+          instructor: r1.reduce((acc, student) => {
+            if (student.statistics.instructor < 4 && student.statistics.isInstructor) {
+              acc.push(student)
+            }
+
+            return acc
+          }, []),
           regular: r1.reduce((acc, student) => {
             if (student.statistics.regularAverage < 2) {
               acc.push(student)
             }
 
             return acc
-          }, []),
+          }, [])
         }))
 
         $('#dayPicker').datetimepicker({
