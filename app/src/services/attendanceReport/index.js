@@ -19,7 +19,7 @@ class Service {
       where: {
         'active': true
       },
-      attributes: ['id', 'firstName', 'lastName'],
+      attributes: ['id', 'firstName', 'lastName', 'roles'],
       include: [
         {
           model: this.options.app.services['api/attendances'].Model,

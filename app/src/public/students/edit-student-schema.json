@@ -26,7 +26,7 @@
       "type": "array",
       "items": {
         "type": "string",
-        "enum": ["Student", "Demo Team", "Instructor"]
+        "enum": ["Student", "Sparring", "Demo Team", "Instructor"]
       },
       "default": ["Student"]
     },
