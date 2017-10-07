@@ -15,13 +15,13 @@
       </div>
   </div>
   
-  <h1>Students with less than 2 times attendance per week</h1>
+  <h1>Students with less than 8 regular classes over the last 28 days</h1>
   <ul>
   {{#regular}}
     <li>
       <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
         {{firstName}} {{lastName}}
-      </a> <span class="badge">{{numeral statistics.regularAverage format="0.00"}}/2</span>
+      </a> <span class="badge">{{numeral statistics.regular}}/8</span>
     </li>
   {{/regular}}
   {{^regular}}
