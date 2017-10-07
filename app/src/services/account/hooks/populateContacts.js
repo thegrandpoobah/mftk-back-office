@@ -50,7 +50,7 @@ module.exports = function(options) {
           accountMap[contact.accountId].contacts.push(contact)
         })
 
-        accounts = _.sortBy(accounts, ['contacts[0].firstName', 'contacts[0].lastName'])
+        accounts = _.orderBy(accounts, ['active', 'contacts[0].firstName', 'contacts[0].lastName'], ['desc', 'asc', 'asc'])
         
         if (!isArray) {
           accounts = accounts[0]
