@@ -1,5 +1,7 @@
 'use strict';
 
+const linkedActiveStatus = require('./linkedActiveStatus');
+
 const populateRanks = require('./populateRanks');
 
 const globalHooks = require('../../../hooks');
@@ -32,7 +34,7 @@ exports.after = {
     })
   ],
   create: [],
-  update: [],
-  patch: [],
+  update: [linkedActiveStatus()],
+  patch: [linkedActiveStatus()],
   remove: []
 };

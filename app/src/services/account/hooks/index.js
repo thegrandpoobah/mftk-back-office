@@ -1,5 +1,7 @@
 'use strict';
 
+const deactiveStudents = require('./deactiveStudents');
+
 const populateContacts = require('./populateContacts');
 
 const globalHooks = require('../../../hooks');
@@ -21,7 +23,7 @@ exports.after = {
   find: [populateContacts()],
   get: [populateContacts()],
   create: [],
-  update: [],
-  patch: [],
+  update: [deactiveStudents()],
+  patch: [deactiveStudents()],
   remove: []
 };

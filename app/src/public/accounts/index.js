@@ -69,7 +69,7 @@ module.exports = {
   index: function() {
     title.set('Accounts')
 
-    qwest.get('/api/accounts').then(function(xhr, response) {
+    qwest.get('/api/accounts?$sort[active]=-1').then(function(xhr, response) {
       $('#spa-target').empty().html(templates['index'](response))
     })
   },
