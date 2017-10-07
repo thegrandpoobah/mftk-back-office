@@ -196,7 +196,7 @@ module.exports = {
   index: function() {
     title.set('Students')
 
-    qwest.get('/api/students?$sort[firstName]=1&$sort[lastName]=1').then(function(xhr, response) {
+    qwest.get('/api/students?$sort[active]=-1&$sort[firstName]=1&$sort[lastName]=1').then(function(xhr, response) {
       if (response.data) {
         response.data = response.data.map(responseToModel)
       }

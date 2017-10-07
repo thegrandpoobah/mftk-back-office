@@ -74,45 +74,45 @@ module.exports = {
 
           student.statistics = {
             isDemoTeam: student.roles.indexOf('Demo Team') !== -1,
-            isSparringTeam: student.roles.indexOf('Olympic Sparring') !== -1,
+            isSparringTeam: student.roles.indexOf('Sparring') !== -1,
             isInstructor: student.roles.indexOf('Instructor') !== -1,
             demos: demos,
             sparring: sparring,
             instructor: instructor,
-            regularAverage: regular/4
+            regular: regular
           }
         })
 
         $('#spa-target').empty().html(templates['index']({
           startDate: end,
           demo: r1.reduce((acc, student) => {
-            if (student.statistics.demos < 4 && student.statistics.isDemoTeam) {
+            if (student.statistics.demos < 3 && student.statistics.isDemoTeam) {
               acc.push(student)
             }
             
             return acc
-          }, []),
+          }, []).sort((a, b) => { a.statistics.demos - b.statistics.demos }),
           sparring: r1.reduce((acc, student) => {
             if (student.statistics.sparring < 2 && student.statistics.isSparringTeam) {
               acc.push(student)
             }
             
             return acc
-          }, []),
+          }, []).sort((a, b) => { a.statistics.sparring - b.statistics.sparring }),
           instructor: r1.reduce((acc, student) => {
             if (student.statistics.instructor < 4 && student.statistics.isInstructor) {
               acc.push(student)
             }
 
             return acc
-          }, []),
+          }, []).sort((a, b) => { a.statistics.instructor - b.statistics.instructor }),
           regular: r1.reduce((acc, student) => {
-            if (student.statistics.regularAverage < 2) {
+            if (student.statistics.regular < 7) {
               acc.push(student)
             }
 
             return acc
-          }, [])
+          }, []).sort((a, b) => { a.statistics.regular - b.statistics.regular })
         }))
 
         $('#dayPicker').datetimepicker({
