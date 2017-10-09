@@ -1,70 +1,104 @@
 <div class="panel panel-default">
   <div class="panel-heading clearfix">
-    Reports
+    Attendance Report
   </div>
-  <div class="container">
-      <div class='col-md-12'>
-          <div class="form-group">
-              <div class='input-group date' id='dayPicker'>
-                  <input type='text' class="form-control" />
-                  <span class="input-group-addon">
-                      <span class="glyphicon glyphicon-calendar"></span>
-                  </span>
-              </div>
-          </div>
+  <div class="panel-body">
+    <form class="form-inline" style="margin-bottom: 1em;">
+      <div class="form-group">
+        <label for="reportAsOfDate">Show Report As Of:</label>
+        <div class="input-group date" id="dayPicker">
+            <input id="reportAsOfDate" type="text" class="form-control" />
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
       </div>
+    </form>
+
+    <ul class="nav nav-tabs report-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#regular" aria-controls="regular" role="tab" data-toggle="tab">Regular Classes</a></li>
+      <li role="presentation"><a href="#sparring" aria-controls="sparring" role="tab" data-toggle="tab">Sparring</a></li>
+      <li role="presentation"><a href="#demo" aria-controls="demo" role="tab" data-toggle="tab">Demo</a></li>
+      <li role="presentation"><a href="#instructors" aria-controls="instructors" role="tab" data-toggle="tab">Instructors</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="regular">
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong>Students with less than 8 regular classes over the last 28 days</strong></div>
+          <div class="panel-body">
+            <ul>
+            {{#regular}}
+              <li>
+                <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
+                  {{firstName}} {{lastName}}
+                </a> {{{label statistics.regular max="8" danger="3" warning="5" info="6"}}}
+              </li>
+            {{/regular}}
+            {{^regular}}
+              <li>No Students Found</li>
+            {{/regular}}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="sparring">
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong>Students with less than 2 sparring classes over the last 28 days</strong></div>
+          <div class="panel-body">
+            <ul>
+            {{#sparring}}
+              <li>
+                <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
+                  {{firstName}} {{lastName}}
+                </a> {{{label statistics.sparring max="4" danger="1" warning="2" info="3"}}}
+              </li>
+            {{/sparring}}
+            {{^sparring}}
+              <li>No Students Found</li>
+            {{/sparring}}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="demo">
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong>Students with less than 4 demo classes over the last 28 days</strong></div>
+          <div class="panel-body">
+            <ul>
+            {{#demo}}
+              <li>
+                <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
+                  {{firstName}} {{lastName}}
+                </a> {{{label statistics.demos max="4" danger="1" warning="2" info="3"}}}
+              </li>
+            {{/demo}}
+            {{^demo}}
+              <li>No Students Found</li>
+            {{/demo}}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="instructors">
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong>Instructors with less than 4 lessons over the last 28 days</strong></div>
+          <div class="panel-body">
+            <ul>
+            {{#instructor}}
+              <li>
+                <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
+                  {{firstName}} {{lastName}}
+                </a> {{{label statistics.instructor max="4" danger="1" warning="2" info="3"}}}
+              </li>
+            {{/instructor}}
+            {{^instructor}}
+              <li>No Instructors Found</li>
+            {{/instructor}}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  
-  <h1>Students with less than 8 regular classes over the last 28 days</h1>
-  <ul>
-  {{#regular}}
-    <li>
-      <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
-        {{firstName}} {{lastName}}
-      </a> <span class="badge">{{numeral statistics.regular}}/8</span>
-    </li>
-  {{/regular}}
-  {{^regular}}
-    <li>No Students Found</li>
-  {{/regular}}
-  </ul>
-  <h1>Students with less than 4 demo classes over the last 28 days</h1>
-  <ul>
-  {{#demo}}
-    <li>
-      <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
-        {{firstName}} {{lastName}}
-      </a> <span class="badge">{{statistics.demos}}/4</span>
-    </li>
-  {{/demo}}
-  {{^demo}}
-    <li>No Students Found</li>
-  {{/demo}}
-  </ul>
-  <h1>Students with less than 2 sparring classes over the last 28 days</h1>
-  <ul>
-  {{#sparring}}
-    <li>
-      <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
-        {{firstName}} {{lastName}}
-      </a> <span class="badge">{{statistics.sparring}}/4</span>
-    </li>
-  {{/sparring}}
-  {{^sparring}}
-    <li>No Students Found</li>
-  {{/sparring}}
-  </ul>
-  <h1>Instructors with less than 4 lessons over the last 28 days</h1>
-  <ul>
-  {{#instructor}}
-    <li>
-      <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
-        {{firstName}} {{lastName}}
-      </a> <span class="badge">{{statistics.instructor}}/4</span>
-    </li>
-  {{/instructor}}
-  {{^instructor}}
-    <li>No Instructors Found</li>
-  {{/instructor}}
-  </ul>
 </div>
