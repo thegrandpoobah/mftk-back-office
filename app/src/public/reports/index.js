@@ -1,4 +1,5 @@
 var Aviator = require('aviator')
+var _ = require('lodash')
 var qwest = require('qwest')
 var moment = require('moment')
 var title = require('../title')
@@ -85,35 +86,40 @@ module.exports = {
 
         $('#spa-target').empty().html(templates['index']({
           startDate: end,
-          demo: r1.reduce((acc, student) => {
+          demo: _.sortBy(r1.reduce((acc, student) => {
             if (student.statistics.demos < 3 && student.statistics.isDemoTeam) {
               acc.push(student)
             }
             
             return acc
-          }, []).sort((a, b) => { a.statistics.demos - b.statistics.demos }),
-          sparring: r1.reduce((acc, student) => {
+          }, []), 'statistics.demos'),
+          sparring: _.sortBy(r1.reduce((acc, student) => {
             if (student.statistics.sparring < 2 && student.statistics.isSparringTeam) {
               acc.push(student)
             }
             
             return acc
-          }, []).sort((a, b) => { a.statistics.sparring - b.statistics.sparring }),
-          instructor: r1.reduce((acc, student) => {
+          }, []), 'statistics.sparring'),
+          instructor: _.sortBy(r1.reduce((acc, student) => {
             if (student.statistics.instructor < 4 && student.statistics.isInstructor) {
               acc.push(student)
             }
 
             return acc
-          }, []).sort((a, b) => { a.statistics.instructor - b.statistics.instructor }),
-          regular: r1.reduce((acc, student) => {
+          }, []), 'statistics.instructor'),
+          regular: _.sortBy(r1.reduce((acc, student) => {
             if (student.statistics.regular < 7) {
               acc.push(student)
             }
 
             return acc
-          }, []).sort((a, b) => { a.statistics.regular - b.statistics.regular })
+          }, []), 'statistics.regular')
         }))
+
+        $('.report-tabs a').click(function (e) {
+          e.preventDefault()
+          $(this).tab('show')
+        })
 
         $('#dayPicker').datetimepicker({
           defaultDate: end.format(),
