@@ -5,7 +5,7 @@
   <div class="panel-body">
     <form class="form-inline" style="margin-bottom: 1em;">
       <div class="form-group">
-        <label for="reportAsOfDate">Show Report as of:</label>
+        <label for="reportAsOfDate">Show Report As Of:</label>
         <div class="input-group date" id="dayPicker">
             <input id="reportAsOfDate" type="text" class="form-control" />
             <span class="input-group-addon">
@@ -32,7 +32,7 @@
               <li>
                 <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
                   {{firstName}} {{lastName}}
-                </a> <span class="badge">{{numeral statistics.regular}}/8</span>
+                </a> {{{label statistics.regular max="8" danger="3" warning="5" info="6"}}}
               </li>
             {{/regular}}
             {{^regular}}
@@ -51,7 +51,7 @@
               <li>
                 <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
                   {{firstName}} {{lastName}}
-                </a> <span class="badge">{{statistics.sparring}}/4</span>
+                </a> {{{label statistics.sparring max="4" danger="1" warning="2" info="3"}}}
               </li>
             {{/sparring}}
             {{^sparring}}
@@ -70,7 +70,7 @@
               <li>
                 <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
                   {{firstName}} {{lastName}}
-                </a> <span class="badge">{{statistics.demos}}/4</span>
+                </a> {{{label statistics.demos max="4" danger="1" warning="2" info="3"}}}
               </li>
             {{/demo}}
             {{^demo}}
@@ -89,7 +89,7 @@
               <li>
                 <a href="/admin/students/{{id}}/attendance/?month={{date startDate format="MMYYYY"}}">
                   {{firstName}} {{lastName}}
-                </a> <span class="badge">{{statistics.instructor}}/4</span>
+                </a> {{{label statistics.instructor max="4" danger="1" warning="2" info="3"}}}
               </li>
             {{/instructor}}
             {{^instructor}}
