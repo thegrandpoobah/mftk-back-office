@@ -11,11 +11,12 @@ require('handlebars/runtime')
 qwest.setDefaultDataType('json')
 
 var templates = {
-  'index': require('./index.html.handlebars')
+  'attendance': require('./attendance.html.handlebars'),
+  'email': require('./email.html.handlebars')
 }
 
 module.exports = {
-  index: function(request) {
+  attendance: function (request) {
     title.set('Reports')
 
     let end = moment()
@@ -31,19 +32,19 @@ module.exports = {
 
     qwest
       .get('/api/attendanceReports?startTime=' + start.format() + '&endTime=' + end.format())
-      .then(function(xhr, r1) {
+      .then(function (xhr, r1) {
         /* TODO: This should be generalized.. this is MFTK specific at this point */
         let maxDemos = 0
         let maxSparring = 0
 
-        for (let i = moment(start); i.valueOf() < end.valueOf(); i = i.add(1, 'days')) { 
+        for (let i = moment(start); i.valueOf() < end.valueOf(); i = i.add(1, 'days')) {
           switch (i.format('dd')) {
-          case 'Fr':
-            maxSparring++
-            break
-          case 'Sa':
-            maxDemos++
-            break
+            case 'Fr':
+              maxSparring++
+              break
+            case 'Sa':
+              maxDemos++
+              break
           }
         }
 
@@ -57,19 +58,19 @@ module.exports = {
 
           student.attendance.forEach(a => {
             switch (a.divisionId) {
-            case 11: // DEMO
-              demos++
-              break
-            case 8: // SPARRING
-            case 21: // SPARRING
-              sparring++
-              break
-            case null:
-              instructor++
-              break
-            default:
-              regular++
-              break
+              case 11: // DEMO
+                demos++
+                break
+              case 8: // SPARRING
+              case 21: // SPARRING
+                sparring++
+                break
+              case null:
+                instructor++
+                break
+              default:
+                regular++
+                break
             }
           })
 
@@ -84,20 +85,20 @@ module.exports = {
           }
         })
 
-        $('#spa-target').empty().html(templates['index']({
+        $('#spa-target').empty().html(templates['attendance']({
           startDate: end,
           demo: _.sortBy(r1.reduce((acc, student) => {
             if (student.statistics.demos < 3 && student.statistics.isDemoTeam) {
               acc.push(student)
             }
-            
+
             return acc
           }, []), 'statistics.demos'),
           sparring: _.sortBy(r1.reduce((acc, student) => {
             if (student.statistics.sparring < 2 && student.statistics.isSparringTeam) {
               acc.push(student)
             }
-            
+
             return acc
           }, []), 'statistics.sparring'),
           instructor: _.sortBy(r1.reduce((acc, student) => {
@@ -127,14 +128,23 @@ module.exports = {
         });
 
         $("#dayPicker").on("dp.change", function (e) {
-            end = moment(e.date)
+          end = moment(e.date)
 
-            Aviator.navigate('/admin/reports', { 
-              queryParams: {
-                end: end.format()
-              }
-            })
+          Aviator.navigate('/admin/reports/attendance', {
+            queryParams: {
+              end: end.format()
+            }
+          })
         });
+      })
+  },
+  emails: function (request) {
+    title.set('Emails')
+
+    qwest
+      .get('/api/emailReport')
+      .then(function (xhr, r1) {
+        $('#spa-target').empty().html(templates['email'](r1))
       })
   }
 }
