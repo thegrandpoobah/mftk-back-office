@@ -11,7 +11,7 @@ class Service {
   find (params) {
     // params.query...
     return this.options.app.services['api/accounts']
-      .find({ where: { active: true } })
+      .find({ query: { active: true } })
       .then((accts) => {
         const accum = []
 
