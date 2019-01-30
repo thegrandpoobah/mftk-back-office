@@ -4,6 +4,7 @@ const curriculumLog = require('./curriculumLog');
 const note = require('./note');
 const attendance = require('./attendance');
 const attendanceReport = require('./attendanceReport');
+const emailReport = require('./emailReport');
 const division = require('./division');
 const contact = require('./contact');
 const account = require('./account');
@@ -16,7 +17,7 @@ const user = require('./user');
 
 const Sequelize = require('sequelize');
 
-module.exports = function() {
+module.exports = function () {
   const app = this;
 
   const sequelize = new Sequelize(app.get('postgres'), {
@@ -37,6 +38,7 @@ module.exports = function() {
   app.configure(curriculumLog);
 
   app.configure(attendanceReport);
+  app.configure(emailReport);
 
   app.configure(studentSearch);
   app.configure(accountSearch);

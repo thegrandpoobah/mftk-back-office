@@ -25,11 +25,12 @@
       "/new": "create",
       "/:id": {
         "/edit": "edit",
-        "/delete": "delete" 
+        "/delete": "delete"
       }
     },
     "/reports": {
-      "/": "index"
+      "/attendance": "attendance",
+      "/emails": "emails"
     }
   },
   "/disciplinary-note": {
